@@ -13,7 +13,7 @@ class Db {
         // Try and connect to the database
         if(!isset(self::$connection)) {
             // Load configuration as an array. Use the actual location of your configuration file
-            $config = parse_ini_file('../dbconfig.ini'); 
+            $config = parse_ini_file(dirname(__FILE__).'/../dbconfig.ini'); 
 	    self::$connection = mysql_connect($config['host'],$config['dbuser'],$config['dbpass']);
 	    mysql_select_db($config['dbname']);
         }

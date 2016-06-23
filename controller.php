@@ -15,6 +15,7 @@ if($_FILES)
       $$key = $_FILES[$key]['tmp_name'];
    }
 }
+$config = parse_ini_file('dbconfig.ini'); 
 spl_autoload_register(function ($class_name) {
     include 'phpclasses/'.$class_name . '.class.php';
 });

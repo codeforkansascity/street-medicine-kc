@@ -8,8 +8,6 @@ class Agencies {
 
    	public function __construct()
    	{
-		$config = parse_ini_file('../dbconfig.ini');
-      		require ($config['homedir'].'controller.php');
    	}
 
         /*

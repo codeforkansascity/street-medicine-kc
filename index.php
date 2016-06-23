@@ -42,14 +42,14 @@ $C = new Categories();
 $cats = $C->getAllCategories();
 foreach($cats as $cat)
 {
-   $checkboxVar = "catid".$cat->id; 
-   $labelVar = "label".$cat->id;
+   $checkboxVar = "catid".$cat[id]; 
+   $labelVar = "label".$cat[id];
    //if(!$_POST) $$checkboxVar="x";	//BY DEFAULT, CHECK ALL
-   echo "<label class=\"btn btn-default ".$cat->buttonclass;
+   echo "<label class=\"btn btn-default ".$cat[buttonclass];
    if($$checkboxVar=='x') echo " active";
-   echo "\" id=\"$labelVar\"><input class=\"category-btn\" type=\"checkbox\" value=\"x\" data-catid=\"".$cat->id."\" id=\"$checkboxVar\" name=\"$checkboxVar\" autocomplete=\"off\"";
+   echo "\" id=\"$labelVar\"><input class=\"category-btn\" type=\"checkbox\" value=\"x\" data-catid=\"".$cat[id]."\" id=\"$checkboxVar\" name=\"$checkboxVar\" autocomplete=\"off\"";
    if($$checkboxVar=='x') echo " checked";
-   echo "> ".$cat->category."</label>";
+   echo "> ".$cat[category]."</label>";
 }
 ?>
 </div><!--/category-options-->
