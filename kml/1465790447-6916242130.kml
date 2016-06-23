@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <kml xmlns="http://www.opengis.net/kml/2.2">
+        <Document><Style id="category1">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/redpin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category2">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/bluepin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category3">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/greenpin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category4">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/yellowpin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category5">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/graypin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Seton Center Health Services Dental Clinic</h4><p>HEALTHCARE &middot; FOOD</p><p>8216 E. 23rd St.<br>Kansas City, MO 64127</p><p><a href="tel:+18162313955">(816) 231-3955</a></p><p>Must complete a financial assessment before scheduling an appointment. Financial Assessments are completed at the time specified. Accept various insurances, also fee based on income. Serve children to adult for both emergencies and appointments.</p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=39.0816094,-94.4871186"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category3</styleUrl>
+                <Point>
+                        <coordinates>-94.4871186,39.0816094,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Salvation Army</h4><p>HOUSING &middot; FOOD</p><p>3013-19 E. 9th Street<br>Kansas City, MO 64124</p><p><a href="tel:+1816-483-8484">(816) 483-8484</a></p><p>Food Pantry interviews are held at specified times. Must schedule for an interview. Will receive food at time of interview. Service area includes East 18th St to East 44th St. 1800-4400 N & S</p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=39.1035433,-94.5827923"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category3</styleUrl>
+                <Point>
+                        <coordinates>-94.5827923,39.1035433,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Salvation Army</h4><p>HOUSING &middot; FOOD</p><p>6618 E. Truman Rd.<br>Kansas City, MO 64126</p><p><a href="tel:+18162416485">(816) 241-6485</a></p><p>Food pantry interviews are held at specified times. Must schedule for an interview. Will receive food at time of interview. Service area includes East 18th St to East 44th St. 1800-4400 N & S.</p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=39.0941159,-94.5046017"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category3</styleUrl>
+                <Point>
+                        <coordinates>-94.5046017,39.0941159,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Della Lamb Community Service</h4><p>FOOD &middot; OTHER</p><p>500 Woodland Ave<br>Kansas City , MO 64106</p><p><a href="tel:+1">() -</a></p><p>Provides services to adults 21 years or older, teaching basic skills for independent living as well as more advanced skills needed to find employment and maintain finances to become self-reliant.</p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=39.1085772,-94.5603052"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category3</styleUrl>
+                <Point>
+                        <coordinates>-94.5603052,39.1085772,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Della Lamb Community Services </h4><p>FOOD &middot; OTHER</p><p>3100 E. 12th St.<br>Kansas City, MO 64127</p><p><a href="tel:+1816-921-3002">(816) 921-3002</a></p><p>Provides services to adults 21 years or older, teaching basic skills for independent living as well as more advanced skills needed to find employment and maintain finances to become self-reliant.</p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=39.0988521,-94.5458132"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category3</styleUrl>
+                <Point>
+                        <coordinates>-94.5458132,39.0988521,0.000000</coordinates>
+                </Point>
+        </Placemark></Document></kml>

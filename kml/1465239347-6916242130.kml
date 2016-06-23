@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <kml xmlns="http://www.opengis.net/kml/2.2">
+        <Document><Style id="category1">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/redpin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category2">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/bluepin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category3">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/greenpin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category4">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/yellowpin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category5">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/graypin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Cabot West Side Dental Clinic</h4><p>HEALTHCARE</p><p>1810 Summit St<br>Kansas City, MO 64108</p><p><a href="tel:+18164710900">8164710900</a></p><p>Emergency walk-in available must be present 30 minutes prior, first come first served. Full dental services for all ages 4 months and up. Fees are on a sliding scale, or insurance is accepted. Full evaluation with x-rays included.</p><p style="text-align:right;"><a href="#"><b><i>more info &rarr;</i></b></a></p></div>]]></description>
+		<styleUrl>#category1</styleUrl>
+                <Point>
+                        <coordinates>-94.5938491,39.0907024,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Kansas City Care Clinic (Dental)</h4><p>HEALTHCARE</p><p>6400 Prospect Ave, Suite 200<br>Kansas City, MO 64132</p><p><a href="tel:+18167772790">8167772790</a></p><p>Will not be accepting new patients until Jan 2015. Appointment only no emergency services provided. Will see TB and HIV patients. Dental patients must also be Kansas City CARE Clinic patients.</p><p style="text-align:right;"><a href="#"><b><i>more info &rarr;</i></b></a></p></div>]]></description>
+		<styleUrl>#category1</styleUrl>
+                <Point>
+                        <coordinates>-94.5575926,39.0102595,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Truman Medical Center</h4><p>HEALTHCARE</p><p>2301 Holmes<br> Kansas City, MO 64108</p><p><a href="tel:+1816-404-1000">816-404-1000</a></p><p>TMC Discount (discounted medical services) eligibility is based on residency, income and family size. Applicants must be Kansas City and/or Jackson County, MO. residents and their income must be below 200 percent of federal poverty level guidelines. In or</p><p style="text-align:right;"><a href="#"><b><i>more info &rarr;</i></b></a></p></div>]]></description>
+		<styleUrl>#category1</styleUrl>
+                <Point>
+                        <coordinates>-94.5752503,39.0844507,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>UMKC School of Dentistry</h4><p>HEALTHCARE</p><p>650 E. 25th St.<br>Kansas City, Missouri 64108</p><p><a href="tel:+1816-235-2100">816-235-2100</a></p><p>Call for appointment times. Emergency clinic is first come first served at designated times. Accept Medicaid; also have a set fee that must be paid in full at time of service. Emergency fee is $45.</p><p style="text-align:right;"><a href="#"><b><i>more info &rarr;</i></b></a></p></div>]]></description>
+		<styleUrl>#category1</styleUrl>
+                <Point>
+                        <coordinates>-94.5770394,39.0820446,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Samuel U. Rodgers Dental Clinic</h4><p>HEALTHCARE</p><p>825 Euclid Ave.<br>Kansas City, MO 64124</p><p><a href="tel:+18168894613">8168894613</a></p><p>Accept major insurance, Medicare, Medicaid, and all MO Health Net plans, cash, checks, or major credit cards. Offer a fee discount based on household income to those who qualify.</p><p style="text-align:right;"><a href="#"><b><i>more info &rarr;</i></b></a></p></div>]]></description>
+		<styleUrl>#category1</styleUrl>
+                <Point>
+                        <coordinates>-94.5572347,39.104104,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Seton Center Health Services Dental Clinic</h4><p>HEALTHCARE &middot; FOOD</p><p>8216 E. 23rd St.<br>Kansas City, MO 64127</p><p><a href="tel:+18162313955">8162313955</a></p><p>Must complete a financial assessment before scheduling an appointment. Financial Assessments are completed at the time specified. Accept various insurances, also fee based on income. Serve children to adult for both emergencies and appointments.</p><p style="text-align:right;"><a href="#"><b><i>more info &rarr;</i></b></a></p></div>]]></description>
+		<styleUrl>#category1</styleUrl>
+                <Point>
+                        <coordinates>-94.4871186,39.0816094,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Swope Health Central Dental Clinic</h4><p>HEALTHCARE</p><p>3801 Blue Pkwy<br>Kansas City, MO 64130</p><p><a href="tel:+18169235800">8169235800</a></p><p>Appointments only. Insured are welcome. For uninsured, sliding fee scale based upon income.</p><p style="text-align:right;"><a href="#"><b><i>more info &rarr;</i></b></a></p></div>]]></description>
+		<styleUrl>#category1</styleUrl>
+                <Point>
+                        <coordinates>-94.5396828,39.0348634,0.000000</coordinates>
+                </Point>
+        </Placemark></Document></kml>

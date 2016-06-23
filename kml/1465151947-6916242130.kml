@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <kml xmlns="http://www.opengis.net/kml/2.2">
+        <Document><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Cabot West Side Dental Clinic</h4><p><i class="fa fa-circle" aria-hidden="true" style="color:$color;"></i>HEALTHCARE</p><p>1810 Summit St<br>Kansas City, MO 64108</p><p>8164710900</p></div>]]></description>
+                <Point>
+                        <coordinates>-94.5938491,39.0907024,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Kansas City Care Clinic (Dental)</h4><p><i class="fa fa-circle" aria-hidden="true" style="color:$color;"></i>HEALTHCARE</p><p>6400 Prospect Ave, Suite 200<br>Kansas City, MO 64132</p><p>8167772790</p></div>]]></description>
+                <Point>
+                        <coordinates>-94.5575926,39.0102595,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Truman Medical Center</h4><p><i class="fa fa-circle" aria-hidden="true" style="color:$color;"></i>HEALTHCARE</p><p>2301 Holmes<br> Kansas City, MO 64108</p><p>816-404-1000</p></div>]]></description>
+                <Point>
+                        <coordinates>-94.5752503,39.0844507,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>UMKC School of Dentistry</h4><p><i class="fa fa-circle" aria-hidden="true" style="color:$color;"></i>HEALTHCARE</p><p>650 E. 25th St.<br>Kansas City, Missouri 64108</p><p>816-235-2100</p></div>]]></description>
+                <Point>
+                        <coordinates>-94.5770394,39.0820446,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Samuel U. Rodgers Dental Clinic</h4><p><i class="fa fa-circle" aria-hidden="true" style="color:$color;"></i>HEALTHCARE</p><p>825 Euclid Ave.<br>Kansas City, MO 64124</p><p>8168894613</p></div>]]></description>
+                <Point>
+                        <coordinates>-94.5572347,39.104104,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Seton Center Health Services Dental Clinic</h4><p><i class="fa fa-circle" aria-hidden="true" style="color:$color;"></i>HEALTHCARE <i class="fa fa-circle" aria-hidden="true" style="color:$color;"></i>FOOD</p><p>8216 E. 23rd St.<br>Kansas City, MO 64127</p><p>8162313955</p></div>]]></description>
+                <Point>
+                        <coordinates>-94.4871186,39.0816094,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Hope House </h4><p><i class="fa fa-circle" aria-hidden="true" style="color:$color;"></i>OTHER SERVICES</p><p>P.O Box 577<br>Lee's Summit, MO 64063</p><p>816-461-4673<br>816-461-4673 (Emergency)</p></div>]]></description>
+                <Point>
+                        <coordinates>-94.3821724,38.9108408,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4>Swope Health Central Dental Clinic</h4><p><i class="fa fa-circle" aria-hidden="true" style="color:$color;"></i>HEALTHCARE</p><p>3801 Blue Pkwy<br>Kansas City, MO 64130</p><p>8169235800</p></div>]]></description>
+                <Point>
+                        <coordinates>-94.5396828,39.0348634,0.000000</coordinates>
+                </Point>
+        </Placemark></Document></kml>

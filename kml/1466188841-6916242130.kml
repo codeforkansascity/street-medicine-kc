@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <kml xmlns="http://www.opengis.net/kml/2.2">
+        <Document><Style id="category1">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/redpin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category2">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/bluepin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category3">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/greenpin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category4">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/yellowpin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Style id="category5">
+                <IconStyle>
+                        <Icon>
+                        <href>http://homelesskc.gazelleincorporated.com/images/graypin.png</href>
+                        </Icon>
+                </IconStyle>
+        </Style><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>HEALTHCARE</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>HEALTHCARE</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>HEALTHCARE</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>HEALTHCARE</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>HEALTHCARE</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>HEALTHCARE &middot; FOOD</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>HEALTHCARE</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>JOBS &middot; OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>HOUSING &middot; FOOD</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>HOUSING &middot; FOOD</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>JOBS &middot; OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>FOOD &middot; OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>FOOD &middot; OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark><Placemark>
+                <name></name>
+                <description><![CDATA[<div class="map-listings-text"><h4></h4><p>OTHER</p><p><br>,  </p><p><a href="tel:+1">() -</a></p><span style="float:left;"><a target="_blank" href="https://www.google.com/maps?saddr=My+Location&daddr=,"><b>GET DIRECTIONS</b></a></span><span style="float:right;"><a target="_blank" href="#"><b>MORE INFO</b></a></span><div style="clear:both;"></div></div>]]></description>
+		<styleUrl>#category0</styleUrl>
+                <Point>
+                        <coordinates>,,0.000000</coordinates>
+                </Point>
+        </Placemark></Document></kml>

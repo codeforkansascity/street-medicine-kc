@@ -1,0 +1,83 @@
+.filter-wrap {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	overflow-y:visible;
+	min-height:60px;
+        box-shadow: 5px 5px 5px #a0a0a0;
+}
+#main-filter {
+        line-height:40px;
+	margin: 10px auto;
+        font-size:20px;
+        text-align:center;
+}
+#list.list-wrap {
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:0px;
+	height:50px;
+        text-align:center;
+        background-color:#ffffff;
+        z-index:9999;
+        box-shadow: -5px -5px 5px #a0a0a0;
+    	-webkit-transition: height 0.4s; /* Safari */
+    	transition: height 0.4s;
+}
+#list.active {
+	height:95% !important;
+}
+.list-element {
+	text-align:left;
+	border-bottom:#e0e0e0 1px dotted;
+	padding:10px;
+}
+.list-element h4 {
+	font-size:14px;
+}
+.list-element p {
+	margin: 0 0 5px 0;
+	font-size:12px;
+}
+.map-wrap {
+	position:absolute;
+	left:0;
+	right:0;
+	top:65px;
+	bottom:50px;
+}
+#map {
+	width:100%;
+  	height:100%;
+}
+.btn.active {
+   box-shadow: inset 3px 3px 5px rgba(0,0,0,.5) !important;
+}
+.btn-food {
+	background-color:#55dd55 !important; 
+}
+.btn-medical {
+        background-color:#ff5555 !important; 
+}
+.btn-housing {
+        background-color:#00dddd !important; 
+}
+.btn-jobs {
+        background-color:#ffff55 !important; 
+}
+.btn-other {
+        background-color:#f0f0f0 !important; 
+}
+@media screen and (max-width: 480px) {
+	#main-filter {
+		line-height:20px !important;
+		font-size:14px !important;
+	}
+	#ineed { display:none; }
+	#category-options label, #find {
+		padding:4px 7px;
+		font-size:12px;
+	}
+}
