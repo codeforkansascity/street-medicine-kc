@@ -1,17 +1,17 @@
 <?php
 //DATABASE PARAMS
-$dbname="homeless_kc";
-$dbuser="homeless_kc";
-$dbpass="kiran-0605";
-$dbhost="localhost";
+$dbname = "homeless_kc";
+$dbuser = "homeless_kc";
+$dbpass = "kiran-0605";
+$dbhost = "localhost";
 
 //STATES
-$state_abbrevs=array("KS","MO");
-$state_fulls=array("Kansas","Missouri");
+// $state_abbrevs=array("KS","MO");
+// $state_fulls=array("Kansas","Missouri");
 
-$GoogleMapsAPIKey="AIzaSyD4msj-ty44VVh0dNDPPocz0wAv_XIRjiE";
+$GoogleMapsAPIKey = "AIzaSyD4msj-ty44VVh0dNDPPocz0wAv_XIRjiE";
 
-$pattern10digits = "/[0-9]{10}/";
+// $pattern10digits = "/[0-9]{10}/";
 
 $header = '<!DOCTYPE html>
 <html lang="en">

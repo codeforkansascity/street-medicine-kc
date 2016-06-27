@@ -3,31 +3,32 @@ require 'functions.php';
 require 'controller.php';
 
 //GET SEARCH PARAMS
-   $catids=array(); $c=0;
-   foreach($_POST as $key => $value)	//Get Categories Checked
-   {
-      if(preg_match("/catid/",$key) && $value=="x")	//Category Checked
-      {
-	 $catids[$c]=preg_replace("/[^0-9]/","",$key); 	//Get Category ID
-	 $c++; 
-      }
-   }
-   //Now $catids is an array of the selected categories
-   $results=explode("<data>",GetSearchResults($catids));
-   $kmlfile=$results[0]; 
-   $listhtml=$results[1];
+var_dump($_POST);
+$catids = array();
+$c = 0;
+foreach ($_POST as $key => $value) //Get Categories Checked
+{
+	if (preg_match("/catid/", $key) && $value == "x") //Category Checked
+	{
+		$catids[$c] = preg_replace("/[^0-9]/", "", $key); //Get Category ID
+		$c++;
+	}
+}
+//Now $catids is an array of the selected categories
+$results = explode("<data>", GetSearchResults($catids));
+$kmlfile = $results[0];
+$listhtml = $results[1];
 
 echo GetHeader($kmlfile);
 
 //GEO CODE AGENCIES
-$sql="SELECT * FROM Agency WHERE latitude=0 AND address1!=''";
-$result=mysql_query($sql);
+$sql = "SELECT * FROM Agency WHERE latitude=0 AND address1!=''";
+$result = mysql_query($sql);
 $A = new Agencies();
-while($row=mysql_fetch_array($result))
-{
-   $temp=explode(",",$A->getCoordinates($row[id]));
-   $sql2="UPDATE Agency SET latitude='$temp[0]',longitude='$temp[1]' WHERE id='$row[id]'";
-   $result2=mysql_query($sql2);
+while ($row = mysql_fetch_array($result)) {
+	$temp = explode(",", $A->getCoordinates($row[id]));
+	$sql2 = "UPDATE Agency SET latitude='$temp[0]',longitude='$temp[1]' WHERE id='$row[id]'";
+	$result2 = mysql_query($sql2);
 }
 
 ?>
@@ -40,16 +41,21 @@ while($row=mysql_fetch_array($result))
 <?php
 $C = new Categories();
 $cats = $C->getAllCategories();
-foreach($cats as $cat)
-{
-   $checkboxVar = "catid".$cat[id]; 
-   $labelVar = "label".$cat[id];
-   //if(!$_POST) $$checkboxVar="x";	//BY DEFAULT, CHECK ALL
-   echo "<label class=\"btn btn-default ".$cat[buttonclass];
-   if($$checkboxVar=='x') echo " active";
-   echo "\" id=\"$labelVar\"><input class=\"category-btn\" type=\"checkbox\" value=\"x\" data-catid=\"".$cat[id]."\" id=\"$checkboxVar\" name=\"$checkboxVar\" autocomplete=\"off\"";
-   if($$checkboxVar=='x') echo " checked";
-   echo "> ".$cat[category]."</label>";
+foreach ($cats as $cat) {
+	$checkboxVar = "catid" . $cat[id];
+	$labelVar = "label" . $cat[id];
+	//if(!$_POST) $$checkboxVar="x";	//BY DEFAULT, CHECK ALL
+	echo "<label class=\"btn btn-default " . $cat[buttonclass];
+	if ($$checkboxVar == 'x') {
+		echo " active";
+	}
+
+	echo "\" id=\"$labelVar\"><input class=\"category-btn\" type=\"checkbox\" value=\"x\" data-catid=\"" . $cat[id] . "\" id=\"$checkboxVar\" name=\"$checkboxVar\" autocomplete=\"off\"";
+	if ($$checkboxVar == 'x') {
+		echo " checked";
+	}
+
+	echo "> " . $cat[category] . "</label>";
 }
 ?>
 </div><!--/category-options-->
