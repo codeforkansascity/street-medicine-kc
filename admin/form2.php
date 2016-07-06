@@ -20,7 +20,6 @@ if ($agency_id > 0) {
 
 	//For the description, since it will go into textarea, let's convert "<br>" to line break:
 	$agency['description'] = str_replace("<br>", "\r\n", $agency['description']);
-
 }
 //Otherwise, $agency will be empty by default and we can reference it anyway without harm
 
@@ -96,6 +95,7 @@ if ($H) {
 		$rowCount = 2;
 	} else {
 		$rowCount++;
+		$rowCount = min($rowCount, 9);
 	}
 
 	for ($i = 0; $i < $rowCount; $i++) {
@@ -113,6 +113,7 @@ if ($H) {
 		}
 	}
 }
+
 $D = new Days();
 $days = $D->getAllDays();
 echo "<table class=\"table\">
@@ -129,17 +130,16 @@ for ($i = 0; $i < $rowCount; $i++) {
 	echo "<tr>";
 	for ($j = 0; $j < 7; $j++) {
 		$td = "<td><input size='6' name='open-$i+$j' zxcvb ></input>&nbsp;<input size='6' name='close-$i+$j' qwert ></input></td>";
-		$xt = $times[$i][$j];
+		$timeItem = $times[$i][$j];
 		if ($i == 0) {
 			$td = str_replace("put size", "put required size", $td);
-			// echo ("$td<br>");
 		}
-		if ($xt == "") {
+		if ($timeItem == "") {
 			$td = str_replace("zxcvb", "placeholder=\"09:30\"", $td);
 			$td = str_replace("qwert", "placeholder=\"16:30\"", $td);
 		} else {
-			$ot = substr($xt['openTime'], 0, 5);
-			$ct = substr($xt['closeTime'], 0, 5);
+			$ot = substr($timeItem['openTime'], 0, 5);
+			$ct = substr($timeItem['closeTime'], 0, 5);
 			$td = str_replace("zxcvb", "value=\"" . $ot . "\"", $td);
 			$td = str_replace("qwert", "value=\"" . $ct . "\"", $td);
 		}
@@ -187,7 +187,6 @@ foreach ($cats as $category) {
 			if (in_array($subcategory['id'], $activatedSubcategories)) {
 				echo " checked";
 			}
-
 			echo ">" . $subcategory['subcategory'] . "</div>";
 		}}
 	echo "</div><!--/panel-collapse-->

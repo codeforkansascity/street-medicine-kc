@@ -42,7 +42,6 @@ class Db {
 		// Query the database
 		$result = mysql_query($query);
 
-		// echo "<br>Query: $query<br>result: $result<br>" . mysql_error();
 		return $result;
 	}
 
@@ -55,7 +54,6 @@ class Db {
 	public function select($query) {
 		$rows = array();
 		$result = mysql_query($query);
-		// echo "<br>Query: $query<br>result: $result<br>" . mysql_error();
 		if ($result === false) {
 			return false;
 		}

@@ -5,11 +5,11 @@ $dbuser = "homeless_kc";
 $dbpass = "kiran-0605";
 $dbhost = "localhost";
 
+$GoogleMapsAPIKey = "AIzaSyD4msj-ty44VVh0dNDPPocz0wAv_XIRjiE";
+
 //STATES
 // $state_abbrevs=array("KS","MO");
 // $state_fulls=array("Kansas","Missouri");
-
-$GoogleMapsAPIKey = "AIzaSyD4msj-ty44VVh0dNDPPocz0wAv_XIRjiE";
 
 // $pattern10digits = "/[0-9]{10}/";
 
