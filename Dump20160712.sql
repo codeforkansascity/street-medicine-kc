@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: Jul 12, 2016 at 09:35 AM
+-- Generation Time: Jul 12, 2016 at 09:53 AM
 -- Server version: 5.1.73-cll
 -- PHP Version: 5.4.31
 
@@ -350,7 +350,7 @@ INSERT INTO `category` (`id`, `category`, `pinfile`, `buttonclass`) VALUES
 (5, 'Other Services', 'graypin.png', 'btn-other'),
 (6, 'Target Demographics', '', ''),
 (7, 'Languages Served', '', ''),
-(8, 'Social Services', '', '');
+(8, 'Social Services', 'pinkpin.png', 'btn-social');
 
 -- --------------------------------------------------------
 
