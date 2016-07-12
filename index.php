@@ -3,7 +3,6 @@ require 'functions.php';
 require 'controller.php';
 
 //GET SEARCH PARAMS
-var_dump($_POST);
 $catids = array();
 $c = 0;
 foreach ($_POST as $key => $value) //Get Categories Checked
@@ -22,7 +21,7 @@ $listhtml = $results[1];
 echo GetHeader($kmlfile);
 
 //GEO CODE AGENCIES
-$sql = "SELECT * FROM Agency WHERE latitude=0 AND address1!=''";
+$sql = "SELECT * FROM agency WHERE latitude=0 AND address1!=''";
 $result = mysql_query($sql);
 $A = new Agencies();
 while ($row = mysql_fetch_array($result)) {
@@ -40,7 +39,7 @@ while ($row = mysql_fetch_array($result)) {
 <div class="btn-group" data-toggle="buttons" id="category-options">
 <?php
 $C = new Categories();
-$cats = $C->getAllCategories();
+$cats = $C->getAllCategories("id",TRUE);
 foreach ($cats as $cat) {
 	$checkboxVar = "catid" . $cat[id];
 	$labelVar = "label" . $cat[id];

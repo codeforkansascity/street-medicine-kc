@@ -83,14 +83,14 @@ if ($H) {
 	}
 
 	//find number of rows for each column
-	foreach ($hours as $hour) {
+	if($hours) { foreach ($hours as $hour) {
 		$counts[$hour['dayOfWeek_id'] - 1] += 1;
-	}
+	} }
 
 	$rowCount = 0;
-	foreach ($counts as $c) {
+	if($counts) { foreach ($counts as $c) {
 		$rowCount = max($rowCount, $c);
-	}
+	} }
 	if ($agency_id == 0) {
 		$rowCount = 2;
 	} else {
@@ -104,14 +104,14 @@ if ($H) {
 		}
 	}
 
-	foreach ($hours as $hour) {
+	if($hours) { foreach ($hours as $hour) {
 		for ($i = 0; $i < $rowCount; $i++) {
 			if ($times[$i][$hour['dayOfWeek_id'] - 1] == "") {
 				$times[$i][$hour['dayOfWeek_id'] - 1] = $hour;
 				break;
 			}
 		}
-	}
+	} }
 }
 
 $D = new Days();
@@ -119,9 +119,9 @@ $days = $D->getAllDays();
 echo "<table class=\"table\">
   <thead>
     <tr>";
-foreach ($days as $day) {
+if($days) { foreach ($days as $day) {
 	echo "<th>" . $day['longName'] . "</th>";
-}
+} }
 echo "   </tr>
   </thead>
   <tbody>";
@@ -167,7 +167,7 @@ if ($subCats) {
 //Next, display an accordion of the categories & subcategories, with activated subcategories checked
 $C = new Categories();
 $cats = $C->getAllCategories();
-foreach ($cats as $category) {
+if($cats) { foreach ($cats as $category) {
 	// var_dump($category);
 	echo "<div id='accordion' role='tablist' aria-multiselectable='true'>
 		<div class='panel panel-default'>
@@ -193,6 +193,7 @@ foreach ($cats as $category) {
 	</div><!--/accordion-->
 	<br />";
 } //End for each Category
+} //end if categories
 
 echo "<button type='submit' class='btn btn-primary'>Save and Continue</button></form>";
 

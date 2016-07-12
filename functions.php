@@ -112,11 +112,11 @@ gin="anonymous"></script>';
 }
 function GetSearchResults($catids = array()) {
 	require 'controller.php';
-	$sql = "SELECT DISTINCT t1.* FROM Agency AS t1, Agency_has_subCategories AS t2, subCategories AS t3 WHERE t1.id=t2.Agency_id AND t2.subCategories_id=t3.id AND (t1.latitude!=0 OR t1.longitude!=0) AND (";
+	$sql = "SELECT DISTINCT t1.* FROM agency AS t1, agency_has_subcategories AS t2, subcategory AS t3 WHERE t1.id=t2.agency_id AND t2.subcategories_id=t3.id AND (t1.latitude!=0 OR t1.longitude!=0) AND (";
 	$catssearched = 0;
 	for ($i = 0; $i < count($catids); $i++) {
 		if ($catids[$i] > 0) {
-			$sql .= "t3.categories_id='$catids[$i]' OR ";
+			$sql .= "t3.category_id='$catids[$i]' OR ";
 			$catssearched = 1;
 		}
 	}
@@ -129,7 +129,7 @@ function GetSearchResults($catids = array()) {
 	$kml = '<?xml version="1.0" encoding="UTF-8"?>
         <kml xmlns="http://www.opengis.net/kml/2.2">
         <Document>';
-	$sql2 = "SELECT * FROM categories";
+	$sql2 = "SELECT * FROM category";
 	$result2 = mysql_query($sql2);
 	while ($row2 = mysql_fetch_array($result2)) {
 		$kml .= '<Style id="category' . $row2[id] . '">
@@ -165,7 +165,7 @@ function GetSearchResults($catids = array()) {
 	return $filename . "<data>" . $list;
 }
 function GetCategoryPin($categid) {
-	$sql = "SELECT pinfile FROM categories WHERE id='$categid'";
+	$sql = "SELECT pinfile FROM category WHERE id='$categid'";
 	$result = mysql_query($sql);
 	if ($row = mysql_fetch_array($result)) {
 		return "http://homelesskc.gazelleincorporated.com/images/" . $row[0];
@@ -175,7 +175,7 @@ function GetCategoryPin($categid) {
 
 }
 function GetMainCategory($agencyid, $usecatids = array()) {
-	$sql = "SELECT t1.id,t1.category FROM categories AS t1, subCategories AS t2, Agency_has_subCategories AS t3 WHERE t1.id=t2.categories_id AND t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid'";
+	$sql = "SELECT t1.id,t1.category FROM category AS t1, subcategory AS t2, agency_has_subcategories AS t3 WHERE t1.id=t2.category_id AND t2.id=t3.subcategories_id AND t3.agency_id='$agencyid'";
 	if (count($usecatids) > 0) {
 		$sqlpiece = "";
 		for ($i = 0; $i < count($usecatids); $i++) {

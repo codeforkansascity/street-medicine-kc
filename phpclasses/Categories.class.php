@@ -11,13 +11,17 @@ class Categories {
 		        * Returns an array of all Categories
 		        *
 		        * @param  $orderby - Field by which to order (default: id)
+			* @param $pinfile - If TRUE only return ones that have a pinfile associated
+			*	with it (to make sure correct ones selected for I NEED search
 		        *
 		        * @return MySQL query result array
 	*/
-	function getAllCategories($orderby = "id") {
+	function getAllCategories($orderby = "id", $pinfile = FALSE) {
 		$db = new Db();
 		$dbconn = $db->connect();
-		$sql = "SELECT * FROM " . $this->table . " ORDER BY $orderby";
+		$sql = "SELECT * FROM " . $this->table;
+		if($pinfile) $sql.=" WHERE pinfile!=''";
+	   	$sql.=" ORDER BY $orderby";
 		$cats = $db->select($sql);
 		if ($db->error()) {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
