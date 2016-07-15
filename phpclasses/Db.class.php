@@ -12,12 +12,12 @@ class Db {
 	public function connect() {
 		// Try and connect to the database
 		if (!isset(self::$connection)) {
-			// echo "connecting...<br>";
 			// Load configuration as an array. Use the actual location of your configuration file
 			$config = parse_ini_file(dirname(__FILE__) . '/../dbconfig.ini');
+			echo "connecting...<br>";
 			self::$connection = mysql_connect($config['host'], $config['dbuser'], $config['dbpass']);
+			echo "connected<br>!";
 			mysql_select_db($config['dbname']);
-			// echo "connected<br>!";
 		}
 
 		// If connection was not successful, handle the error
