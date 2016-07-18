@@ -2,7 +2,6 @@
 require '../variables.php';
 require '../controller.php';
 require 'functions.php';
-echo $header;
 
 /* Process the Form Input */
 if ($_POST) {
@@ -78,9 +77,6 @@ if ($_POST) {
 //What about missing required fields of information?
 //using the required constraint on html input statements.
 
-echo ("<script>
-<!--
-location.replace(\"index.php\");
--->
-</script>");
+header("Location: form2.php?agency_id=$agency_id");
+
 ?>

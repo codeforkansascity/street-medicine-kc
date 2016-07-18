@@ -3,7 +3,15 @@ require '../variables.php';
 require '../controller.php';
 $db = new Db();
 echo $header;
-$agency_id = $_POST["id"];
+
+if($_GET["agency_id"])	//This agency was saved - show them a confirmation message at the top
+{
+   $saved=1; $agency_id=$_GET["agency_id"];
+}
+else
+{
+   $saved=0; $agency_id = $_POST["id"];
+}
 ?>
 
 <!--BEGIN CUSTOM CONTENT-->
@@ -12,6 +20,8 @@ $agency_id = $_POST["id"];
 	<h4>Fields marked with a * are required.</h4>
 </div>
 <?php
+if($saved)
+   echo "<p class=\"bg-success\">This agency's information has been saved! Continue editing this agency below or <a href=\"index.php\"><b>click here</b></a> to return to the main menu.</p>";
 
 if ($agency_id > 0) {
 	$A = new Agencies();
@@ -65,8 +75,8 @@ echo ">Kansas</label></span>&nbsp;&nbsp;&nbsp;<b>*Zip</b>&nbsp;<input type='text
 	</div>
 	<div class='form-group'>
 	<label for='first'>Name of Contact:</label>
-	<p><b>First:</b> <input type='text' id='first' name='first' size='20' value=\"$agency[first]\" placeholder=\"First Name\">&nbsp;&nbsp;&nbsp;
-	<b>Last:</b><input type='text' id='last' name='last' size='30' value=\"$agency[last]\" placeholder=\"Last Name\"></p>
+	<p><b>First:</b> <input type='text' id='first' name='first' size='20' value=\"$agency[contactFirst]\" placeholder=\"First Name\">&nbsp;&nbsp;&nbsp;
+	<b>Last:</b><input type='text' id='last' name='last' size='30' value=\"$agency[contactLast]\" placeholder=\"Last Name\"></p>
 	</div>
 	<div class='form-group'>
 	<p><b>Website:</b> <input type='url' name='website' class='form-control' value=\"$agency[website]\" placeholder=\"http://\" size='60'></p>
@@ -226,6 +236,7 @@ function hoursTable($agency_id, $subCat = 0) {
 		echo "</tr>";
 	}
 
+<<<<<<< HEAD
 	echo "</tbody></table>";
 }
 /*
@@ -236,4 +247,56 @@ hoursTable($agency_id, $subcat["id"]) . "
 </div>
 </div>
  */
+=======
+echo "</tbody></table>";
+/* THE CATEGORIES & SUBCATEGORIES */
+
+//Below, I'm going to incorporate the Categories class I've already written to pull out the available categories/subcategories
+
+//First, get the subCategories the Agency has activated
+$activatedSubcategories = [];
+if ($agency_id > 0) {
+	$subCats = $A->fetchActivatedAgencySubCategories($agency_id);
+}
+if ($subCats) {
+	foreach ($subCats as $subCat) {
+		array_push($activatedSubcategories, $subCat['id']);
+	}
+} else echo "NONE";
+
+//Next, display an accordion of the categories & subcategories, with activated subcategories checked
+$C = new Categories();
+$cats = $C->getAllCategories();
+if($cats) { foreach ($cats as $category) {
+	// var_dump($category);
+	echo "<div id='accordion' role='tablist' aria-multiselectable='true'>
+		<div class='panel panel-default'>
+			<div class='panel-heading' role='tab' id='headingOne'>
+				<h4 class='panel-title'>
+ 				<a data-toggle='collapse' data-parent='#accordion' href='#collapseOne' aria-expanded='true' aria-controls='collapse'" . $category['id'] . ">" . $category['category'] . "</a>
+				</h4>
+			</div>
+		</div><!--/panel-default-->
+		<div id='collapse" . $category['id'] . "'  class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" . $category['id'] . "'>";
+	//Show Subcategories of this Category:
+	$subcats = $C->getSubCategories($category['id']);
+	// var_dump($subcats);
+	if ($subcats) {
+		foreach ($subcats as $subcategory) {
+			echo "<div class='checkbox-inline'><input type='checkbox' name=subcat'" . $subcategory['id'] . "'";
+			if (in_array($subcategory['id'], $activatedSubcategories)) {
+				echo " checked";
+			}
+			echo ">" . $subcategory['subcategory'] . "</div>";
+		}}
+	echo "</div><!--/panel-collapse-->
+	</div><!--/accordion-->
+	<br />";
+} //End for each Category
+} //end if categories
+
+echo "<button type='submit' class='btn btn-primary'>Save and Continue</button></form>";
+
+echo $footer;
+>>>>>>> 8f1b7eca26f50dc8bcd26b4d63ba9ef5925da9a0
 ?>
