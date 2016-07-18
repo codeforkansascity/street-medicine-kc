@@ -3,7 +3,15 @@ require '../variables.php';
 require '../controller.php';
 $db = new Db();
 echo $header;
-$agency_id = $_POST["id"];
+
+if($_GET["agency_id"])	//This agency was saved - show them a confirmation message at the top
+{
+   $saved=1; $agency_id=$_GET["agency_id"];
+}
+else
+{
+   $saved=0; $agency_id = $_POST["id"];
+}
 ?>
 
 <!--BEGIN CUSTOM CONTENT-->
@@ -12,6 +20,8 @@ $agency_id = $_POST["id"];
 	<h4>Fields marked with a * are required.</h4>
 </div>
 <?php
+if($saved)
+   echo "<p class=\"bg-success\">This agency's information has been saved! Continue editing this agency below or <a href=\"index.php\"><b>click here</b></a> to return to the main menu.</p>";
 
 $H = new Hours();
 if ($agency_id > 0) {
@@ -66,8 +76,8 @@ echo ">Kansas</label></span>&nbsp;&nbsp;&nbsp;<b>*Zip</b>&nbsp;<input type='text
 	</div>
 	<div class='form-group'>
 	<label for='first'>Name of Contact:</label>
-	<p><b>First:</b> <input type='text' id='first' name='first' size='20' value=\"$agency[first]\" placeholder=\"First Name\">&nbsp;&nbsp;&nbsp;
-	<b>Last:</b><input type='text' id='last' name='last' size='30' value=\"$agency[last]\" placeholder=\"Last Name\"></p>
+	<p><b>First:</b> <input type='text' id='first' name='first' size='20' value=\"$agency[contactFirst]\" placeholder=\"First Name\">&nbsp;&nbsp;&nbsp;
+	<b>Last:</b><input type='text' id='last' name='last' size='30' value=\"$agency[contactLast]\" placeholder=\"Last Name\"></p>
 	</div>
 	<div class='form-group'>
 	<p><b>Website:</b> <input type='url' name='website' class='form-control' value=\"$agency[website]\" placeholder=\"http://\" size='60'></p>
@@ -156,13 +166,13 @@ echo "</tbody></table>";
 //First, get the subCategories the Agency has activated
 $activatedSubcategories = [];
 if ($agency_id > 0) {
-	$subCats = $A->fetchActivatedAgencySubcategories($agency_id);
+	$subCats = $A->fetchActivatedAgencySubCategories($agency_id);
 }
 if ($subCats) {
 	foreach ($subCats as $subCat) {
 		array_push($activatedSubcategories, $subCat['id']);
 	}
-}
+} else echo "NONE";
 
 //Next, display an accordion of the categories & subcategories, with activated subcategories checked
 $C = new Categories();

@@ -3,7 +3,7 @@ class Agencies {
 
 	public $table = "agency";
 	public $subCatLinkTable = "agency_has_subcategories";
-	public $subCatTable = "subCategory";
+	public $subCatTable = "subcategory";
 	public $catTable = "category";
 
 	public function __construct() {
@@ -99,7 +99,7 @@ class Agencies {
 	function refreshSubCatLinkTable($agency_id, $subcategories_id) {
 		$db = new Db();
 		$dbconn = $db->connect();
-		$sql = "INSERT INTO " . $this->subCatLinkTable . " VALUES($agency_id, $subcategories_id);";
+		$sql = "INSERT INTO " . $this->subCatLinkTable . " VALUES ($agency_id, $subcategories_id);";
 		$db->query($sql);
 		if ($db->error()) {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
@@ -291,7 +291,7 @@ class Agencies {
 			return FALSE;
 		}
 
-		// echo "<br>SQL: " . $sql . "<br>";
+		 //echo "<br>SQL: " . $sql . "<br>";
 	}
 
 	/*
