@@ -14,18 +14,15 @@ class Db {
 		if (!isset(self::$connection)) {
 			// Load configuration as an array. Use the actual location of your configuration file
 			$config = parse_ini_file(dirname(__FILE__) . '/../dbconfig.ini');
-			echo "connecting...<br>";
-			self::$connection = mysql_connect($config['host'], $config['dbuser'], $config['dbpass']);
-			echo "connected<br>!";
-			mysql_select_db($config['dbname']);
+			// Create connection
+			self::$connection = new mysqli($config['host'], $config['dbuser'], $config['dbpass'], $config['dbname']);
+
+// Check connection
+			if (self::$connection->connect_error) {
+				die("Connection failed: " . self::$connection->connect_error);
+			}
 		}
 
-		// If connection was not successful, handle the error
-		if (self::$connection === false) {
-			// Handle error - notify administrator, log to a file, show an error screen, etc.
-			echo ("connection failed<br>" . mysql_error());
-			return false;
-		}
 		return self::$connection;
 	}
 
@@ -38,10 +35,8 @@ class Db {
 	public function query($query) {
 		// Connect to the database
 		$connection = $this->connect();
-
 		// Query the database
-		$result = mysql_query($query);
-
+		$result = mysqli_query($connection, $query);
 		return $result;
 	}
 
@@ -53,12 +48,11 @@ class Db {
 	 */
 	public function select($query) {
 		$rows = array();
-		$result = mysql_query($query);
+		$result = $this->query($query);
 		if ($result === false) {
 			return false;
 		}
-		while ($row = mysql_fetch_assoc($result)) {
-			//7.0:$result -> fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$rows[] = $row;
 		}
 		return $rows;

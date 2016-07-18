@@ -12,6 +12,7 @@ if ($_FILES) {
 	}
 }
 $config = parse_ini_file('dbconfig.ini');
+// var_dump($config);
 spl_autoload_register(function ($class_name) {
 	include 'phpclasses/' . $class_name . '.class.php';
 });

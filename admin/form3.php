@@ -63,7 +63,7 @@ if ($_POST) {
 			$j = substr($key, 7, 1);
 			$D = new DateTime($value);
 			$oTime = $D->format($f);
-			$k2 = "close-$i+$j";
+			$k2 = str_replace("open+", "close+", $key);
 			$D = new DateTime($_POST["$k2"]);
 			$cTime = $D->format($f);
 			$H->insertHoursForAgency($oTime, $cTime, $j + 1, $agency_id);

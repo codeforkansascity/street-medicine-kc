@@ -16,6 +16,7 @@ class Agencies {
 		        *
 		        * @return associative array
 	*/
+
 	function fetchAgency($agencyid) {
 		if (!$agencyid) {
 			return FALSE;
@@ -47,9 +48,10 @@ class Agencies {
 		        *
 		        * @return string
 	*/
+
 	function getAgencyDescription($agencyid) {
 		$db = new Db();
-		$dbconn = $db->connect();
+		// $dbconn = $db->connect();
 		$sql = "SELECT * FROM " . $this->table . " WHERE id='$agencyid'";
 		$agencies = $db->select($sql);
 
@@ -96,6 +98,7 @@ class Agencies {
 		        *
 		        * @return MySQL query result array
 	*/
+
 	function refreshSubCatLinkTable($agency_id, $subcategories_id) {
 		$db = new Db();
 		$dbconn = $db->connect();
@@ -115,6 +118,7 @@ class Agencies {
 			*
 		     	* @return MySQL query result
 	*/
+
 	function fetchAgencies($orderby = "name ASC") {
 		$db = new Db();
 		$dbconn = $db->connect();
@@ -140,6 +144,7 @@ class Agencies {
 		*
 		* @return formatted string
 	*/
+
 	function formatPhone($phone) {
 		$phone = preg_replace("/[^0-9]/", "", $phone);
 		$phone = "(" . substr($phone, 0, 3) . ") " . substr($phone, 3, 3) . "-" . substr($phone, 6, 4);
@@ -155,6 +160,7 @@ class Agencies {
 		*
 		* @return 	MySQL query result
 	*/
+
 	function fetchActivatedAgencySubCategories($agencyid = 0, $categoryid = 0, $orderby = "subCategory") {
 
 		if ($agencyid == 0) {
@@ -181,13 +187,14 @@ class Agencies {
 	}
 
 	/*
-		* Determine if an Agency is marked as offering services in a specific subCategory
-		*
-		* @param	$agencyid (Agency.id)
-		* @param	$subcatid (subCategories.id)
-		*
-		* @return	boolean
+			* Determine if an Agency is marked as offering services in a specific subCategory
+			*
+			* @param	$agencyid (Agency.id)
+			* @param	$subcatid (subCategories.id)
+			*
+			* @return	boolean
 	*/
+
 	function agencyHasSubCategory($agencyid, $subcatid) {
 		if (!$agencyid || !$subcatid) {
 			return FALSE;
@@ -213,12 +220,12 @@ class Agencies {
 	}
 
 	/*
-		        * Return an array of the (main) categories an Agency belongs to
-		        *
-		        * @param        $agencyid (Agency.id)
-		        * @param        $orderby (default order by is category name)
-		        *
-		        * @return       MySQL query result
+			        * Return an array of the (main) categories an Agency belongs to
+			        *
+			        * @param        $agencyid (Agency.id)
+			        * @param        $orderby (default order by is category name)
+			        *
+			        * @return       MySQL query result
 	*/
 	function fetchActivatedAgencyCategories($agencyid = 0, $orderby = "category") {
 
@@ -242,13 +249,13 @@ class Agencies {
 	}
 
 	/*
-		* Insert new agency into database
-		* Assumption: All data has been sanitized/prepped
-		*
-		* @param
-		* @param
-		*
-		* @return	mysql_insert_id() or FALSE if error
+		 * Insert new agency into database
+		 * Assumption: All data has been sanitized/prepped
+		 *
+		 * @param
+		 * @param
+		 *
+		 * @return	mysql_insert_id() or FALSE if error
 	*/
 	function insert_agency($name, $description, $address1, $address2, $city, $state, $zip,
 		$phone, $emergencyPhone, $fax, $website, $contactFirst, $contactLast, $email, $free) {
@@ -269,10 +276,10 @@ class Agencies {
 	}
 
 	/*
-		* Update existing agency's info in the database
-		* Assumption: All data has been sanitized/prepped
-		*
-		* @return	boolean
+		 * Update existing agency's info in the database
+		 * Assumption: All data has been sanitized/prepped
+		 *
+		 * @return	boolean
 	*/
 	function update_agency($id, $agency, $description, $address1, $address2, $city, $state, $zip,
 		$phone, $emergencyPhone, $fax, $website, $contactFirst, $contactLast, $email, $free) {
@@ -281,8 +288,8 @@ class Agencies {
 		$dbconn = $db->connect();
 
 		$sql = "UPDATE " . $this->table . " SET name='$agency', description='$description', address1='$address1', address2='$address2', city='$city', state='$state',
-        	zip='$zip', phone='$phone', emergencyPhone='$emergencyPhone', fax='$fax', website='$website', contactFirst='$first',
-        	contactLast='$last', email='$email', free=$free WHERE id=$id;";
+	zip='$zip', phone='$phone', emergencyPhone='$emergencyPhone', fax='$fax', website='$website', contactFirst='$first',
+	contactLast='$last', email='$email', free=$free WHERE id=$id;";
 
 		$db->query($sql);
 
@@ -295,10 +302,10 @@ class Agencies {
 	}
 
 	/*
-		        * Use Google Maps API to grab the coordinates for an Agency's location
-		        *
-			* @param	agencyid
-		        * @return       "$lat,$lng" or FALSE
+		 * Use Google Maps API to grab the coordinates for an Agency's location
+		 *
+		 * @param	agencyid
+		 * @return       "$lat,$lng" or FALSE
 	*/
 	function getCoordinates($agencyid) {
 		$db = new Db();
@@ -332,12 +339,12 @@ class Agencies {
 	}
 
 	/*
-		* Check to see if an Agency is in a certain Category.
-		*
-		* @param	agency id
-		* @param	category id
-		*
-		* @return	boolean
+		 * Check to see if an Agency is in a certain Category.
+		 *
+		 * @param	agency id
+		 * @param	category id
+		 *
+		 * @return	boolean
 	*/
 	function isInCategory($agencyid, $categid) {
 		$sql = "SELECT * FROM subCategories AS t2, Agency_has_subCategories AS t3 WHERE t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid' AND t2.categories_id='$categid'";
@@ -358,5 +365,6 @@ class Agencies {
 			return FALSE;
 		}
 	}
+
 } //End Class Definition
 ?>

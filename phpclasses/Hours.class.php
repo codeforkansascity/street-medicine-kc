@@ -33,10 +33,10 @@ class Hours {
 		            *
 		            * @return MySQL query result array
 	*/
-	function getHoursForAgency($agency_id, $orderby = "dayOfWeek_id, openTime") {
+	function getHoursForAgency($agency_id, $subcategory_id = 0, $orderby = "dayOfWeek_id, openTime") {
 		$db = new Db();
 		$dbconn = $db->connect();
-		$sql = "SELECT * FROM " . $this->table . " WHERE agency_id = $agency_id ORDER BY $orderby";
+		$sql = "SELECT * FROM " . $this->table . " WHERE agency_id = $agency_id AND subcategory_id = $subcategory_id ORDER BY $orderby";
 		$hours = $db->select($sql);
 		if ($db->error()) {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";

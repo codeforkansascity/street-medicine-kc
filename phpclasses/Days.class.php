@@ -16,12 +16,12 @@ class Days {
 		$db = new Db();
 		$dbconn = $db->connect();
 		$sql = "SELECT * FROM " . $this->table . " ORDER BY $orderby";
-		$hours = $db->select($sql);
+		$days = $db->select($sql);
 		if ($db->error()) {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
 			return FALSE;
 		}
-		return $hours;
+		return $days;
 	}
 }
 ?>

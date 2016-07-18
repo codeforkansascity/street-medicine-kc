@@ -18,7 +18,7 @@ $A = new Agencies();
 $agencies = $A->fetchAgencies();
 ?>
 		<select class="c-select" name="id">
-				<option value="0">New Agency Record</option>
+			<option value="0">New Agency Record</option>
 <?php
 foreach ($agencies as $agency) {
 	$agencyName = $agency["name"];

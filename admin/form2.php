@@ -13,7 +13,6 @@ $agency_id = $_POST["id"];
 </div>
 <?php
 
-$H = new Hours();
 if ($agency_id > 0) {
 	$A = new Agencies();
 	$agency = $A->fetchAgency($agency_id);
@@ -75,22 +74,99 @@ echo ">Kansas</label></span>&nbsp;&nbsp;&nbsp;<b>*Zip</b>&nbsp;<input type='text
 	<div class='form-group'>
 	<p><b>*Hours:</b></p>
 	</div>";
-if ($H) {
-	$hours = $H->getHoursForAgency($agency_id);
+
+hoursTable($agency_id);
+
+/* THE CATEGORIES & SUBCATEGORIES */
+
+//Below, I'm going to incorporate the Categories class I've already written to pull out the available categories/subcategories
+
+//First, get the subCategories the Agency has activated
+$activatedSubcategories = [];
+if ($agency_id > 0) {
+	$subCats = $A->fetchActivatedAgencySubCategories($agency_id);
+}
+if ($subCats) {
+	foreach ($subCats as $subCat) {
+		array_push($activatedSubcategories, $subCat['id']);
+	}
+}
+
+//Next, display an accordion of the categories & subcategories, with activated subcategories checked
+
+// ///////////////
+$C = new Categories();
+$cats = $C->getAllCategories();
+if ($cats) {
+	echo
+		"<div class=\"panel-group\" id=\"accordion\">";
+	foreach ($cats as $category) {
+		echo
+			"<div class=\"panel panel-default\">
+			<div class=\"panel-heading\">
+				<h4 class=\"panel-title\">
+					<a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" . $category["id"] . "\">" . $category["category"] . "</a>
+				</h4>
+			</div>
+			<div id=\"collapse" . $category["id"] . "\" class=\"panel-collapse collapse \">
+				<div class=\"panel-body\">
+					<div class=\"panel-group\" id=\"accordion" . $category["id"] . "\">";
+//Show Subcategories of this Category:
+		$subcats = $C->getSubCategories($category['id']);
+		foreach ($subcats as $subcat) {
+			echo "
+						<div class=\"panel panel-default\">
+							<div class=\"panel-heading\">
+								<h5 class=\"panel-title\">
+									<div class=\"checkbox\">
+										<input type=\"checkbox\" name=\"subcat" . $subcat["id"] . "\"";
+			if (in_array($subcat['id'], $activatedSubcategories)) {echo " checked";}
+			echo ">" . $subcat["subcategory"];
+			echo "</div>
+								</h5>
+							</div>
+						</div>
+<div class=\"container\">
+<button type=\"button\" class=\"btn btn-info\" data-toggle=\"collapse\" data-target=\"#collapse" . $category["id"] . $subcategory["id"] . "\">Edit Hours</button>
+<div id=\"collapse" . $category["id"] . $subcategory["id"] . "\" class=\"collapse\"> " .
+			hoursTable($agency_id, $subcat["id"]) . "
+</div>
+</div>
+						";
+		}
+		echo "
+					</div>
+				</div>
+			</div>
+		</div>";
+	}
+	echo "
+	</div>";
+}
+
+echo "<button type='submit' class='btn btn-primary'>Save and Continue</button></form>";
+
+echo $footer;
+
+function hoursTable($agency_id, $subCat = 0) {
+	$H = new Hours();
+	$hours = $H->getHoursForAgency($agency_id, $subCat);
 	$counts = [];
 	for ($i = 0; $i < 7; $i++) {
 		$counts[$i] = 0;
 	}
 
 	//find number of rows for each column
-	if($hours) { foreach ($hours as $hour) {
-		$counts[$hour['dayOfWeek_id'] - 1] += 1;
-	} }
+	if ($hours) {
+		foreach ($hours as $hour) {
+			$counts[$hour['dayOfWeek_id'] - 1] += 1;
+		}}
 
 	$rowCount = 0;
-	if($counts) { foreach ($counts as $c) {
-		$rowCount = max($rowCount, $c);
-	} }
+	if ($counts) {
+		foreach ($counts as $c) {
+			$rowCount = max($rowCount, $c);
+		}}
 	if ($agency_id == 0) {
 		$rowCount = 2;
 	} else {
@@ -104,98 +180,60 @@ if ($H) {
 		}
 	}
 
-	if($hours) { foreach ($hours as $hour) {
-		for ($i = 0; $i < $rowCount; $i++) {
-			if ($times[$i][$hour['dayOfWeek_id'] - 1] == "") {
-				$times[$i][$hour['dayOfWeek_id'] - 1] = $hour;
-				break;
+	if ($hours) {
+		foreach ($hours as $hour) {
+			for ($i = 0; $i < $rowCount; $i++) {
+				if ($times[$i][$hour['dayOfWeek_id'] - 1] == "") {
+					$times[$i][$hour['dayOfWeek_id'] - 1] = $hour;
+					break;
+				}
 			}
 		}
-	} }
-}
+	}
 
-$D = new Days();
-$days = $D->getAllDays();
-echo "<table class=\"table\">
+	$D = new Days();
+	$days = $D->getAllDays();
+	echo "<table class=\"table\">
   <thead>
     <tr>";
-if($days) { foreach ($days as $day) {
-	echo "<th>" . $day['longName'] . "</th>";
-} }
-echo "   </tr>
+	if ($days) {
+		foreach ($days as $day) {
+			echo "<th>" . $day['longName'] . "</th>";
+		}}
+	echo "   </tr>
   </thead>
   <tbody>";
 
-for ($i = 0; $i < $rowCount; $i++) {
-	echo "<tr>";
-	for ($j = 0; $j < 7; $j++) {
-		$td = "<td><input size='6' name='open-$i+$j' zxcvb ></input>&nbsp;<input size='6' name='close-$i+$j' qwert ></input></td>";
-		$timeItem = $times[$i][$j];
-		if ($i == 0) {
-			$td = str_replace("put size", "put required size", $td);
-		}
-		if ($timeItem == "") {
-			$td = str_replace("zxcvb", "placeholder=\"09:30\"", $td);
-			$td = str_replace("qwert", "placeholder=\"16:30\"", $td);
-		} else {
-			$ot = substr($timeItem['openTime'], 0, 5);
-			$ct = substr($timeItem['closeTime'], 0, 5);
-			$td = str_replace("zxcvb", "value=\"" . $ot . "\"", $td);
-			$td = str_replace("qwert", "value=\"" . $ct . "\"", $td);
-		}
-		echo $td;
-	}
-	echo "</tr>";
-}
-
-echo "</tbody></table>";
-/* THE CATEGORIES & SUBCATEGORIES */
-
-//Below, I'm going to incorporate the Categories class I've already written to pull out the available categories/subcategories
-
-//First, get the subCategories the Agency has activated
-$activatedSubcategories = [];
-if ($agency_id > 0) {
-	$subCats = $A->fetchActivatedAgencySubcategories($agency_id);
-}
-if ($subCats) {
-	foreach ($subCats as $subCat) {
-		array_push($activatedSubcategories, $subCat['id']);
-	}
-}
-
-//Next, display an accordion of the categories & subcategories, with activated subcategories checked
-$C = new Categories();
-$cats = $C->getAllCategories();
-if($cats) { foreach ($cats as $category) {
-	// var_dump($category);
-	echo "<div id='accordion' role='tablist' aria-multiselectable='true'>
-		<div class='panel panel-default'>
-			<div class='panel-heading' role='tab' id='headingOne'>
-				<h4 class='panel-title'>
- 				<a data-toggle='collapse' data-parent='#accordion' href='#collapseOne' aria-expanded='true' aria-controls='collapse'" . $category['id'] . ">" . $category['category'] . "</a>
-				</h4>
-			</div>
-		</div><!--/panel-default-->
-		<div id='collapse" . $category['id'] . "'  class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" . $category['id'] . "'>";
-	//Show Subcategories of this Category:
-	$subcats = $C->getSubCategories($category['id']);
-	// var_dump($subcats);
-	if ($subcats) {
-		foreach ($subcats as $subcategory) {
-			echo "<div class='checkbox-inline'><input type='checkbox' name=subcat'" . $subcategory['id'] . "'";
-			if (in_array($subcategory['id'], $activatedSubcategories)) {
-				echo " checked";
+	for ($i = 0; $i < $rowCount; $i++) {
+		echo "<tr>";
+		for ($j = 0; $j < 7; $j++) {
+			$td = "<td><input size='6' name='open+$i+$j+subCat' zxcvb ></input>&nbsp;<input size='6' name='close+$i+$j+subCat' qwert ></input></td>";
+			$timeItem = $times[$i][$j];
+			if ($i == 0 && $subCat == 0 && $j < 5) {
+				$td = str_replace("put size", "put required size", $td);
 			}
-			echo ">" . $subcategory['subcategory'] . "</div>";
-		}}
-	echo "</div><!--/panel-collapse-->
-	</div><!--/accordion-->
-	<br />";
-} //End for each Category
-} //end if categories
+			if ($timeItem == "") {
+				$td = str_replace("zxcvb", "placeholder=\"09:30\"", $td);
+				$td = str_replace("qwert", "placeholder=\"16:30\"", $td);
+			} else {
+				$ot = substr($timeItem['openTime'], 0, 5);
+				$ct = substr($timeItem['closeTime'], 0, 5);
+				$td = str_replace("zxcvb", "value=\"" . $ot . "\"", $td);
+				$td = str_replace("qwert", "value=\"" . $ct . "\"", $td);
+			}
+			echo $td;
+		}
+		echo "</tr>";
+	}
 
-echo "<button type='submit' class='btn btn-primary'>Save and Continue</button></form>";
-
-echo $footer;
+	echo "</tbody></table>";
+}
+/*
+<div class=\"container\">
+<button type=\"button\" class=\"btn btn-info\" data-toggle=\"collapse\" data-target=\"#collapse" . $category["id"] . $subcategory["id"] . "\">Edit Hours</button>
+<div id=\"collapse" . $category["id"] . $subcategory["id"] . "\" class=\"collapse\"> " .
+hoursTable($agency_id, $subcat["id"]) . "
+</div>
+</div>
+ */
 ?>

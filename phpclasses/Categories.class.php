@@ -20,8 +20,11 @@ class Categories {
 		$db = new Db();
 		$dbconn = $db->connect();
 		$sql = "SELECT * FROM " . $this->table;
-		if($pinfile) $sql.=" WHERE pinfile!=''";
-	   	$sql.=" ORDER BY $orderby";
+		if ($pinfile) {
+			$sql .= " WHERE pinfile!=''";
+		}
+
+		$sql .= " ORDER BY $orderby";
 		$cats = $db->select($sql);
 		if ($db->error()) {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
