@@ -5,7 +5,7 @@ $db = new Db();
 echo $header;
 
 if($_GET["agency_id"])	//This agency was saved - show them a confirmation message at the top
-{
+{ 
    $saved=1; $agency_id=$_GET["agency_id"];
 }
 else
