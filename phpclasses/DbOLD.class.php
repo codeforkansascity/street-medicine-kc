@@ -1,5 +1,5 @@
 <?php
-//THIS VERSION IS FOR NEW PHP!!!!!
+//THIS VERSION IS FOR OLD PHP!!!!!
 //Database Class to perform standard DB operations
 class Db {
 	// The database connection
@@ -16,7 +16,9 @@ class Db {
 			// Load configuration as an array. Use the actual location of your configuration file
 			$config = parse_ini_file(dirname(__FILE__) . '/../dbconfig.ini');
 			// Create connection
-			self::$connection = new mysqli($config['host'], $config['dbuser'], $config['dbpass'], $config['dbname']);
+			//self::$connection = new mysqli($config['host'], $config['dbuser'], $config['dbpass'], $config['dbname']);
+			self::$connection = mysql_connect($config['host'], $config['dbuser'], $config['dbpass']); //KEEP IN FOR WEBSERVER (JUST COMMENT OUT)
+			mysql_select_db($config['dbname']); //KEEP IN FOR WEBSERVER (JUST COMMENT OUT)
 
 // Check connection
 			if (self::$connection->connect_error) {
@@ -37,7 +39,8 @@ class Db {
 		// Connect to the database
 		$connection = $this->connect();
 		// Query the database
-		$result = mysqli_query($connection, $query);
+		//$result = mysqli_query($connection, $query);
+                $result = mysql_query($query);	//KEEP IN FOR WEBSERVER (JUST COMMENT OUT)
 		return $result;
 	}
 
@@ -49,11 +52,13 @@ class Db {
 	 */
 	public function select($query) {
 		$rows = array();
-		$result = $this->query($query);
+		//$result = $this->query($query);
+	        $result = mysql_query($query);
 		if ($result === false) {
 			return false;
 		}
-		while ($row = $result->fetch_assoc()) {
+		//while ($row = $result->fetch_assoc()) {
+		while ($row = mysql_fetch_assoc($result)) {	//KEEP IN FOR WEBSERVER (JUST COMMENT OUT)
 			$rows[] = $row;
 		}
 		return $rows;
