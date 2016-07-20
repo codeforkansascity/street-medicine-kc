@@ -80,6 +80,9 @@ echo ">Kansas</label></span>&nbsp;&nbsp;&nbsp;<b>*Zip</b>&nbsp;<input type='text
 	<b>Last:</b><input type='text' id='last' name='last' size='30' value=\"$agency[contactLast]\" placeholder=\"Last Name\"></p>
 	</div>
 	<div class='form-group'>
+	</div>";
+// contacts here
+echo "<div class='form-group'>
 	<p><b>Website:</b> <input type='url' name='website' class='form-control' value=\"$agency[website]\" placeholder=\"http://\" size='60'></p>
 	</div>
 	<div class='form-group'>
@@ -107,11 +110,11 @@ if ($subCats) {
 $C = new Categories();
 $cats = $C->getAllCategories();
 if ($cats) {
-	echo
-		"<div class=\"panel-group\" id=\"accordion\">";
+	echo "
+	<div class=\"panel-group\" id=\"accordion\">";
 	foreach ($cats as $category) {
-		echo
-			"<div class=\"panel panel-default\">
+		echo "
+			<div class=\"panel panel-default\">
 			<div class=\"panel-heading\">
 				<h4 class=\"panel-title\">
 					<a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" . $category["id"] . "\">" . $category["category"] . "</a>
@@ -119,28 +122,32 @@ if ($cats) {
 			</div>
 			<div id=\"collapse" . $category["id"] . "\" class=\"panel-collapse collapse \">
 				<div class=\"panel-body\">
-					<div class=\"panel-group\" id=\"accordion" . $category["id"] . "\">";
+					<div class=\"panel-group\" id=\"accordion" . $category["id"] . "\"  data-parent=\"#accordion" . $category["id"] . "\">";
 //Show Subcategories of this Category:
 		$subcats = $C->getSubCategories($category['id']);
 		foreach ($subcats as $subcat) {
 			echo "
 						<div class=\"panel panel-default\">
 							<div class=\"panel-heading\">
-								<h5 class=\"panel-title\">
+								<div class=\"panel-title\">
 									<div class=\"checkbox\">
 										<input type=\"checkbox\" name=\"subcat" . $subcat["id"] . "\"";
 			if (in_array($subcat['id'], $activatedSubcategories)) {echo " checked";}
-			echo ">" . $subcat["subcategory"];
-			echo "</div>
-								</h5>
+			echo "><a
+			data-toggle=\"collapse\"
+			data-parent=\"#accordion" . $category["id"] . "\"
+			href=\"#collapse" . $category["id"] . $subcat["id"] . "\">" . $subcat["subcategory"] . "
+				</a>
+									</div>
+								</div>
+							</div>
+							<div class='panel-collapse collapse' id=\"collapse" . $category["id"] . $subcat["id"] . "\" >
+  								<div class='panel-body'>";
+			hoursTable($agency_id, $category["id"], $subcat["id"]);
+			echo "
+								</div>
 							</div>
 						</div>
-<div class=\"container\">
-<button type=\"button\" class=\"btn btn-info\" data-toggle=\"collapse\" data-target=\"#collapse" . $category["id"] . $subcategory["id"] . "\">Edit Hours</button>
-<div id=\"collapse" . $category["id"] . $subcategory["id"] . "\" class=\"collapse\"> " .
-			hoursTable($agency_id, $subcat["id"]) . "
-</div>
-</div>
 						";
 		}
 		echo "
@@ -157,10 +164,10 @@ echo "<button type='submit' class='btn btn-primary'>Save and Continue</button></
 
 echo $footer;
 
-function hoursTable($agency_id, $subCat = 0) {
+function hoursTable($agency_id, $category_id = 0, $subcategory_id = 0) {
 	if ($agency_id) {
 		$H = new Hours();
-		$hours = $H->getHoursForAgency($agency_id, $subCat);
+		$hours = $H->getHoursForAgency($agency_id, $subcategory_id);
 		$counts = [];
 		for ($i = 0; $i < 7; $i++) {
 			$counts[$i] = 0;
@@ -203,24 +210,33 @@ function hoursTable($agency_id, $subCat = 0) {
 
 		$D = new Days();
 		$days = $D->getAllDays();
-		echo "<table class=\"table\">
-  <thead>
-    <tr>";
+		echo "
+				<table>
+  					<thead>
+    					<tr>";
 		if ($days) {
 			foreach ($days as $day) {
 				echo "<th>" . $day['longName'] . "</th>";
-			}}
-		echo "   </tr>
-  </thead>
-  <tbody>";
+			}
+		}
+		echo "
+						</tr>
+  					</thead>
+  					<tbody>";
 
 		for ($i = 0; $i < $rowCount; $i++) {
-			echo "<tr>";
+			echo "
+						<tr>";
 			for ($j = 0; $j < 7; $j++) {
-				$td = "<td><input size='6' name='open+$i+$j+subCat' zxcvb ></input>&nbsp;<input size='6' name='close+$i+$j+subCat' qwert ></input></td>";
+				$td = "
+							<td>
+								<input size='6' name='open+$i+$j+$subcategory_id'  zxcvb ></input>
+								<input size='6' name='close+$i+$j+$subcategory_id' qwert ></input>
+								&nbsp;&nbsp;
+							</td>";
 				$timeItem = $times[$i][$j];
-				if ($i == 0 && $subCat == 0 && $j < 5) {
-					$td = str_replace("put size", "put required size", $td);
+				if ($i == 0 && $subcategory_id == 0 && $j < 5) {
+					$td = str_replace(" size=", " required size=", $td);
 				}
 				if ($timeItem == "") {
 					$td = str_replace("zxcvb", "placeholder=\"09:30\"", $td);
@@ -233,12 +249,13 @@ function hoursTable($agency_id, $subCat = 0) {
 				}
 				echo $td;
 			}
-			echo "</tr>";
+			echo "
+						</tr>";
 		}
 
-		echo "</tbody></table>";
+		echo "
+					</tbody>
+				</table>";
 	}
 }
-
-echo $footer;
 ?>

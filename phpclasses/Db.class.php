@@ -28,8 +28,6 @@ class Db {
 					echo ("Connection failed: " . self::$connection->connect_error);
 				}
 			}
-
-// Check connection
 		}
 		return self::$connection;
 	}
@@ -45,9 +43,9 @@ class Db {
 		$connection = $this->connect();
 		// Query the database
 		if (version_compare(phpversion(), '5.6.10', '<')) {
-			$result = mysql_query('SELECT * WHERE 1=1');
+			$result = mysql_query($query);
 			if (!$result) {
-				die('Invalid query: ' . mysql_error());
+				echo ('Invalid query: ' . mysql_error());
 			} else {
 				// do nothing
 			}
@@ -72,6 +70,7 @@ class Db {
 		}
 		if (version_compare(phpversion(), '5.6.10', '<')) {
 			while ($row = mysql_fetch_assoc($result)) {
+				$rows[] = $row;
 			}
 		} else {
 			while ($row = $result->fetch_assoc()) {

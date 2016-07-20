@@ -58,16 +58,17 @@ if ($_POST) {
 
 	foreach ($_POST as $key => $value) {
 		if (preg_match("/open/", $key) && $value != "") {
-			$i = substr($key, 5, 1);
 			$j = substr($key, 7, 1);
+			$subcategory_id = substr($key, 9);
+			$subcategory_id = preg_replace("/[^0-9]/", "", $subcategory_id);
 			$D = new DateTime($value);
 			$oTime = $D->format($f);
 			$k2 = str_replace("open+", "close+", $key);
 			$D = new DateTime($_POST["$k2"]);
 			$cTime = $D->format($f);
-			$H->insertHoursForAgency($oTime, $cTime, $j + 1, $agency_id);
+			$H->insertHoursForAgency($oTime, $cTime, $j + 1, $agency_id, $subcategory_id);
 		} else if (preg_match("/subcat/", $key) && $value != "") {
-			$subcategory_id = substr($key, 7);
+			$subcategory_id = substr($key, 6);
 			$subcategory_id = preg_replace("/[^0-9]/", "", $subcategory_id);
 			$A->refreshSubCatLinkTable($agency_id, $subcategory_id);
 		} //if
