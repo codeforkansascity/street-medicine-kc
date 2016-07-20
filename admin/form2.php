@@ -133,20 +133,32 @@ if ($cats) {
 									<div class=\"checkbox\">
 										<input type=\"checkbox\" name=\"subcat" . $subcat["id"] . "\"";
 			if (in_array($subcat['id'], $activatedSubcategories)) {echo " checked";}
-			echo "><a
-			data-toggle=\"collapse\"
-			data-parent=\"#accordion" . $category["id"] . "\"
-			href=\"#collapse" . $category["id"] . $subcat["id"] . "\">" . $subcat["subcategory"] . "
-				</a>
+			echo ">";
+			if (strlen($category["pinfile"]) > 4) {
+				echo "
+											<a
+												data-toggle=\"collapse\"
+												data-parent=\"#accordion" . $category["id"] . "\"
+												href=\"#collapse" . $category["id"] . $subcat["id"] . "\">" . $subcat["subcategory"] . "
+											</a>";
+			} else {
+				echo $subcat["subcategory"];
+			}
+			echo "
 									</div>
 								</div>
-							</div>
+							</div>";
+			if (strlen($category["pinfile"]) > 4) {
+
+				echo "
 							<div class='panel-collapse collapse' id=\"collapse" . $category["id"] . $subcat["id"] . "\" >
   								<div class='panel-body'>";
-			hoursTable($agency_id, $category["id"], $subcat["id"]);
-			echo "
+				hoursTable($agency_id, $category["id"], $subcat["id"]);
+				echo "
 								</div>
-							</div>
+							</div>";
+			}
+			echo "
 						</div>
 						";
 		}
