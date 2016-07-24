@@ -47,15 +47,18 @@ echo "<form method='POST' action='form3.php'>
 if ($agency['free'] == 1) {
 	echo " checked";
 }
-
-echo ">&nbsp;<b>All <u>FREE</u> services</b></p></div>
-	<div class='form-group'><label for='email'>*Email:</label><input type='email' class='form-control' id='email' name='email' value=\"$agency[email]\" placeholder=\"agency@example.com\" required>
+echo "
+	>&nbsp;<b>All <u>FREE</u> services</b></p></div>
+ 	<div class='form-group'>
+		<p><b>Website:</b> <input type='url' name='website' class='form-control' value=\"$agency[website]\" placeholder=\"http://\" size='60'></p>
+	</div>
+     <div class='form-group'><label for='email'>*Email:</label><input type='email' class='form-control' id='email' name='email' value=\"$agency[email]\" placeholder=\"agency@example.com\" required>
 	</div>
 	<div class='form-group'>
-	<p><b>*Address Line 1</b>&nbsp;<input type='text' class='form-control' id='address1' name='address1' required value=\"$agency[address1]\" placeholder=\"Address Line 1\"></p>
-	<p><b>Address Line 2</b>&nbsp;<input type='text' class='form-control' id='address2' name='address2' value=\"$agency[address2]\" placeholder=\"Address Line 2\"></p>
-	<p><b>*City</b>&nbsp;<input type='text' size='20' id='city' name='city' required value=\"$agency[city]\" placeholder=\"City\">,&nbsp;
-	<span class='radio-inline'><label><input type='radio' name='state' id='mo' value='MO'";
+		<p><b>*Address Line 1</b>&nbsp;<input type='text' class='form-control' id='address1' name='address1' required value=\"$agency[address1]\" placeholder=\"Address Line 1\"></p>
+		<p><b>Address Line 2</b>&nbsp;<input type='text' class='form-control' id='address2' name='address2' value=\"$agency[address2]\" placeholder=\"Address Line 2\"></p>
+		<p><b>*City</b>&nbsp;<input type='text' size='20' id='city' name='city' required value=\"$agency[city]\" placeholder=\"City\">,&nbsp;
+		<span class='radio-inline'><label><input type='radio' name='state' id='mo' value='MO'";
 if ($agency['state'] == "MO") {
 	echo " checked";
 }
@@ -65,44 +68,28 @@ if ($agency['state'] == "KS") {
 	echo " checked";
 }
 
-echo ">Kansas</label></span>&nbsp;&nbsp;&nbsp;<b>*Zip</b>&nbsp;<input type='text' minlength='5' maxlength='10' size='11' id='zip' name='zip' required value=\"$agency[zip]\" placeholder=\"Zip\"></p>
+echo "
+			>Kansas</label></span>&nbsp;&nbsp;&nbsp;<b>*Zip</b>&nbsp;<input type='text' minlength='5' maxlength='10' size='11' id='zip' name='zip' required value=\"$agency[zip]\" placeholder=\"Zip\"></p>
 	</div>
 	<div class='form-group'>
-	<label for='phone'>Telephone Numbers:</label>
-	<p><b>*Primary:</b> <input id='phone' type='text' size=11 minlength=10 maxlength=10 name='phone' required value=\"$agency[phone]\" placeholder=\"8165551212\">&nbsp;&nbsp;&nbsp;
-	<b>Emergency:</b> <input type='text' size=11 minlength=10 maxlength=10 name='emergencyPhone' value=\"$agency[emergencyPhone]\" placeholder=\"8165551212\">&nbsp;&nbsp;&nbsp;
-	<b>Fax:</b> <input type='text' size=11 minlength=10 maxlength=10 name='fax' value=\"$agency[fax]\" placeholder=\"8165551212\">
-	</p>
+		<p><b>*Hours:</b></p>
 	</div>
-	<div class='form-group'>
-	<label for='first'>Name of Contact:</label>
-	<p><b>First:</b> <input type='text' id='first' name='first' size='20' value=\"$agency[contactFirst]\" placeholder=\"First Name\">&nbsp;&nbsp;&nbsp;
-	<b>Last:</b><input type='text' id='last' name='last' size='30' value=\"$agency[contactLast]\" placeholder=\"Last Name\"></p>
-	</div>
-	<div class='form-group'>
-	</div>";
-// contacts here
-echo "<div class='form-group'>
-	<p><b>Website:</b> <input type='url' name='website' class='form-control' value=\"$agency[website]\" placeholder=\"http://\" size='60'></p>
-	</div>
-	<div class='form-group'>
-	<p><b>*Hours:</b></p>
-	</div>";
-
+	";
 hoursTable($agency_id);
+echo "<br>Contacts:";
+contacts($agency);
+echo "<br>";
 
 /* THE CATEGORIES & SUBCATEGORIES */
 
-//Below, I'm going to incorporate the Categories class I've already written to pull out the available categories/subcategories
-
 //First, get the subCategories the Agency has activated
-$activatedSubcategories = [];
+$activatedSubcategories = array();
 if ($agency_id > 0) {
 	$subCats = $A->fetchActivatedAgencySubCategories($agency_id);
 }
 if ($subCats) {
 	foreach ($subCats as $subCat) {
-		array_push($activatedSubcategories, $subCat['id']);
+		$activatedSubcategories[] = $subCat['id'];
 	}
 }
 
@@ -169,7 +156,8 @@ if ($cats) {
 		</div>";
 	}
 	echo "
-	</div>";
+	</div>
+	";
 }
 
 echo "<button type='submit' class='btn btn-primary'>Save and Continue</button></form>";
@@ -270,4 +258,80 @@ function hoursTable($agency_id, $category_id = 0, $subcategory_id = 0) {
 				</table>";
 	}
 }
+
+function contactsOLD($agency) {
+	echo "
+	<div class='form-group'>
+	<label for='phone'>Telephone Numbers:</label>
+	<p><b>*Primary:</b> <input id='phone' type='text' size=11 minlength=10 maxlength=10 name='phone' required value=\"$agency[phone]\" placeholder=\"8165551212\">&nbsp;&nbsp;&nbsp;
+	<b>Emergency:</b> <input type='text' size=11 minlength=10 maxlength=10 name='emergencyPhone' value=\"$agency[emergencyPhone]\" placeholder=\"8165551212\">&nbsp;&nbsp;&nbsp;
+	<b>Fax:</b> <input type='text' size=11 minlength=10 maxlength=10 name='fax' value=\"$agency[fax]\" placeholder=\"8165551212\">
+	</p>
+	</div>
+	<div class='form-group'>
+	<label for='first'>Name of Contact:</label>
+	<p><b>First:</b> <input type='text' id='first' name='first' size='20' value=\"$agency[contactFirst]\" placeholder=\"First Name\">&nbsp;&nbsp;&nbsp;
+	<b>Last:</b><input type='text' id='last' name='last' size='30' value=\"$agency[contactLast]\" placeholder=\"Last Name\"></p>
+	</div>
+	<div class='form-group'>
+	</div>";
+
+}
+
+function contacts($agency) {
+	$K = new Contacts();
+	$cTypes = $K->getAllContactTypes();
+	$pTypes = $K->getAllPhoneTypes();
+	$contacts = $K->getContactsForAgency($agency["id"]);
+	$contacts[] = null;
+	if ($contacts) {
+		foreach ($contacts as $contact) {
+			$id = $contact['id'];
+			if (!$id) {
+				$id = 0;
+			}
+			// var_dump($id);
+			echo "
+				<div class='form-group'>
+					<input type=\"text\" size=\"5\" value=\"$contact[title]\" placeholder='Title' id=\"title\"" . $id . "\" name=\"title" . $id . "\"<\input>
+					<input type=\"text\" size=\"11\" value=\"$contact[givenName]\" placeholder='First' id=\"given" . $id . "\" name=\"given" . $id . "\"<\input>
+					<input type=\"text\" size=\"15\" value=\"$contact[familyName]\" placeholder='Last' id=\"family" . $id . "\" name=\"family" . $id . "\"<\input>
+					<input type=\"text\" size=\"5\" value=\"$contact[suffix]\" placeholder='suffix' id=\"suffix" . $id . "\" name=\"suffix" . $id . "\"<\input>
+					<input type=\"text\" size=\"9\" value=\"$contact[credentials]\" placeholder='credentials' id=\"credentials" . $id . "\" name=\"credentials" . $id . "\"<\input>
+					<input type=\"text\" size=\"11\" minlength=10 maxlength=10 value=\"$contact[phone]\" placeholder='phone' id=\"phone" . $id . "\" name=\"phone" . $id . "\"<\input>
+					<input type=\"text\" size=\"38\" value=\"$contact[email]\" placeholder=\"email\" id=\"email" . $id . "\" name=\"email" . $id . "\" <\input>
+			";
+			doTypes($cTypes, "contactType", $id, $contact['contactType_id']);
+			doTypes($pTypes, "phoneType", $id, $contact['phoneType_id']);
+			echo "
+				</div>";
+		}
+	}
+}
+
+function doTypes($typeArray, $typeName, $id, $tid = 0) {
+	if (!$id) {
+		$id = 0;
+	}
+	$n = $typeName . $id;
+	echo "
+	<select name=\"" . $n . "\">";
+	foreach ($typeArray as $typeItem) {
+		$type = $typeItem[type];
+		$type_id = $typeItem[id];
+		echo "<option value=$type_id";
+		if ($tid == $type_id) {
+			echo " selected";
+		}
+		echo ">$type</option>";
+	}
+
+	echo "
+	</select>";
+}
+
+function phoneType() {
+}
+
 ?>
+

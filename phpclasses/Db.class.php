@@ -14,8 +14,8 @@ class Db {
 		if (!isset(self::$connection)) {
 			// Load configuration as an array. Use the actual location of your configuration file
 			$config = parse_ini_file(dirname(__FILE__) . '/../dbconfig.ini');
-			// Create connection
 
+			// Create connection
 			if (version_compare(phpversion(), '5.6.10', '<')) {
 				self::$connection = mysql_connect($config['host'], $config['dbuser'], $config['dbpass']);
 				if (!self::$connection) {
@@ -40,17 +40,19 @@ class Db {
 	 */
 	public function query($query) {
 		// Connect to the database
-		$connection = $this->connect();
 		// Query the database
 		if (version_compare(phpversion(), '5.6.10', '<')) {
 			$result = mysql_query($query);
-			if (!$result) {
+		} else {
+			$result = mysqli_query($this->connect(), $query);
+		}
+
+		if (!$result) {
+			if (version_compare(phpversion(), '5.6.10', '<')) {
 				echo ('Invalid query: ' . mysql_error());
 			} else {
-				// do nothing
+				echo ('Invalid query: ' . mysqli_error($connection));
 			}
-		} else {
-			$result = mysqli_query($connection, $query);
 		}
 
 		return $result;
@@ -63,11 +65,11 @@ class Db {
 	 * @return bool False on failure / array Database rows on success
 	 */
 	public function select($query) {
-		$rows = array();
 		$result = $this->query($query);
 		if ($result === false) {
 			return false;
 		}
+		$rows = array();
 		if (version_compare(phpversion(), '5.6.10', '<')) {
 			while ($row = mysql_fetch_assoc($result)) {
 				$rows[] = $row;
@@ -86,8 +88,12 @@ class Db {
 	 * @return string Database error message
 	 */
 	public function error() {
-		$connection = $this->connect();
-		return $connection->error;
+		if (version_compare(phpversion(), '5.6.10', '<')) {
+			$connection = $this->connect();
+			return $connection->error;
+		} else {
+			return mysqli_error($connection);
+		}
 	}
 
 	/**

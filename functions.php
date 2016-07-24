@@ -14,8 +14,21 @@ if ($_FILES) {
 	}
 }
 
-$db = mysql_connect($dbhost, $dbuser, $dbpass);
-mysql_select_db($dbname, $db);
+if (version_compare(phpversion(), '5.6.10', '<')) {
+	$db = mysql_connect($dbhost, $dbuser, $dbpass);
+	if (mysql_connect_error()) {
+		echo "Failed to connect to MySQL: " . mysql_connect_error();
+	} elseif (!mysql_select_db($dbname, $db)) {
+		echo "Failed to select " . $dbname;
+	} else {
+		//do nothing
+	}
+} else {
+	$db = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+	if (mysqli_connect_errno()) {
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+}
 
 function GetHeader($kmlfile = "") {
 	require 'variables.php';
@@ -130,8 +143,9 @@ function GetSearchResults($catids = array()) {
         <kml xmlns="http://www.opengis.net/kml/2.2">
         <Document>';
 	$sql2 = "SELECT * FROM category";
-	$result2 = mysql_query($sql2);
-	while ($row2 = mysql_fetch_array($result2)) {
+
+	$rows2 = setRows($sql2);
+	foreach ($rows2 as $row2) {
 		$kml .= '<Style id="category' . $row2[id] . '">
                 <IconStyle>
                         <Icon>
@@ -141,9 +155,11 @@ function GetSearchResults($catids = array()) {
         </Style>';
 	}
 	$list = "";
-	$result = mysql_query($sql);
+
 	$a = new Agencies();
-	while ($row = mysql_fetch_array($result)) {
+
+	$rows = setRows($sql);
+	foreach ($rows as $row) {
 		$row = $a->fetchAgency($row[id]);
 		$info = $row['cdata']; //GetCDATADescription($row[id]);
 		$kml .= "<Placemark>
@@ -166,8 +182,14 @@ function GetSearchResults($catids = array()) {
 }
 function GetCategoryPin($categid) {
 	$sql = "SELECT pinfile FROM category WHERE id='$categid'";
-	$result = mysql_query($sql);
-	if ($row = mysql_fetch_array($result)) {
+	if (version_compare(phpversion(), '5.6.10', '<')) {
+		$result = mysql_query($sql);
+		$row = mysql_fetch_array($result);
+	} else {
+		$result = mysqli_query($dq, $sql);
+		$row = mysqli_fetch_array($result);
+	}
+	if ($row) {
 		return "http://homelesskc.gazelleincorporated.com/images/" . $row[0];
 	} else {
 		return FALSE;
@@ -184,14 +206,36 @@ function GetMainCategory($agencyid, $usecatids = array()) {
 		if ($sqlpiece != '') {
 			$sql .= " AND (" . substr($sqlpiece, 0, strlen($sqlpiece) - 4) . ")";
 		}
-
 	}
 	$sql .= " LIMIT 1";
-	$result = mysql_query($sql);
-	if ($row = mysql_fetch_array($result)) {
+	if (version_compare(phpversion(), '5.6.10', '<')) {
+		$result = mysql_query($sql);
+		$row - mysql_fetch_array($result);
+	} else {
+		$result = mysqli_query($db, $sql);
+		$row = mysqli_fetch_array($result);
+	}
+	if ($row) {
 		return $row[id];
 	} else {
 		return 0;
 	}
 
+}
+
+function setRows($sql) {
+	$rows = array();
+	if (version_compare(phpversion(), '5.6.10', '<')) {
+		$result = mysql_query($sql);
+		$rows = makeResultArray($result);
+		while ($row = mysql_fetch_array($result)) {
+			$rows = array_push($rows, $row);
+		}
+	} else {
+		$result = mysqli_query($db, $sql);
+		while ($row = mysqli_fetch_array($result)) {
+			$rows = array_push($rows, $row);
+		}
+	}
+	return $rows;
 }

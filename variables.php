@@ -41,6 +41,6 @@ $header = '<!DOCTYPE html>
 
 $footer = '    </div><!--/main container-->
   </body>
-  </html>';
+</html>';
 
 ?>

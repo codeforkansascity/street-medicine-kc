@@ -257,13 +257,13 @@ class Agencies {
 		 *
 		 * @return	mysql_insert_id() or FALSE if error
 	*/
-	function insert_agency($name, $description, $address1, $address2, $city, $state, $zip,
-		$phone, $emergencyPhone, $fax, $website, $contactFirst, $contactLast, $email, $free) {
+	function insert_agency($name, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free) {
 
 		$db = new Db();
 		$dbconn = $db->connect();
 
-		$sql = "INSERT INTO " . $this->table . " (name, description, address1, address2, city, state, zip, phone, emergencyPhone, fax, website, contactFirst, contactLast, email, free) VALUES ('$name', '$description' , '$address1', '$address2', '$city', '$state', '$zip', '$phone',     '$emergencyPhone', '$fax', '$website', '$contactFirst', '$contactLast', '$email', $free)";
+		$sql = "INSERT INTO " . $this->table . " (name, description, address1, address2, city, state, zip, website, email, free)
+		VALUES ('$name', '$description' , '$address1', '$address2', '$city', '$state', '$zip', '$website', '$email', $free)";
 
 		$result = $db->query($sql);
 
@@ -281,15 +281,13 @@ class Agencies {
 		 *
 		 * @return	boolean
 	*/
-	function update_agency($id, $agency, $description, $address1, $address2, $city, $state, $zip,
-		$phone, $emergencyPhone, $fax, $website, $contactFirst, $contactLast, $email, $free) {
+	function update_agency($id, $agency, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free) {
 
 		$db = new Db();
 		$dbconn = $db->connect();
 
 		$sql = "UPDATE " . $this->table . " SET name='$agency', description='$description', address1='$address1', address2='$address2', city='$city', state='$state',
-	zip='$zip', phone='$phone', emergencyPhone='$emergencyPhone', fax='$fax', website='$website', contactFirst='$first',
-	contactLast='$last', email='$email', free=$free WHERE id=$id;";
+	zip='$zip', website='$website', email='$email', free=$free WHERE id=$id;";
 
 		$db->query($sql);
 
@@ -298,7 +296,7 @@ class Agencies {
 			return FALSE;
 		}
 
-		 //echo "<br>SQL: " . $sql . "<br>";
+		//echo "<br>SQL: " . $sql . "<br>";
 	}
 
 	/*
