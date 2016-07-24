@@ -1,4 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `homeless_kc` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `homeless_kc`;
 -- MySQL dump 10.13  Distrib 5.6.24, for osx10.8 (x86_64)
 --

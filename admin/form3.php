@@ -37,33 +37,44 @@ if ($_POST) {
 
 	foreach ($_POST as $key => $value) {
 		if (preg_match("/open/", $key) && $value != "") {
-			$j = substr($key, 7, 1);
-			$subcategory_id = prepInput(substr($key, 9), "phone");
-			$D = new DateTime($value);
-			$oTime = $D->format($tFormat);
-			$k2 = str_replace("open+", "close+", $key);
-			$D = new DateTime($_POST["$k2"]);
-			$cTime = $D->format($tFormat);
-			$H->insertHoursForAgency($oTime, $cTime, $j + 1, $agency_id, $subcategory_id);
+			doTime($H, $key, $value, $agency_id, $tFormat);
 		} else if (preg_match("/subcat/", $key) && $value != "") {
-			$subcategory_id = prepInput(substr($key, 6), "phone");
-			$A->refreshSubCatLinkTable($agency_id, $subcategory_id);
+			doSubcategory($A, $key, $agency_id);
 		} else if (preg_match("/family/", $key) && $value != "") {
-			$contact_id = prepInput(substr($key, 6), "phone");
-			$title = prepInput($_POST["title" . $contact_id]);
-			$givenName = prepInput($_POST["given" . $contact_id]);
-			$familyName = prepInput($_POST["family" . $contact_id]);
-			$suffix = prepInput($_POST["suffix" . $contact_id]);
-			$credentials = prepInput($_POST["credentials" . $contact_id]);
-			$phone = prepInput($_POST["phone" . $contact_id], "phone");
-			$email = prepInput($_POST["email" . $contact_id], "email");
-			$contactType_id = prepInput($_POST["contactType" . $contact_id]);
-			$phoneType_id = prepInput($_POST["phoneType" . $contact_id]);
-			$K->insertContact($title, $givenName, $familyName, $suffix, $credentials, $phone, $email, $contactType_id, $agency_id, $phoneType_id);
+			doContact($K, $key, $agency_id);
 		} //if match
 	} //foreach
 } //if $_POST
 
 header("Location: form2.php?agency_id=$agency_id");
 
+function doTime($H, $key, $value, $agency_id, $tFormat) {
+	$j = prepInput(substr($key, 7, 1), "phone") + 1;
+	$subcategory_id = prepInput(substr($key, 9), "phone");
+	$D = new DateTime($value);
+	$oTime = $D->format($tFormat);
+	$k2 = str_replace("open+", "close+", $key);
+	$D = new DateTime($_POST["$k2"]);
+	$cTime = $D->format($tFormat);
+	$H->insertHoursForAgency($oTime, $cTime, $j, $agency_id, $subcategory_id);
+}
+
+function doSubcategory($A, $key, $agency_id) {
+	$subcategory_id = prepInput(substr($key, 6), "phone");
+	$A->refreshSubCatLinkTable($agency_id, $subcategory_id);
+}
+
+function doContact($K, $key, $agency_id) {
+	$contact_id = prepInput(substr($key, 6), "phone");
+	$title = prepInput($_POST["title" . $contact_id]);
+	$givenName = prepInput($_POST["given" . $contact_id]);
+	$familyName = prepInput($_POST["family" . $contact_id]);
+	$suffix = prepInput($_POST["suffix" . $contact_id]);
+	$credentials = prepInput($_POST["credentials" . $contact_id]);
+	$phone = prepInput($_POST["phone" . $contact_id], "phone");
+	$email = prepInput($_POST["email" . $contact_id], "email");
+	$contactType_id = prepInput($_POST["contactType" . $contact_id], "phone");
+	$phoneType_id = prepInput($_POST["phoneType" . $contact_id], "phone");
+	$K->insertContact($title, $givenName, $familyName, $suffix, $credentials, $phone, $email, $contactType_id, $agency_id, $phoneType_id);
+}
 ?>
