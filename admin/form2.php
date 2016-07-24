@@ -34,14 +34,14 @@ if ($agency_id > 0) {
 //Otherwise, $agency will be empty by default and we can reference it anyway without harm
 
 echo "<form method='POST' action='form3.php'>
-	<input type='hidden' name='agency_id' value='$agency_id'> <!-- I MOVED THE HIDDEN VALUE OF THE agency_id HERE -->
+	<input type='hidden' name='agency_id' value='$agency_id'>
 	<div class='form-group'>
 	<br><br>
-	<label for='agency'>*Agency Name:</label>
+	<label for='agency'><h4>*Agency Name:</h4></label>
 	<input type='text' class='form-control' id='agency' name='agency' placeholder=\"Agency Name\" value=\"$agency[name]\" required>
 	</div>
 	<div class='form-group'>
-	<label for='description'>Description:</label>
+	<label for='description'><h4>Description:</h4></label>
 	<textarea rows='8' class='form-control' id='description' name='description' wrap='soft' placeholder='Description'>" . $agency['description'] . "</textarea>
 	</div><div class='form-group'><p><input type='checkbox' name='free'";
 if ($agency['free'] == 1) {
@@ -50,121 +50,40 @@ if ($agency['free'] == 1) {
 echo "
 	>&nbsp;<b>All <u>FREE</u> services</b></p></div>
  	<div class='form-group'>
-		<p><b>Website:</b> <input type='url' name='website' class='form-control' value=\"$agency[website]\" placeholder=\"http://\" size='60'></p>
+		<p><h4>Website:</h4> <input type='url' name='website' class='form-control' value=\"$agency[website]\" placeholder=\"http://\" size='60'></p>
 	</div>
-     <div class='form-group'><label for='email'>*Email:</label><input type='email' class='form-control' id='email' name='email' value=\"$agency[email]\" placeholder=\"agency@example.com\" required>
-	</div>
+     <h4>*Email:</h4><input type='email' class='form-control' id='email' name='email' value=\"$agency[email]\" placeholder=\"agency@example.com\" required>
 	<div class='form-group'>
-		<p><b>*Address Line 1</b>&nbsp;<input type='text' class='form-control' id='address1' name='address1' required value=\"$agency[address1]\" placeholder=\"Address Line 1\"></p>
-		<p><b>Address Line 2</b>&nbsp;<input type='text' class='form-control' id='address2' name='address2' value=\"$agency[address2]\" placeholder=\"Address Line 2\"></p>
-		<p><b>*City</b>&nbsp;<input type='text' size='20' id='city' name='city' required value=\"$agency[city]\" placeholder=\"City\">,&nbsp;
+		<p><h4>*Address Line 1</h4><input type='text' class='form-control' id='address1' name='address1' required value=\"$agency[address1]\" placeholder=\"Address Line 1\"></p>
+		<p><h4>Address Line 2</h4><input type='text' class='form-control' id='address2' name='address2' value=\"$agency[address2]\" placeholder=\"Address Line 2\"></p>
+		<p><h4>*City *State *Zip</h4>&nbsp;<input type='text' size='20' id='city' name='city' required value=\"$agency[city]\" placeholder=\"City\">,&nbsp;
 		<span class='radio-inline'><label><input type='radio' name='state' id='mo' value='MO'";
 if ($agency['state'] == "MO") {
 	echo " checked";
 }
 
-echo '>Missouri</label></span><span class="radio-inline"><label><input type="radio" name="state" id="ks" value="KS"';
+echo ">Missouri</label></span><span class=\"radio-inline\"><label><input type=\"radio\" name=\"state\" id=\"ks\" value=\"KS\"";
 if ($agency['state'] == "KS") {
 	echo " checked";
 }
 
 echo "
-			>Kansas</label></span>&nbsp;&nbsp;&nbsp;<b>*Zip</b>&nbsp;<input type='text' minlength='5' maxlength='10' size='11' id='zip' name='zip' required value=\"$agency[zip]\" placeholder=\"Zip\"></p>
+			>Kansas</label></span>&nbsp;&nbsp;&nbsp;<input type='text' minlength='5' maxlength='10' size='11' id='zip' name='zip' required value=\"$agency[zip]\" placeholder=\"Zip\"></p>
 	</div>
-	<div class='form-group'>
-		<p><b>*Hours:</b></p>
-	</div>
+	<h4>Contacts:</h4>
 	";
-hoursTable($agency_id);
-echo "<br>Contacts:";
-contacts($agency);
-echo "<br>";
+doContacts($agency);
+
+echo "<h4>*Hours:</h4>";
+doHoursTable($agency_id);
 
 /* THE CATEGORIES & SUBCATEGORIES */
-
-//First, get the subCategories the Agency has activated
-$activatedSubcategories = array();
-if ($agency_id > 0) {
-	$subCats = $A->fetchActivatedAgencySubCategories($agency_id);
-}
-if ($subCats) {
-	foreach ($subCats as $subCat) {
-		$activatedSubcategories[] = $subCat['id'];
-	}
-}
-
-//Next, display an accordion of the categories & subcategories, with activated subcategories checked
-$C = new Categories();
-$cats = $C->getAllCategories();
-if ($cats) {
-	echo "
-	<div class=\"panel-group\" id=\"accordion\">";
-	foreach ($cats as $category) {
-		echo "
-			<div class=\"panel panel-default\">
-			<div class=\"panel-heading\">
-				<h4 class=\"panel-title\">
-					<a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" . $category["id"] . "\">" . $category["category"] . "</a>
-				</h4>
-			</div>
-			<div id=\"collapse" . $category["id"] . "\" class=\"panel-collapse collapse \">
-				<div class=\"panel-body\">
-					<div class=\"panel-group\" id=\"accordion" . $category["id"] . "\"  data-parent=\"#accordion" . $category["id"] . "\">";
-//Show Subcategories of this Category:
-		$subcats = $C->getSubCategories($category['id']);
-		foreach ($subcats as $subcat) {
-			echo "
-						<div class=\"panel panel-default\">
-							<div class=\"panel-heading\">
-								<div class=\"panel-title\">
-									<div class=\"checkbox\">
-										<input type=\"checkbox\" name=\"subcat" . $subcat["id"] . "\"";
-			if (in_array($subcat['id'], $activatedSubcategories)) {echo " checked";}
-			echo ">";
-			if (strlen($category["pinfile"]) > 4) {
-				echo "
-											<a
-												data-toggle=\"collapse\"
-												data-parent=\"#accordion" . $category["id"] . "\"
-												href=\"#collapse" . $category["id"] . $subcat["id"] . "\">" . $subcat["subcategory"] . "
-											</a>";
-			} else {
-				echo $subcat["subcategory"];
-			}
-			echo "
-									</div>
-								</div>
-							</div>";
-			if (strlen($category["pinfile"]) > 4) {
-
-				echo "
-							<div class='panel-collapse collapse' id=\"collapse" . $category["id"] . $subcat["id"] . "\" >
-  								<div class='panel-body'>";
-				hoursTable($agency_id, $category["id"], $subcat["id"]);
-				echo "
-								</div>
-							</div>";
-			}
-			echo "
-						</div>
-						";
-		}
-		echo "
-					</div>
-				</div>
-			</div>
-		</div>";
-	}
-	echo "
-	</div>
-	";
-}
-
+doSubcategories($A, $agency_id);
 echo "<button type='submit' class='btn btn-primary'>Save and Continue</button></form>";
 
 echo $footer;
-
-function hoursTable($agency_id, $category_id = 0, $subcategory_id = 0) {
+// ==========
+function doHoursTable($agency_id, $category_id = 0, $subcategory_id = 0) {
 	if ($agency_id) {
 		$H = new Hours();
 		$hours = $H->getHoursForAgency($agency_id, $subcategory_id);
@@ -230,8 +149,8 @@ function hoursTable($agency_id, $category_id = 0, $subcategory_id = 0) {
 			for ($j = 0; $j < 7; $j++) {
 				$td = "
 							<td>
-								<input size='6' name='open+$i+$j+$subcategory_id'  zxcvb ></input>
-								<input size='6' name='close+$i+$j+$subcategory_id' qwert ></input>
+								<input size='5' name='open+$i+$j+$subcategory_id'  zxcvb ></input>
+								<input size='5' name='close+$i+$j+$subcategory_id' qwert ></input>
 								&nbsp;&nbsp;
 							</td>";
 				$timeItem = $times[$i][$j];
@@ -259,7 +178,7 @@ function hoursTable($agency_id, $category_id = 0, $subcategory_id = 0) {
 	}
 }
 
-function contacts($agency) {
+function doContacts($agency) {
 	$K = new Contacts();
 	$cTypes = $K->getAllContactTypes();
 	$pTypes = $K->getAllPhoneTypes();
@@ -278,7 +197,7 @@ function contacts($agency) {
 					<input type=\"text\" size=\"11\" value=\"$contact[givenName]\" placeholder='First' id=\"given" . $id . "\" name=\"given" . $id . "\"<\input>
 					<input type=\"text\" size=\"15\" value=\"$contact[familyName]\" placeholder='Last' id=\"family" . $id . "\" name=\"family" . $id . "\"<\input>
 					<input type=\"text\" size=\"5\" value=\"$contact[suffix]\" placeholder='suffix' id=\"suffix" . $id . "\" name=\"suffix" . $id . "\"<\input>
-					<input type=\"text\" size=\"9\" value=\"$contact[credentials]\" placeholder='credentials' id=\"credentials" . $id . "\" name=\"credentials" . $id . "\"<\input>
+					<input type=\"text\" size=\"12\" value=\"$contact[credentials]\" placeholder='credentials' id=\"credentials" . $id . "\" name=\"credentials" . $id . "\"<\input>
 					<input type=\"text\" size=\"11\" minlength=10 maxlength=10 value=\"$contact[phone]\" placeholder='phone' id=\"phone" . $id . "\" name=\"phone" . $id . "\"<\input>
 					<input type=\"text\" size=\"38\" value=\"$contact[email]\" placeholder=\"email\" id=\"email" . $id . "\" name=\"email" . $id . "\" <\input>
 			";
@@ -311,8 +230,85 @@ function doTypes($typeArray, $typeName, $id, $tid = 0) {
 	</select>";
 }
 
-function phoneType() {
-}
+function doSubcategories($A, $agency_id) {
+//First, get the subCategories the Agency has activated
+	$activatedSubcategories = array();
+	if ($agency_id > 0) {
+		$subCats = $A->fetchActivatedAgencySubCategories($agency_id);
+	}
+	if ($subCats) {
+		foreach ($subCats as $subCat) {
+			$activatedSubcategories[] = $subCat['id'];
+		}
+	}
 
+//Next, display an accordion of the categories & subcategories, with activated subcategories checked
+	$C = new Categories();
+	$cats = $C->getAllCategories();
+	if ($cats) {
+		echo "
+	<h4>Services:</h4>
+	<div class=\"panel-group\" id=\"accordion\">";
+		foreach ($cats as $category) {
+			echo "
+			<div class=\"panel panel-default\">
+			<div class=\"panel-heading\">
+				<h5 class=\"panel-title\">
+					<a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" . $category["id"] . "\">" . $category["category"] . "</a>
+				</h5>
+			</div>
+			<div id=\"collapse" . $category["id"] . "\" class=\"panel-collapse collapse \">
+				<div class=\"panel-body\">
+					<div class=\"panel-group\" id=\"accordion" . $category["id"] . "\"  data-parent=\"#accordion" . $category["id"] . "\">";
+//Show Subcategories of this Category:
+			$subcats = $C->getSubCategories($category['id']);
+			foreach ($subcats as $subcat) {
+				echo "
+						<div class=\"panel panel-default\">
+							<div class=\"panel-heading\">
+								<div class=\"panel-title\">
+									<div class=\"checkbox\">
+										<input type=\"checkbox\" name=\"subcat" . $subcat["id"] . "\"";
+				if (in_array($subcat['id'], $activatedSubcategories)) {echo " checked";}
+				echo ">";
+				if (strlen($category["pinfile"]) > 4) {
+					echo "
+											<a
+												data-toggle=\"collapse\"
+												data-parent=\"#accordion" . $category["id"] . "\"
+												href=\"#collapse" . $category["id"] . $subcat["id"] . "\">" . $subcat["subcategory"] . "
+											</a>";
+				} else {
+					echo $subcat["subcategory"];
+				}
+				echo "
+									</div>
+								</div>
+							</div>";
+				if (strlen($category["pinfile"]) > 4) {
+
+					echo "
+							<div class='panel-collapse collapse' id=\"collapse" . $category["id"] . $subcat["id"] . "\" >
+  								<div class='panel-body'>";
+					doHoursTable($agency_id, $category["id"], $subcat["id"]);
+					echo "
+								</div>
+							</div>";
+				}
+				echo "
+						</div>
+						";
+			}
+			echo "
+					</div>
+				</div>
+			</div>
+		</div>";
+		}
+		echo "
+	</div>
+	";
+	}
+}
 ?>
 
