@@ -259,25 +259,6 @@ function hoursTable($agency_id, $category_id = 0, $subcategory_id = 0) {
 	}
 }
 
-function contactsOLD($agency) {
-	echo "
-	<div class='form-group'>
-	<label for='phone'>Telephone Numbers:</label>
-	<p><b>*Primary:</b> <input id='phone' type='text' size=11 minlength=10 maxlength=10 name='phone' required value=\"$agency[phone]\" placeholder=\"8165551212\">&nbsp;&nbsp;&nbsp;
-	<b>Emergency:</b> <input type='text' size=11 minlength=10 maxlength=10 name='emergencyPhone' value=\"$agency[emergencyPhone]\" placeholder=\"8165551212\">&nbsp;&nbsp;&nbsp;
-	<b>Fax:</b> <input type='text' size=11 minlength=10 maxlength=10 name='fax' value=\"$agency[fax]\" placeholder=\"8165551212\">
-	</p>
-	</div>
-	<div class='form-group'>
-	<label for='first'>Name of Contact:</label>
-	<p><b>First:</b> <input type='text' id='first' name='first' size='20' value=\"$agency[contactFirst]\" placeholder=\"First Name\">&nbsp;&nbsp;&nbsp;
-	<b>Last:</b><input type='text' id='last' name='last' size='30' value=\"$agency[contactLast]\" placeholder=\"Last Name\"></p>
-	</div>
-	<div class='form-group'>
-	</div>";
-
-}
-
 function contacts($agency) {
 	$K = new Contacts();
 	$cTypes = $K->getAllContactTypes();
