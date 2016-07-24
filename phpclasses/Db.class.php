@@ -49,9 +49,9 @@ class Db {
 
 		if (!$result) {
 			if (version_compare(phpversion(), '5.6.10', '<')) {
-				echo ('Invalid query: ' . mysql_error());
+				echo ('Invalid query: ' . mysql_error() . $query);
 			} else {
-				echo ('Invalid query: ' . mysqli_error($connection));
+				echo ('Invalid query: ' . mysqli_error($connection) . $query);
 			}
 		}
 

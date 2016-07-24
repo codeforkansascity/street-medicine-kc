@@ -24,8 +24,8 @@ if ($saved) {
 	echo "<p class=\"bg-success\">This agency's information has been saved! Continue editing this agency below or <a href=\"index.php\"><b>click here</b></a> to return to the main menu.</p>";
 }
 
+$A = new Agencies();
 if ($agency_id > 0) {
-	$A = new Agencies();
 	$agency = $A->fetchAgency($agency_id);
 
 	//For the description, since it will go into textarea, let's convert "<br>" to line break:
@@ -84,106 +84,115 @@ echo "<button type='submit' class='btn btn-primary'>Save and Continue</button></
 echo $footer;
 // ==========
 function doHoursTable($agency_id, $category_id = 0, $subcategory_id = 0) {
-	if ($agency_id) {
-		$H = new Hours();
+	$H = new Hours();
+	if ($agency_id > 0) {
 		$hours = $H->getHoursForAgency($agency_id, $subcategory_id);
-		$counts = [];
-		for ($i = 0; $i < 7; $i++) {
-			$counts[$i] = 0;
+	} else {
+		$hours = array();
+	}
+
+	$counts = [];
+	for ($i = 0; $i < 7; $i++) {
+		$counts[$i] = 0;
+	}
+
+	//find number of rows for each column
+	if ($hours) {
+		foreach ($hours as $hour) {
+			$counts[$hour['dayOfWeek_id'] - 1] += 1;
+		}}
+
+	$rowCount = 0;
+	if ($counts) {
+		foreach ($counts as $c) {
+			$rowCount = max($rowCount, $c);
+		}}
+	if ($agency_id == 0) {
+		$rowCount = 2;
+	} else {
+		$rowCount++;
+		$rowCount = min($rowCount, 9);
+	}
+
+	for ($i = 0; $i < $rowCount; $i++) {
+		for ($j = 0; $j < 7; $j++) {
+			$times[$i][$j] = "";
 		}
+	}
 
-		//find number of rows for each column
-		if ($hours) {
-			foreach ($hours as $hour) {
-				$counts[$hour['dayOfWeek_id'] - 1] += 1;
-			}}
-
-		$rowCount = 0;
-		if ($counts) {
-			foreach ($counts as $c) {
-				$rowCount = max($rowCount, $c);
-			}}
-		if ($agency_id == 0) {
-			$rowCount = 2;
-		} else {
-			$rowCount++;
-			$rowCount = min($rowCount, 9);
-		}
-
-		for ($i = 0; $i < $rowCount; $i++) {
-			for ($j = 0; $j < 7; $j++) {
-				$times[$i][$j] = "";
-			}
-		}
-
-		if ($hours) {
-			foreach ($hours as $hour) {
-				for ($i = 0; $i < $rowCount; $i++) {
-					if ($times[$i][$hour['dayOfWeek_id'] - 1] == "") {
-						$times[$i][$hour['dayOfWeek_id'] - 1] = $hour;
-						break;
-					}
+	if ($hours) {
+		foreach ($hours as $hour) {
+			for ($i = 0; $i < $rowCount; $i++) {
+				if ($times[$i][$hour['dayOfWeek_id'] - 1] == "") {
+					$times[$i][$hour['dayOfWeek_id'] - 1] = $hour;
+					break;
 				}
 			}
 		}
+	}
 
-		$D = new Days();
-		$days = $D->getAllDays();
-		echo "
+	$D = new Days();
+	$days = $D->getAllDays();
+	echo "
 				<table>
   					<thead>
     					<tr>";
-		if ($days) {
-			foreach ($days as $day) {
-				echo "<th>" . $day['longName'] . "</th>";
-			}
+	if ($days) {
+		foreach ($days as $day) {
+			echo "<th>" . $day['longName'] . "</th>";
 		}
-		echo "
+	}
+	echo "
 						</tr>
   					</thead>
   					<tbody>";
 
-		for ($i = 0; $i < $rowCount; $i++) {
-			echo "
+	for ($i = 0; $i < $rowCount; $i++) {
+		echo "
 						<tr>";
-			for ($j = 0; $j < 7; $j++) {
-				$td = "
+		for ($j = 0; $j < 7; $j++) {
+			$td = "
 							<td>
 								<input size='5' name='open+$i+$j+$subcategory_id'  zxcvb ></input>
 								<input size='5' name='close+$i+$j+$subcategory_id' qwert ></input>
 								&nbsp;&nbsp;
 							</td>";
-				$timeItem = $times[$i][$j];
-				if ($i == 0 && $subcategory_id == 0 && $j < 5) {
-					$td = str_replace(" size=", " required size=", $td);
-				}
-				if ($timeItem == "") {
-					$td = str_replace("zxcvb", "placeholder=\"09:30\"", $td);
-					$td = str_replace("qwert", "placeholder=\"16:30\"", $td);
-				} else {
-					$ot = substr($timeItem['openTime'], 0, 5);
-					$ct = substr($timeItem['closeTime'], 0, 5);
-					$td = str_replace("zxcvb", "value=\"" . $ot . "\"", $td);
-					$td = str_replace("qwert", "value=\"" . $ct . "\"", $td);
-				}
-				echo $td;
+			$timeItem = $times[$i][$j];
+			if ($i == 0 && $subcategory_id == 0 && $j < 5) {
+				$td = str_replace(" size=", " required size=", $td);
 			}
-			echo "
-						</tr>";
+			if ($timeItem == "") {
+				$td = str_replace("zxcvb", "placeholder=\"09:30\"", $td);
+				$td = str_replace("qwert", "placeholder=\"16:30\"", $td);
+			} else {
+				$ot = substr($timeItem['openTime'], 0, 5);
+				$ct = substr($timeItem['closeTime'], 0, 5);
+				$td = str_replace("zxcvb", "value=\"" . $ot . "\"", $td);
+				$td = str_replace("qwert", "value=\"" . $ct . "\"", $td);
+			}
+			echo $td;
 		}
-
 		echo "
+						</tr>";
+	}
+
+	echo "
 					</tbody>
 				</table>";
-	}
 }
 
 function doContacts($agency) {
 	$K = new Contacts();
 	$cTypes = $K->getAllContactTypes();
 	$pTypes = $K->getAllPhoneTypes();
-	$contacts = $K->getContactsForAgency($agency["id"]);
+
+	if ($agency_id = $agency['id']) {
+		$contacts = $K->getContactsForAgency($agency["id"]);
+	} else {
+		$contacts = array();
+	}
 	$contacts[] = null;
+
 	if ($contacts) {
 		foreach ($contacts as $contact) {
 			$id = $contact['id'];

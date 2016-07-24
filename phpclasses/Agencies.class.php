@@ -271,8 +271,12 @@ class Agencies {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
 			return FALSE;
 		}
-
-		return mysql_insert_id(); //This is the Agency.id value for the newly inserted Agency
+		if (version_compare(phpversion(), '5.6.10', '<')) {
+			$insert_id = mysql_insert_id(); //This is the Agency.id value for the newly inserted Agency
+		} else {
+			$insert_id = $dbconn->insert_id;
+		}
+		return $insert_id;
 	}
 
 	/*
@@ -295,8 +299,7 @@ class Agencies {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
 			return FALSE;
 		}
-
-		//echo "<br>SQL: " . $sql . "<br>";
+		return TRUE;
 	}
 
 	/*
@@ -315,7 +318,12 @@ class Agencies {
 			return FALSE;
 		}
 
-		$row = mysql_fetch_array($result);
+		if (version_compare(phpversion(), '5.6.10', '<')) {
+			$row = mysql_fetch_array($result);
+		} else {
+			$row = mysqli_fetch_array($result);
+		}
+
 		$url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($row[address1] . " " . $row[address2] . ", $row[city], $row[state]") . "&key=$GoogleMapsAPI";
 
 		$ch = curl_init($url);
