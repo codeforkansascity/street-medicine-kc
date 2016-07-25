@@ -14,8 +14,21 @@ if ($_FILES) {
 	}
 }
 
-$db = mysql_connect($dbhost, $dbuser, $dbpass);
-mysql_select_db($dbname, $db);
+if (version_compare(phpversion(), '5.6.10', '<')) {
+	$db = mysql_connect($dbhost, $dbuser, $dbpass);
+	if (!$db) {
+		echo "Failed to connect to MySQL: " . mysql_error();
+	} elseif (!mysql_select_db($dbname, $db)) {
+		echo "Failed to select " . $dbname;
+	} else {
+		//do nothing
+	}
+} else {
+	$db = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+	if (mysqli_connect_errno()) {
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+}
 
 function GetHeader($kmlfile = "") {
 	require 'variables.php';
@@ -112,7 +125,7 @@ gin="anonymous"></script>';
 }
 function GetSearchResults($catids = array()) {
 	require 'controller.php';
-	$sql = "SELECT DISTINCT t1.* FROM agency AS t1, agency_has_subcategories AS t2, subcategory AS t3 WHERE t1.id=t2.agency_id AND t2.subcategories_id=t3.id AND (t1.latitude!=0 OR t1.longitude!=0) AND (";
+	$sql = "SELECT DISTINCT t1.* FROM agency AS t1, agency_has_subcategories AS t2, subCategory AS t3 WHERE t1.id=t2.agency_id AND t2.subcategories_id=t3.id AND (t1.latitude!=0 OR t1.longitude!=0) AND (";
 	$catssearched = 0;
 	for ($i = 0; $i < count($catids); $i++) {
 		if ($catids[$i] > 0) {
@@ -130,8 +143,9 @@ function GetSearchResults($catids = array()) {
         <kml xmlns="http://www.opengis.net/kml/2.2">
         <Document>';
 	$sql2 = "SELECT * FROM category";
-	$result2 = mysql_query($sql2);
-	while ($row2 = mysql_fetch_array($result2)) {
+
+	$rows2 = setRows($sql2);
+	foreach ($rows2 as $row2) {
 		$kml .= '<Style id="category' . $row2[id] . '">
                 <IconStyle>
                         <Icon>
@@ -141,9 +155,11 @@ function GetSearchResults($catids = array()) {
         </Style>';
 	}
 	$list = "";
-	$result = mysql_query($sql);
+
 	$a = new Agencies();
-	while ($row = mysql_fetch_array($result)) {
+
+	$rows = setRows($sql);
+	foreach ($rows as $row) {
 		$row = $a->fetchAgency($row[id]);
 		$info = $row['cdata']; //GetCDATADescription($row[id]);
 		$kml .= "<Placemark>
@@ -166,8 +182,14 @@ function GetSearchResults($catids = array()) {
 }
 function GetCategoryPin($categid) {
 	$sql = "SELECT pinfile FROM category WHERE id='$categid'";
-	$result = mysql_query($sql);
-	if ($row = mysql_fetch_array($result)) {
+	if (version_compare(phpversion(), '5.6.10', '<')) {
+		$result = mysql_query($sql);
+		$row = mysql_fetch_array($result);
+	} else {
+		$result = mysqli_query($dq, $sql);
+		$row = mysqli_fetch_array($result);
+	}
+	if ($row) {
 		return "http://homelesskc.gazelleincorporated.com/images/" . $row[0];
 	} else {
 		return FALSE;
@@ -175,7 +197,7 @@ function GetCategoryPin($categid) {
 
 }
 function GetMainCategory($agencyid, $usecatids = array()) {
-	$sql = "SELECT t1.id,t1.category FROM category AS t1, subcategory AS t2, agency_has_subcategories AS t3 WHERE t1.id=t2.category_id AND t2.id=t3.subcategories_id AND t3.agency_id='$agencyid'";
+	$sql = "SELECT t1.id,t1.category FROM category AS t1, subCategory AS t2, agency_has_subcategories AS t3 WHERE t1.id=t2.category_id AND t2.id=t3.subcategories_id AND t3.agency_id='$agencyid'";
 	if (count($usecatids) > 0) {
 		$sqlpiece = "";
 		for ($i = 0; $i < count($usecatids); $i++) {
@@ -184,14 +206,39 @@ function GetMainCategory($agencyid, $usecatids = array()) {
 		if ($sqlpiece != '') {
 			$sql .= " AND (" . substr($sqlpiece, 0, strlen($sqlpiece) - 4) . ")";
 		}
-
 	}
 	$sql .= " LIMIT 1";
-	$result = mysql_query($sql);
-	if ($row = mysql_fetch_array($result)) {
+	if (version_compare(phpversion(), '5.6.10', '<')) {
+		$result = mysql_query($sql);
+		$row = mysql_fetch_array($result);
+	} else {
+		$result = mysqli_query($db, $sql);
+		$row = mysqli_fetch_array($result);
+	}
+	if ($row) {
 		return $row[id];
 	} else {
 		return 0;
 	}
 
+}
+
+function setRows($sql) {
+	$rows = array();
+	if (version_compare(phpversion(), '5.6.10', '<')) {
+		$result = mysql_query($sql);
+		if(mysql_error())
+		{
+			echo "<p>ERROR WITH QUERYL $sql<br>ERROR READS:".mysql_error()."</p>"; return FALSE;
+		}
+		while ($row = mysql_fetch_array($result)) {
+			$rows[]=$row;
+		}
+	} else {
+		$result = mysqli_query($db, $sql);
+		while ($row = mysqli_fetch_array($result)) {
+			$rows = array_push($rows, $row);
+		}
+	}
+	return $rows;
 }

@@ -29,7 +29,7 @@ function prepInput($data, $type = "") {
 			$data = 0;
 		}
 	} else if ($type == "url") {
-		if (substr($data, 0, 7) != "http://" && substr($data, 0, 8) != "https://") {
+		if (strlen($data) > 4 && substr($data, 0, 7) != "http://" && substr($data, 0, 8) != "https://") {
 			$data = "http://" . $data;
 		}
 	}

@@ -52,10 +52,10 @@ class Hours {
 		            *
 		            * @return FALSE on error, otherwise TRUE
 	*/
-	function insertHoursForAgency($openTime, $closeTime, $dayOfWeek_id, $agency_id) {
+	function insertHoursForAgency($openTime, $closeTime, $dayOfWeek_id, $agency_id, $subcategory_id) {
 		$db = new Db();
 		$dbconn = $db->connect();
-		$sql = "INSERT INTO " . $this->table . " (openTime, closeTime, dayOfWeek_id, agency_id)  VALUES('$openTime', '$closeTime', '$dayOfWeek_id', '$agency_id')";
+		$sql = "INSERT INTO " . $this->table . " (openTime, closeTime, dayOfWeek_id, agency_id, subcategory_id)  VALUES('$openTime', '$closeTime', '$dayOfWeek_id', '$agency_id', '$subcategory_id')";
 		$db->query($sql);
 		if ($db->error()) {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";

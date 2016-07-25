@@ -3,7 +3,7 @@ class Agencies {
 
 	public $table = "agency";
 	public $subCatLinkTable = "agency_has_subcategories";
-	public $subCatTable = "subcategory";
+	public $subCatTable = "subCategory";
 	public $catTable = "category";
 
 	public function __construct() {
@@ -236,16 +236,16 @@ class Agencies {
 		$db = new Db();
 		$dbconn = $db->connect();
 
-		$sql = "SELECT DISTINCT t1.* FROM $catTable AS t1, " . $this->subCatTable . " AS t2, " . $this->subCatLinkTable . " AS t3 WHERE t1.id=t2.categories_id AND t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid' ORDER BY $orderby";
+		$sql = "SELECT DISTINCT t1.* FROM ".$this->catTable." AS t1, " . $this->subCatTable . " AS t2, " . $this->subCatLinkTable . " AS t3 WHERE t1.id=t2.category_id AND t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid' ORDER BY $orderby";
 
-		$result = $db->query($sql);
+                $activatedCats = $db->select($sql);
 
-		if ($db->error()) {
-			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
-			return FALSE;
-		}
+                if ($db->error()) {
+                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+                        return FALSE;
+                }
 
-		return $result;
+                return $activatedCats;
 	}
 
 	/*
@@ -257,13 +257,13 @@ class Agencies {
 		 *
 		 * @return	mysql_insert_id() or FALSE if error
 	*/
-	function insert_agency($name, $description, $address1, $address2, $city, $state, $zip,
-		$phone, $emergencyPhone, $fax, $website, $contactFirst, $contactLast, $email, $free) {
+	function insert_agency($name, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free) {
 
 		$db = new Db();
 		$dbconn = $db->connect();
 
-		$sql = "INSERT INTO " . $this->table . " (name, description, address1, address2, city, state, zip, phone, emergencyPhone, fax, website, contactFirst, contactLast, email, free) VALUES ('$name', '$description' , '$address1', '$address2', '$city', '$state', '$zip', '$phone',     '$emergencyPhone', '$fax', '$website', '$contactFirst', '$contactLast', '$email', $free)";
+		$sql = "INSERT INTO " . $this->table . " (name, description, address1, address2, city, state, zip, website, email, free)
+		VALUES ('$name', '$description' , '$address1', '$address2', '$city', '$state', '$zip', '$website', '$email', $free)";
 
 		$result = $db->query($sql);
 
@@ -271,8 +271,12 @@ class Agencies {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
 			return FALSE;
 		}
-
-		return mysql_insert_id(); //This is the Agency.id value for the newly inserted Agency
+		if (version_compare(phpversion(), '5.6.10', '<')) {
+			$insert_id = mysql_insert_id(); //This is the Agency.id value for the newly inserted Agency
+		} else {
+			$insert_id = $dbconn->insert_id;
+		}
+		return $insert_id;
 	}
 
 	/*
@@ -281,15 +285,13 @@ class Agencies {
 		 *
 		 * @return	boolean
 	*/
-	function update_agency($id, $agency, $description, $address1, $address2, $city, $state, $zip,
-		$phone, $emergencyPhone, $fax, $website, $contactFirst, $contactLast, $email, $free) {
+	function update_agency($id, $agency, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free) {
 
 		$db = new Db();
 		$dbconn = $db->connect();
 
 		$sql = "UPDATE " . $this->table . " SET name='$agency', description='$description', address1='$address1', address2='$address2', city='$city', state='$state',
-	zip='$zip', phone='$phone', emergencyPhone='$emergencyPhone', fax='$fax', website='$website', contactFirst='$first',
-	contactLast='$last', email='$email', free=$free WHERE id=$id;";
+	zip='$zip', website='$website', email='$email', free=$free WHERE id=$id;";
 
 		$db->query($sql);
 
@@ -297,8 +299,7 @@ class Agencies {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
 			return FALSE;
 		}
-
-		 //echo "<br>SQL: " . $sql . "<br>";
+		return TRUE;
 	}
 
 	/*
@@ -317,7 +318,12 @@ class Agencies {
 			return FALSE;
 		}
 
-		$row = mysql_fetch_array($result);
+		if (version_compare(phpversion(), '5.6.10', '<')) {
+			$row = mysql_fetch_array($result);
+		} else {
+			$row = mysqli_fetch_array($result);
+		}
+
 		$url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($row[address1] . " " . $row[address2] . ", $row[city], $row[state]") . "&key=$GoogleMapsAPI";
 
 		$ch = curl_init($url);
@@ -365,6 +371,46 @@ class Agencies {
 			return FALSE;
 		}
 	}
+
+        /*
+                 * Delete agency and related info from the database
+                 *
+                 * @return      boolean
+        */
+        function deleteAgency($id)	{
+
+                $db = new Db();
+                $dbconn = $db->connect();
+
+		$sql="DELETE FROM contact WHERE agency_id='$id'";
+                $db->query($sql);
+                if ($db->error()) {
+                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+                        return FALSE;
+                }
+
+                $sql="DELETE FROM agency_has_subcategories WHERE agency_id='$id'";
+                $db->query($sql);
+                if ($db->error()) {
+                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+                        return FALSE;
+                }
+
+                $sql="DELETE FROM agencyHours WHERE agency_id='$id'";
+                $db->query($sql);
+                if ($db->error()) {
+                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+                        return FALSE;
+                }
+
+                $sql="DELETE FROM agency WHERE id='$id'";
+                $db->query($sql);
+                if ($db->error()) {
+                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+                        return FALSE;
+                }
+                return TRUE;
+        }
 
 } //End Class Definition
 ?>

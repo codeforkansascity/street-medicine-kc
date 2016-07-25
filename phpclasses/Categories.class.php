@@ -1,7 +1,7 @@
 <?php
 class Categories {
 	public $table = "category";
-	public $subtable = "subcategory";
+	public $subtable = "subCategory";
 	public $junctionTable = "agency_has_subcategories";
 
 	public function __construct() {

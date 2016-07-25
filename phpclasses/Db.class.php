@@ -15,15 +15,21 @@ class Db {
 		if (!isset(self::$connection)) {
 			// Load configuration as an array. Use the actual location of your configuration file
 			$config = parse_ini_file(dirname(__FILE__) . '/../dbconfig.ini');
-			// Create connection
-			self::$connection = new mysqli($config['host'], $config['dbuser'], $config['dbpass'], $config['dbname']);
 
-// Check connection
-			if (self::$connection->connect_error) {
-				die("Connection failed: " . self::$connection->connect_error);
+			// Create connection
+			if (version_compare(phpversion(), '5.6.10', '<')) {
+				self::$connection = mysql_connect($config['host'], $config['dbuser'], $config['dbpass']);
+				if (!self::$connection) {
+					echo "Connection failed.";
+				}
+				$db_selected = mysql_select_db($config['dbname'], self::$connection);
+			} else {
+				self::$connection = new mysqli($config['host'], $config['dbuser'], $config['dbpass'], $config['dbname']);
+				if (self::$connection->connect_error) {
+					echo ("Connection failed: " . self::$connection->connect_error);
+				}
 			}
 		}
-
 		return self::$connection;
 	}
 
@@ -35,9 +41,21 @@ class Db {
 	 */
 	public function query($query) {
 		// Connect to the database
-		$connection = $this->connect();
 		// Query the database
-		$result = mysqli_query($connection, $query);
+		if (version_compare(phpversion(), '5.6.10', '<')) {
+			$result = mysql_query($query);
+		} else {
+			$result = mysqli_query($this->connect(), $query);
+		}
+
+		if (!$result) {
+			if (version_compare(phpversion(), '5.6.10', '<')) {
+				echo ('Invalid query: ' . mysql_error() . $query);
+			} else {
+				echo ('Invalid query: ' . mysqli_error($connection) . $query);
+			}
+		}
+
 		return $result;
 	}
 
@@ -48,13 +66,19 @@ class Db {
 	 * @return bool False on failure / array Database rows on success
 	 */
 	public function select($query) {
-		$rows = array();
 		$result = $this->query($query);
 		if ($result === false) {
 			return false;
 		}
-		while ($row = $result->fetch_assoc()) {
-			$rows[] = $row;
+		$rows = array();
+		if (version_compare(phpversion(), '5.6.10', '<')) {
+			while ($row = mysql_fetch_assoc($result)) {
+				$rows[] = $row;
+			}
+		} else {
+			while ($row = $result->fetch_assoc()) {
+				$rows[] = $row;
+			}
 		}
 		return $rows;
 	}
@@ -65,8 +89,12 @@ class Db {
 	 * @return string Database error message
 	 */
 	public function error() {
-		$connection = $this->connect();
-		return $connection->error;
+		if (version_compare(phpversion(), '5.6.10', '<')) {
+			$connection = $this->connect();
+			return $connection->error;
+		} else {
+			return mysqli_error($connection);
+		}
 	}
 
 	/**
