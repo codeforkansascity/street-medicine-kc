@@ -90,8 +90,7 @@ class Db {
 	 */
 	public function error() {
 		if (version_compare(phpversion(), '5.6.10', '<')) {
-			$connection = $this->connect();
-			return $connection->error;
+			return mysql_error();
 		} else {
 			return mysqli_error($connection);
 		}

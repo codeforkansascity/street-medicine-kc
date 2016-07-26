@@ -54,7 +54,7 @@ foreach ($cats as $cat) {
 		echo " checked";
 	}
 
-	echo "> " . $cat[category] . "</label>";
+	echo "> " . preg_replace("/( Services)/","",$cat[category]) . "</label>";
 }
 ?>
 </div><!--/category-options-->

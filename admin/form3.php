@@ -61,7 +61,7 @@ function doTime($H, $key, $value, $agency_id, $tFormat) {
 
 function doSubcategory($A, $key, $agency_id) {
 	$subcategory_id = prepInput(substr($key, 6), "phone");
-	$A->refreshSubCatLinkTable($agency_id, $subcategory_id);
+	$A->refreshSubCatLinkTable($agency_id, $subcategory_id);	
 }
 
 function doContact($K, $key, $agency_id) {
