@@ -7,7 +7,7 @@ include_once 'includes/functions.php';
 /* Process the Form Input */
 sec_session_start();
 if (login_check($mysqli) == false) {
-	header("Location: ../error.php?err=You are not authorized to access this page, please login.");
+	header("Location: ../admin/error.php?err=You are not authorized to access this page, please login.");
 	exit();
 }
 if ($_POST) {

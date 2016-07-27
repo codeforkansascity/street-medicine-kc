@@ -7,7 +7,7 @@ $db = new Db();
 echo $header;
 sec_session_start();
 if (login_check($mysqli) == false) {
-	header("Location: ../error.php?err=You are not authorized to access this page, please login.");
+	header("Location: ../admin/error.php?err=You are not authorized to access this page, please login.");
 	exit();
 }
 if ($_GET["agency_id"]) //This agency was saved - show them a confirmation message at the top
@@ -27,7 +27,7 @@ if ($_GET["agency_id"]) //This agency was saved - show them a confirmation messa
 </div>
 <?php
 if ($saved) {
-	echo "<p class=\"bg-success\">This agency's information has been saved! Continue editing this agency below or <a href=\"index.php\"><b>click here</b></a> to return to the main menu.</p>";
+	echo "<p class=\"bg-success\">This agency's information has been saved! Continue editing this agency below or <a href=\"front.php\"><b>click here</b></a> to return to the main menu.</p>";
 }
 
 $A = new Agencies();

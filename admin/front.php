@@ -6,8 +6,7 @@ require '../controller.php';
 // Include database connection and functions here.  See 3.1.
 sec_session_start();
 if (login_check($mysqli) == false) {
-	var_dump($mysqli);
-	header("Location: ../includes/error.php?err=You are not authorized to access this page, please login.");
+	header("Location: ../admin/error.php?err=You are not authorized to access this page, please login.");
 	exit();
 }
 $db = new Db();
@@ -152,7 +151,7 @@ for ($a = $offset; $a <= $limit; $a++) {
 		echo "<i>(no contact listed)</i>";
 	}
 
-	echo "</td><td><a href=\"index.php?delete_agency_id=" . $agencyinfo[$a]['id'] . "\" onClick=\"return confirm('Are you sure you want to remove this agency from the database?');\">Delete</a></td></tr>";
+	echo "</td><td><a href=\"front.php?delete_agency_id=" . $agencyinfo[$a]['id'] . "\" onClick=\"return confirm('Are you sure you want to remove this agency from the database?');\">Delete</a></td></tr>";
 }
 echo "</tbody></table>";
 echo $pagenav;
