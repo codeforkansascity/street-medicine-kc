@@ -1,9 +1,15 @@
 <?php
 require '../variables.php';
 require '../controller.php';
+include_once 'includes/db_connect.php';
+include_once 'includes/functions.php';
 $db = new Db();
 echo $header;
-
+sec_session_start();
+if (login_check($mysqli) == false) {
+	header("Location: ../error.php?err=You are not authorized to access this page, please login.");
+	exit();
+}
 if ($_GET["agency_id"]) //This agency was saved - show them a confirmation message at the top
 {
 	$saved = 1;
