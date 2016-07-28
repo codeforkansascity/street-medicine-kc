@@ -7,8 +7,7 @@ include_once 'includes/functions.php';
 /* Process the Form Input */
 sec_session_start();
 if (login_check($mysqli) == false) {
-	header("Location: ../admin/error.php?err=You are not authorized to access this page, please login.");
-	exit();
+	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
 }
 if ($_POST) {
 	$A = new Agencies();

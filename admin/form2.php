@@ -7,8 +7,7 @@ $db = new Db();
 echo $header;
 sec_session_start();
 if (login_check($mysqli) == false) {
-	header("Location: ../admin/error.php?err=You are not authorized to access this page, please login.");
-	exit();
+	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
 }
 if ($_GET["agency_id"]) //This agency was saved - show them a confirmation message at the top
 {

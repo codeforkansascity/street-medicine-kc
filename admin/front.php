@@ -6,8 +6,7 @@ require '../controller.php';
 // Include database connection and functions here.  See 3.1.
 sec_session_start();
 if (login_check($mysqli) == false) {
-	header("Location: ../admin/error.php?err=You are not authorized to access this page, please login.");
-	exit();
+	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
 }
 $db = new Db();
 echo $header;
