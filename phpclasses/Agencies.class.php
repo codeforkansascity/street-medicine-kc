@@ -89,7 +89,7 @@ class Agencies {
 				$description .= "<p>$agency[description]</p>";
 			}
 
-			$description .= "<span style=\"float:left;\"><a target=\"_blank\" href=\"https://www.google.com/maps?dirflg=r&saddr=My+Location&daddr=".urlencode("$agency[address1], $agency[city] $agency[state], $agency[zipcode]")."\"><b>GET DIRECTIONS</b></a></span><span style=\"float:right;\"><a target=\"_blank\" href=\"#\"><b>MORE INFO</b></a></span><div style=\"clear:both;\"></div>";
+			$description .= "<span style=\"float:left;\"><a target=\"_blank\" href=\"https://www.google.com/maps?dirflg=r&saddr=My+Location&daddr=" . urlencode("$agency[address1], $agency[city] $agency[state], $agency[zipcode]") . "\"><b>GET DIRECTIONS</b></a></span><span style=\"float:right;\"><a target=\"_blank\" href=\"#\"><b>MORE INFO</b></a></span><div style=\"clear:both;\"></div>";
 			return $description;
 		}
 	}
@@ -99,7 +99,7 @@ class Agencies {
 		        *
 		        * @param  $orderby - Field by which to order (default: subCategory)
 		        *
-		        * @return MySQL query result array
+		        * @return bool
 	*/
 
 	public function refreshSubCatLinkTable($agency_id, $subcategories_id) {
@@ -118,7 +118,7 @@ class Agencies {
 		     	*
 			* @param  $orderby - Field by which to order (default: name)
 			*
-		     	* @return MySQL query result
+		     	* @return MySQL false on error, else query result
 	*/
 
 	public function fetchAgencies($orderby = "name ASC") {
@@ -224,7 +224,7 @@ class Agencies {
 			        * @param        $agencyid (Agency.id)
 			        * @param        $orderby (default order by is category name)
 			        *
-			        * @return       MySQL query result
+			        * @return       MySQL query result, false on error
 	*/
 	public function fetchActivatedAgencyCategories($agencyid = 0, $orderby = "category") {
 
@@ -234,16 +234,16 @@ class Agencies {
 
 		$db = self::$db;
 
-		$sql = "SELECT DISTINCT t1.* FROM ".$this->catTable." AS t1, " . $this->subCatTable . " AS t2, " . $this->subCatLinkTable . " AS t3 WHERE t1.id=t2.category_id AND t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid' ORDER BY $orderby";
+		$sql = "SELECT DISTINCT t1.* FROM " . $this->catTable . " AS t1, " . $this->subCatTable . " AS t2, " . $this->subCatLinkTable . " AS t3 WHERE t1.id=t2.category_id AND t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid' ORDER BY $orderby";
 
-                $activatedCats = $db->select($sql);
+		$activatedCats = $db->select($sql);
 
-                if ($db->error()) {
-                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
-                        return FALSE;
-                }
+		if ($db->error()) {
+			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+			return FALSE;
+		}
 
-                return $activatedCats;
+		return $activatedCats;
 	}
 
 	/*
@@ -405,7 +405,6 @@ class Agencies {
                 }
                 return TRUE;
         }
-
 
 	/*
 		* Add/Update coordinates for an agency

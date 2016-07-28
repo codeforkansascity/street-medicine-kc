@@ -2,7 +2,13 @@
 require '../variables.php';
 require '../controller.php';
 require 'functions.php';
+include_once 'includes/db_connect.php';
+include_once 'includes/functions.php';
 /* Process the Form Input */
+sec_session_start();
+if (login_check($mysqli) == false) {
+	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
+}
 if ($_POST) {
 	$A = new Agencies();
 	$C = new Categories();
@@ -64,7 +70,7 @@ function doTime($H, $key, $value, $agency_id, $tFormat) {
 
 function doSubcategory($A, $key, $agency_id) {
 	$subcategory_id = prepInput(substr($key, 6), "phone");
-	$A->refreshSubCatLinkTable($agency_id, $subcategory_id);	
+	$A->refreshSubCatLinkTable($agency_id, $subcategory_id);
 }
 
 function doContact($K, $key, $agency_id) {

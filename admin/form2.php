@@ -1,9 +1,14 @@
 <?php
 require '../variables.php';
 require '../controller.php';
+include_once 'includes/db_connect.php';
+include_once 'includes/functions.php';
 $db = new Db();
 echo $header;
-
+sec_session_start();
+if (login_check($mysqli) == false) {
+	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
+}
 if ($_GET["agency_id"]) //This agency was saved - show them a confirmation message at the top
 {
 	$saved = 1;
@@ -21,7 +26,7 @@ if ($_GET["agency_id"]) //This agency was saved - show them a confirmation messa
 </div>
 <?php
 if ($saved) {
-	echo "<p class=\"bg-success\">This agency's information has been saved! Continue editing this agency below or <a href=\"index.php\"><b>click here</b></a> to return to the main menu.</p>";
+	echo "<p class=\"bg-success\">This agency's information has been saved! Continue editing this agency below or <a href=\"front.php\"><b>click here</b></a> to return to the main menu.</p>";
 }
 
 $A = new Agencies();
