@@ -18,18 +18,10 @@ $results = explode("<data>", GetSearchResults($catids));
 $kmlfile = $results[0];
 $listhtml = $results[1];
 
-echo GetHeader($kmlfile);
-
-//GEO CODE AGENCIES
-$sql = "SELECT * FROM agency WHERE latitude=0 AND address1!=''";
-$result = mysql_query($sql);
 $A = new Agencies();
-while ($row = mysql_fetch_array($result)) {
-	$temp = explode(",", $A->getCoordinates($row[id]));
-	$sql2 = "UPDATE Agency SET latitude='$temp[0]',longitude='$temp[1]' WHERE id='$row[id]'";
-	$result2 = mysql_query($sql2);
-}
+$A->geoCode();
 
+echo GetHeader($kmlfile);
 ?>
 <div class="row filter-wrap">
 <form method="post" action="">

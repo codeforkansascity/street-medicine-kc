@@ -2,8 +2,13 @@
 class Hours {
 	public $table = "agencyHours";
 
-	public function __construct() {
-	}
+        // The database object
+        protected static $db;
+
+        public function __construct() {
+                self::$db = new Db() or die("Unable to initiate database object");
+                $dbconn = self::$db->connect() or die("Unable to connect to the database");
+        }
 
 	/*
 		$sql = "DELETE FROM homeless_kc.agency_has_subcategories WHERE agency_id=$agency_id;";
@@ -14,9 +19,8 @@ class Hours {
 		            *
 		            * @return FALSE on error, otherwise TRUE
 	*/
-	function deleteHoursForAgency($agency_id) {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function deleteHoursForAgency($agency_id) {
+		$db = self::$db;
 		$sql = "DELETE FROM " . $this->table . " WHERE agency_id=$agency_id;";
 		$result = $db->query($sql);
 		if ($db->error()) {
@@ -33,9 +37,8 @@ class Hours {
 		            *
 		            * @return MySQL query result array
 	*/
-	function getHoursForAgency($agency_id, $subcategory_id = 0, $orderby = "dayOfWeek_id, openTime") {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function getHoursForAgency($agency_id, $subcategory_id = 0, $orderby = "dayOfWeek_id, openTime") {
+                $db = self::$db;
 		$sql = "SELECT * FROM " . $this->table . " WHERE agency_id = $agency_id AND subcategory_id = $subcategory_id ORDER BY $orderby";
 		$hours = $db->select($sql);
 		if ($db->error()) {
@@ -52,9 +55,8 @@ class Hours {
 		            *
 		            * @return FALSE on error, otherwise TRUE
 	*/
-	function insertHoursForAgency($openTime, $closeTime, $dayOfWeek_id, $agency_id, $subcategory_id) {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function insertHoursForAgency($openTime, $closeTime, $dayOfWeek_id, $agency_id, $subcategory_id) {
+                $db = self::$db;
 		$sql = "INSERT INTO " . $this->table . " (openTime, closeTime, dayOfWeek_id, agency_id, subcategory_id)  VALUES('$openTime', '$closeTime', '$dayOfWeek_id', '$agency_id', '$subcategory_id')";
 		$db->query($sql);
 		if ($db->error()) {

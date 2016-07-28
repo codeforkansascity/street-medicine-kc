@@ -1,5 +1,4 @@
 <?php
-//THIS VERSION IS FOR NEW PHP!!!!!
 //Database Class to perform standard DB operations
 class Db {
 	// The database connection
@@ -14,17 +13,17 @@ class Db {
 		// Try and connect to the database
 		if (!isset(self::$connection)) {
 			// Load configuration as an array. Use the actual location of your configuration file
-			$config = parse_ini_file(dirname(__FILE__) . '/../dbconfig.ini');
+			include(dirname(__FILE__) . '/../dbconfig.php');
 
 			// Create connection
 			if (version_compare(phpversion(), '5.6.10', '<')) {
-				self::$connection = mysql_connect($config['host'], $config['dbuser'], $config['dbpass']);
+				self::$connection = mysql_connect($host, $dbuser, $dbpass);
 				if (!self::$connection) {
 					echo "Connection failed.";
 				}
-				$db_selected = mysql_select_db($config['dbname'], self::$connection);
+				$db_selected = mysql_select_db($dbname, self::$connection);
 			} else {
-				self::$connection = new mysqli($config['host'], $config['dbuser'], $config['dbpass'], $config['dbname']);
+				self::$connection = new mysqli($host, $dbuser, $dbpass, $dbname);
 				if (self::$connection->connect_error) {
 					echo ("Connection failed: " . self::$connection->connect_error);
 				}

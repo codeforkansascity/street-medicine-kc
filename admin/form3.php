@@ -44,6 +44,9 @@ if ($_POST) {
 			doContact($K, $key, $agency_id);
 		} //if match
 	} //foreach
+
+	//Update Geo-Coded Coordinates
+	$A->geoCode($agency_id);
 } //if $_POST
 
 header("Location: form2.php?agency_id=$agency_id");

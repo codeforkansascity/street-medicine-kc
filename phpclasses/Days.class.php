@@ -2,8 +2,13 @@
 class Days {
 	public $table = "dayOfWeek";
 
-	public function __construct() {
-	}
+        // The database object
+        protected static $db;
+
+        public function __construct() {
+                self::$db = new Db() or die("Unable to initiate database object");
+                $dbconn = self::$db->connect() or die("Unable to connect to the database");
+        }
 
 	/*
 		            * Returns an array of days
@@ -12,9 +17,8 @@ class Days {
 		            *
 		            * @return MySQL query result array
 	*/
-	function getAllDays($orderby = "id") {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function getAllDays($orderby = "id") {
+		$db = self::$db;
 		$sql = "SELECT * FROM " . $this->table . " ORDER BY $orderby";
 		$days = $db->select($sql);
 		if ($db->error()) {

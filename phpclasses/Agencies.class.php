@@ -1,12 +1,17 @@
 <?php
 class Agencies {
 
+        // The database object
+        protected static $db;
+
 	public $table = "agency";
 	public $subCatLinkTable = "agency_has_subcategories";
 	public $subCatTable = "subCategory";
 	public $catTable = "category";
 
 	public function __construct() {
+                self::$db = new Db() or die("Unable to initiate database object");
+                $dbconn = self::$db->connect() or die("Unable to connect to the database");
 	}
 
 	/*
@@ -17,13 +22,12 @@ class Agencies {
 		        * @return associative array
 	*/
 
-	function fetchAgency($agencyid) {
+	public function fetchAgency($agencyid) {
 		if (!$agencyid) {
 			return FALSE;
 		}
 
-		$db = new Db();
-		$dbconn = $db->connect();
+		$db = self::$db;
 		$sql = "SELECT * FROM " . $this->table . " WHERE id='$agencyid'";
 		$agencies = $db->select($sql);
 
@@ -49,9 +53,8 @@ class Agencies {
 		        * @return string
 	*/
 
-	function getAgencyDescription($agencyid) {
-		$db = new Db();
-		// $dbconn = $db->connect();
+	public function getAgencyDescription($agencyid) {
+		$db = self::$db;
 		$sql = "SELECT * FROM " . $this->table . " WHERE id='$agencyid'";
 		$agencies = $db->select($sql);
 
@@ -99,9 +102,8 @@ class Agencies {
 		        * @return MySQL query result array
 	*/
 
-	function refreshSubCatLinkTable($agency_id, $subcategories_id) {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function refreshSubCatLinkTable($agency_id, $subcategories_id) {
+		$db = self::$db;
 		$sql = "INSERT INTO " . $this->subCatLinkTable . " VALUES ($agency_id, $subcategories_id);";
 		$db->query($sql);
 		if ($db->error()) {
@@ -119,9 +121,8 @@ class Agencies {
 		     	* @return MySQL query result
 	*/
 
-	function fetchAgencies($orderby = "name ASC") {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function fetchAgencies($orderby = "name ASC") {
+		$db = self::$db;
 		$sql = "SELECT * FROM " . $this->table . " ORDER BY $orderby";
 		$agencies = $db->select($sql);
 		if ($db->error()) {
@@ -145,7 +146,7 @@ class Agencies {
 		* @return formatted string
 	*/
 
-	function formatPhone($phone) {
+	public function formatPhone($phone) {
 		$phone = preg_replace("/[^0-9]/", "", $phone);
 		$phone = "(" . substr($phone, 0, 3) . ") " . substr($phone, 3, 3) . "-" . substr($phone, 6, 4);
 		return $phone;
@@ -161,7 +162,7 @@ class Agencies {
 		* @return 	MySQL query result
 	*/
 
-	function fetchActivatedAgencySubCategories($agencyid = 0, $categoryid = 0, $orderby = "subCategory") {
+	public function fetchActivatedAgencySubCategories($agencyid = 0, $categoryid = 0, $orderby = "subCategory") {
 
 		if ($agencyid == 0) {
 			return FALSE;
@@ -174,8 +175,7 @@ class Agencies {
 
 		$sql .= " ORDER BY $orderby";
 
-		$db = new Db();
-		$dbconn = $db->connect();
+		$db = self::$db;
 		$activatedSubCats = $db->select($sql);
 
 		if ($db->error()) {
@@ -195,13 +195,12 @@ class Agencies {
 			* @return	boolean
 	*/
 
-	function agencyHasSubCategory($agencyid, $subcatid) {
+	public function agencyHasSubCategory($agencyid, $subcatid) {
 		if (!$agencyid || !$subcatid) {
 			return FALSE;
 		}
 
-		$db = new Db();
-		$dbconn = $db->connect();
+		$db = self::$db;
 
 		$sql = "SELECT t1.* FROM " . $this->subCatTable . " AS t1, " . $this->subCatLinkTable . " AS t2 WHERE t1.id=t2.subCategories_id AND t2.Agency_id='$agencyid' AND t1.id='$subcatid'";
 
@@ -227,14 +226,13 @@ class Agencies {
 			        *
 			        * @return       MySQL query result
 	*/
-	function fetchActivatedAgencyCategories($agencyid = 0, $orderby = "category") {
+	public function fetchActivatedAgencyCategories($agencyid = 0, $orderby = "category") {
 
 		if ($agencyid == 0) {
 			return FALSE;
 		}
 
-		$db = new Db();
-		$dbconn = $db->connect();
+		$db = self::$db;
 
 		$sql = "SELECT DISTINCT t1.* FROM ".$this->catTable." AS t1, " . $this->subCatTable . " AS t2, " . $this->subCatLinkTable . " AS t3 WHERE t1.id=t2.category_id AND t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid' ORDER BY $orderby";
 
@@ -257,10 +255,9 @@ class Agencies {
 		 *
 		 * @return	mysql_insert_id() or FALSE if error
 	*/
-	function insert_agency($name, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free) {
+	public function insert_agency($name, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free) {
 
-		$db = new Db();
-		$dbconn = $db->connect();
+		$db = self::$db;
 
 		$sql = "INSERT INTO " . $this->table . " (name, description, address1, address2, city, state, zip, website, email, free)
 		VALUES ('$name', '$description' , '$address1', '$address2', '$city', '$state', '$zip', '$website', '$email', $free)";
@@ -285,10 +282,9 @@ class Agencies {
 		 *
 		 * @return	boolean
 	*/
-	function update_agency($id, $agency, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free) {
+	public function update_agency($id, $agency, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free) {
 
-		$db = new Db();
-		$dbconn = $db->connect();
+		$db = self::$db;
 
 		$sql = "UPDATE " . $this->table . " SET name='$agency', description='$description', address1='$address1', address2='$address2', city='$city', state='$state',
 	zip='$zip', website='$website', email='$email', free=$free WHERE id=$id;";
@@ -308,8 +304,8 @@ class Agencies {
 		 * @param	agencyid
 		 * @return       "$lat,$lng" or FALSE
 	*/
-	function getCoordinates($agencyid) {
-		$db = new Db();
+	public function getCoordinates($agencyid) {
+		$db = self::$db;
 		$sql = "SELECT * FROM " . $this->table . " WHERE id='$agencyid'";
 		$result = $db->query($sql);
 
@@ -324,7 +320,7 @@ class Agencies {
 			$row = mysqli_fetch_array($result);
 		}
 
-		$url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($row[address1] . " " . $row[address2] . ", $row[city], $row[state]") . "&key=$GoogleMapsAPI";
+		$url = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD4msj-ty44VVh0dNDPPocz0wAv_XIRjiE&address=" . urlencode($row[address1] . " " . $row[address2] . ", $row[city], $row[state]");
 
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -352,11 +348,10 @@ class Agencies {
 		 *
 		 * @return	boolean
 	*/
-	function isInCategory($agencyid, $categid) {
+	public function isInCategory($agencyid, $categid) {
 		$sql = "SELECT * FROM subCategories AS t2, Agency_has_subCategories AS t3 WHERE t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid' AND t2.categories_id='$categid'";
 
-		$db = new Db();
-		$dbconn = $db->connect();
+		$db = self::$db;
 
 		$result = $db->query($sql);
 
@@ -377,10 +372,9 @@ class Agencies {
                  *
                  * @return      boolean
         */
-        function deleteAgency($id)	{
+        public function deleteAgency($id)	{
 
-                $db = new Db();
-                $dbconn = $db->connect();
+                $db = self::$db;
 
 		$sql="DELETE FROM contact WHERE agency_id='$id'";
                 $db->query($sql);
@@ -411,6 +405,35 @@ class Agencies {
                 }
                 return TRUE;
         }
+
+
+	/*
+		* Add/Update coordinates for an agency
+		*
+		* @param $agencyid: if 0 = check for missing coordinates; if >0, update that agency only
+		* @return boolean
+	*/
+	public function geoCode($agencyid=0) {
+		$db=self::$db;
+		if($agencyid==0)
+		   	$sql = "SELECT * FROM agency WHERE latitude=0 AND address1!=''";
+		else
+			$sql = "SELECT * FROM agency WHERE id='$agencyid'";
+                $agencies = $db->select($sql);
+                if ($db->error()) {
+                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+                        return FALSE;
+                }
+                foreach ($agencies as $agency) {
+        		$temp = explode(",", $this->getCoordinates($agency['id']));
+        		$sql2 = "UPDATE agency SET latitude='$temp[0]',longitude='$temp[1]' WHERE id='".$agency['id']."'";
+        		$result2 = $db->query($sql2);
+                	if ($db->error()) {
+                        	echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+                        	return FALSE;
+                	}
+		}
+	}
 
 } //End Class Definition
 ?>

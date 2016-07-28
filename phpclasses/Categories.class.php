@@ -1,11 +1,17 @@
 <?php
 class Categories {
+
 	public $table = "category";
 	public $subtable = "subCategory";
 	public $junctionTable = "agency_has_subcategories";
 
-	public function __construct() {
-	}
+        // The database object
+        protected static $db;
+
+        public function __construct() {
+                self::$db = new Db() or die("Unable to initiate database object");
+                $dbconn = self::$db->connect() or die("Unable to connect to the database");
+        }
 
 	/*
 		        * Returns an array of all Categories
@@ -16,9 +22,8 @@ class Categories {
 		        *
 		        * @return MySQL query result array
 	*/
-	function getAllCategories($orderby = "id", $pinfile = FALSE) {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function getAllCategories($orderby = "id", $pinfile = FALSE) {
+		$db = self::$db;
 		$sql = "SELECT * FROM " . $this->table;
 		if ($pinfile) {
 			$sql .= " WHERE pinfile!=''";
@@ -40,9 +45,8 @@ class Categories {
 		        *
 		        * @return MySQL query result array
 	*/
-	function getSubCategories($catid, $orderby = "sequence, id") {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function getSubCategories($catid, $orderby = "sequence, id") {
+                $db = self::$db;
 		$sql = "SELECT * FROM " . $this->subtable . " WHERE category_id='$catid'" . " ORDER BY $orderby";
 		$subcats = $db->select($sql);
 		if ($db->error()) {
@@ -59,9 +63,8 @@ class Categories {
 		        *
 		        * @return MySQL query result array
 	*/
-	function deleteSubcategoryRows($agency_id) {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function deleteSubcategoryRows($agency_id) {
+                $db = self::$db;
 		$sql = "DELETE FROM " . $this->junctionTable . " WHERE agency_id = $agency_id";
 		$db->query($sql);
 		if ($db->error()) {

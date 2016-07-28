@@ -4,8 +4,13 @@ class Contacts {
 	public $contactTypeTable = "contactType";
 	public $phoneTypeTable = "phoneType";
 
-	public function __construct() {
-	}
+        // The database object
+        protected static $db;
+
+        public function __construct() {
+                self::$db = new Db() or die("Unable to initiate database object");
+                $dbconn = self::$db->connect() or die("Unable to connect to the database");
+        }
 
 	/*
 		$sql = "DELETE FROM homeless_kc.agency_has_subcategories WHERE agency_id=$agency_id;";
@@ -16,9 +21,8 @@ class Contacts {
 		            *
 		            * @return FALSE on error, otherwise TRUE
 	*/
-	function deleteContactsForAgency($agency_id) {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function deleteContactsForAgency($agency_id) {
+		$db = self::$db;
 		$sql = "DELETE FROM " . $this->table . " WHERE agency_id=$agency_id;";
 		$result = $db->query($sql);
 		if ($db->error()) {
@@ -35,9 +39,8 @@ class Contacts {
 		            *
 		            * @return MySQL query result array
 	*/
-	function getContactsForAgency($agency_id, $orderby = "contactType_id") {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function getContactsForAgency($agency_id, $orderby = "contactType_id") {
+                $db = self::$db;
 		$sql = "SELECT * FROM " . $this->table . " WHERE agency_id = $agency_id ORDER BY $orderby";
 		$contacts = $db->select($sql);
 		if ($db->error()) {
@@ -52,9 +55,8 @@ class Contacts {
 		            *
 		            * @return MySQL query result string
 	*/
-	function getContactType($id) {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function getContactType($id) {
+                $db = self::$db;
 		$sql = "SELECT type FROM " . $this->contactTypeTable . " WHERE id = $id";
                 $type = $db->select($sql);
 		if ($db->error()) {
@@ -69,9 +71,8 @@ class Contacts {
 		            *
 		            * @return MySQL query result string
 	*/
-	function getPhoneType($id) {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function getPhoneType($id) {
+                $db = self::$db;
 		$sql = "SELECT type FROM " . $this->phoneTypeTable . " WHERE id = $id";
 		$type = $db->select($sql);
 		if ($db->error()) {
@@ -86,9 +87,8 @@ class Contacts {
 		            *
 		            * @return MySQL query result string
 	*/
-	function getAllContactTypes() {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function getAllContactTypes() {
+                $db = self::$db;
 		$sql = "SELECT * FROM " . $this->contactTypeTable;
 		$result = $db->select($sql);
 		if ($db->error()) {
@@ -103,9 +103,8 @@ class Contacts {
 		            *
 		            * @return MySQL query result string
 	*/
-	function getAllPhoneTypes() {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function getAllPhoneTypes() {
+                $db = self::$db;
 		$sql = "SELECT * FROM " . $this->phoneTypeTable;
 		$result = $db->select($sql);
 		if ($db->error()) {
@@ -120,9 +119,8 @@ class Contacts {
 		            *
 		            * @return MySQL query result string
 	*/
-	function insertContact($title, $givenName, $familyName, $suffix, $credentials, $phone, $email, $contactType_id, $agency_id, $phoneType_id) {
-		$db = new Db();
-		$dbconn = $db->connect();
+	public function insertContact($title, $givenName, $familyName, $suffix, $credentials, $phone, $email, $contactType_id, $agency_id, $phoneType_id) {
+                $db = self::$db;
 		$sql = "INSERT INTO " . $this->table . " (title, givenName, familyName, suffix, credentials, phone, email, contactType_id, agency_id, phoneType_id)
 		VALUES ('$title', '$givenName' , '$familyName', '$suffix', '$credentials', '$phone', '$email', '$contactType_id', '$agency_id', '$phoneType_id')";
 		$result = $db->query($sql);
