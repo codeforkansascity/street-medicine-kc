@@ -25,7 +25,7 @@ if ($_REQUEST['delete_agency_id']) {
 
 <!--BEGIN CUSTOM CONTENT-->
 
-    <div class="container theme-showcase" role="main">';
+    <div class="container theme-showcase" role="main">
 
 
 <div class="page-header">
