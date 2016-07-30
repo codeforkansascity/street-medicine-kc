@@ -53,8 +53,9 @@ $header = '<!DOCTYPE html>
     		<!-- Collect the nav links, forms, and other content for toggling -->
     		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       		<ul class="nav navbar-nav">
-        	<li><a href="/admin/front.php">Main Menu</a></li>
-		</ul>
+            <li><a href="/admin/front.php">Main Menu</a></li>
+            <li><a href="/admin/includes/logout.php">Logout</a></li>
+          </ul>
 		</div>
 	</nav>
 
@@ -63,5 +64,4 @@ $header = '<!DOCTYPE html>
 $footer = '    </div><!--/main container-->
   </body>
 </html>';
-
 ?>

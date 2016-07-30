@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Secure Login: Registration Success</title>
+        <title>SMKC Login: Registration Success</title>
         <link rel="stylesheet" href="styles/main.css" />
     </head>
     <body>

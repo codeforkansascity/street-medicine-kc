@@ -1,11 +1,11 @@
 <?php
-include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
 require '../variables.php';
 require '../controller.php';
 // Include database connection and functions here.  See 3.1.
 sec_session_start();
-if (login_check($mysqli) == false) {
+$L = new Login();
+if ($L->loginCheck() == false) {
 	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
 }
 $db = new Db();
@@ -24,6 +24,10 @@ if ($_REQUEST['delete_agency_id']) {
 ?>
 
 <!--BEGIN CUSTOM CONTENT-->
+
+    <div class="container theme-showcase" role="main">';
+
+
 <div class="page-header">
 <h1 style="text-align:center;">Homeless KC <small>Main Menu</small></h1>
 <?php if ($message != '') {
@@ -157,3 +161,4 @@ echo $pagenav;
 
 echo $footer;
 ?>
+

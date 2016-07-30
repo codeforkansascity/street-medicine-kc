@@ -13,7 +13,7 @@ class Db {
 		// Try and connect to the database
 		if (!isset(self::$connection)) {
 			// Load configuration as an array. Use the actual location of your configuration file
-			include(dirname(__FILE__) . '/../dbconfig.php');
+			include dirname(__FILE__) . '/../dbconfig.php';
 
 			// Create connection
 			if (version_compare(phpversion(), '5.6.10', '<')) {
@@ -51,7 +51,7 @@ class Db {
 			if (version_compare(phpversion(), '5.6.10', '<')) {
 				echo ('Invalid query: ' . mysql_error() . $query);
 			} else {
-				echo ('Invalid query: ' . mysqli_error($connection) . $query);
+				echo ('Invalid query: ' . mysqli_error($this->connect()) . $query);
 			}
 		}
 
@@ -91,7 +91,7 @@ class Db {
 		if (version_compare(phpversion(), '5.6.10', '<')) {
 			return mysql_error();
 		} else {
-			return mysqli_error($connection);
+			return mysqli_error($this->connect());
 		}
 	}
 

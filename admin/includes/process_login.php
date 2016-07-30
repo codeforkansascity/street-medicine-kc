@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once 'db_connect.php';
 include_once 'functions.php';
+require '../../controller.php';
 
 sec_session_start(); // Our custom secure way of starting a PHP session.
 
@@ -26,7 +26,8 @@ if (isset($_POST['email'], $_POST['p'])) {
 	$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 	$password = $_POST['p']; // The hashed password.
 	// echo "<br>hashed password: $password<br>";
-	if (login($email, $password, $mysqli) == true) {
+	$L = new Login();
+	if ($L->login($email, $password) == true) {
 		// Login success
 		header("Location: ../front.php");
 		exit();

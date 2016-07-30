@@ -6,7 +6,8 @@ include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
 /* Process the Form Input */
 sec_session_start();
-if (login_check($mysqli) == false) {
+$L = new Login();
+if ($L->loginCheck() == false) {
 	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
 }
 if ($_POST) {

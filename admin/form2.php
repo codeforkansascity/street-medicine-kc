@@ -6,7 +6,8 @@ include_once 'includes/functions.php';
 $db = new Db();
 echo $header;
 sec_session_start();
-if (login_check($mysqli) == false) {
+$L = new Login();
+if ($L->loginCheck() == false) {
 	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
 }
 if ($_GET["agency_id"]) //This agency was saved - show them a confirmation message at the top
