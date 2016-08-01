@@ -1,6 +1,6 @@
 <?php
 class Login {
-	public $table = "Admin";
+	public $table = "admin";
 	public $attempts = "loginAttempts";
 
 	public function __construct() {
@@ -218,7 +218,7 @@ class Login {
 	function userExists($email) {
 		$db = new Db();
 		$dbconn = $db->connect();
-		$sql = "SELECT id FROM admin  WHERE email = $email";
+		$sql = "SELECT id FROM admin  WHERE email = '$email'";
 		$result = $db->select($sql);
 		if ($db->error()) {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";

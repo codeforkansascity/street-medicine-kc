@@ -18,6 +18,7 @@
  */
 
 include_once 'psl-config.php';
+include_once '../controller.php';
 
 $error_msg = "";
 

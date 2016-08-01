@@ -24,6 +24,8 @@ $header = '<!DOCTYPE html>
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
     <title>Homeless KC</title>
+        <script type="text/JavaScript" src="/admin/js/sha512.js"></script>
+        <script type="text/JavaScript" src="/admin/js/forms.js"></script>
   <!-- minified jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 

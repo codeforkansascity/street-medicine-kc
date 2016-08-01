@@ -7,6 +7,7 @@ sec_session_start();
 $L = new Login();
 if ($L->loginCheck() == false) {
 	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
+	exit();
 }
 $db = new Db();
 echo $header;

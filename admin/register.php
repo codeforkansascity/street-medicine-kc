@@ -17,17 +17,9 @@
  */
 include_once 'includes/register.inc.php';
 include_once 'includes/functions.php';
+include_once '../functions.php';
+echo $header;
 ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>SMKC Login: Registration Form</title>
-        <script type="text/JavaScript" src="js/sha512.js"></script>
-        <script type="text/JavaScript" src="js/forms.js"></script>
-        <link rel="stylesheet" href="styles/main.css" />
-    </head>
-    <body>
         <!-- Registration form to be output if the POST variables are not
         set or if the registration script caused an error. -->
         <h1>Register with us</h1>
@@ -50,22 +42,21 @@ if (!empty($error_msg)) {
             <li>Your password and confirmation must match exactly</li>
         </ul>
         <form method="post" name="registration_form" action="<?php echo esc_url($_SERVER['PHP_SELF']); ?>">
-            Username: <input type='text' name='username' id='username' /><br>
-            Email: <input type="text" name="email" id="email" /><br>
-            Password: <input type="password"
+            <p>Username: <input type='text' name='username' id='username' /></p>
+            <p>Email: <input type="text" name="email" id="email" /></p>
+            <p>Password: <input type="password"
                              name="password"
-                             id="password"/><br>
-            Confirm password: <input type="password"
+                             id="password"/></p>
+            <p>Confirm password: <input type="password"
                                      name="confirmpwd"
-                                     id="confirmpwd" /><br>
-            <input type="button"
+                                     id="confirmpwd" /></p>
+            <p><input type="button"
                    value="Register"
                    onclick="return regformhash(this.form,
                                    this.form.username,
                                    this.form.email,
                                    this.form.password,
-                                   this.form.confirmpwd);" />
+                                   this.form.confirmpwd);" /></p>
         </form>
         <p>Return to the <a href="index.php">login page</a>.</p>
-    </body>
-</html>
+<?php echo $footer; ?>

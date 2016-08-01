@@ -26,29 +26,21 @@ if ($L->loginCheck() == true) {
 } else {
 	$logged = 'out';
 }
-?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>SMKC Login: Log In</title>
-        <link rel="stylesheet" href="styles/main.css" />
-        <script type="text/JavaScript" src="js/sha512.js"></script>
-        <script type="text/JavaScript" src="js/forms.js"></script>
-    </head>
-    <body>
-        <?php
+echo $header;
+
 if (isset($_GET['error'])) {
 	echo '<p class="error">Error Logging In!</p>';
 }
 ?>
         <form action="includes/process_login.php" method="post" name="login_form">
-            Email: <input type="text" name="email" />
+	<h1>Homeless KC Login:</h1>
+            <p>Email: <input type="text" name="email" />
             Password: <input type="password"
                              name="password"
                              id="password"/>
             <input type="button"
                    value="Login"
-                   onclick="formhash(this.form, this.form.password);" />
+                   onclick="formhash(this.form, this.form.password);" /></p>
         </form>
         <p>If you don't have a login, please <a href="register.php">register</a></p>
         <p>You are currently logged <?php echo $logged ?>.</p>
@@ -56,6 +48,5 @@ if (isset($_GET['error'])) {
 if ($logged == 'in') {
 	echo "<p>If you are done, please <a href=\"includes/logout.php\">log out</a>.</p>";
 }
+echo $footer;
 ?>
-    </body>
-</html>
