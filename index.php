@@ -19,7 +19,7 @@ $kmlfile = $results[0];
 $listhtml = $results[1];
 
 $A = new Agencies();
-$A->geoCode();
+$A->geoCode();	//Run a check to make sure every agency with an address has been geo-coded
 
 echo GetHeader($kmlfile);
 ?>

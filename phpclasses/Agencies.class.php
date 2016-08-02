@@ -89,7 +89,7 @@ class Agencies {
 				$description .= "<p>$agency[description]</p>";
 			}
 
-			$description .= "<span style=\"float:left;\"><a target=\"_blank\" href=\"https://www.google.com/maps?dirflg=r&saddr=My+Location&daddr=" . urlencode("$agency[address1], $agency[city] $agency[state], $agency[zipcode]") . "\"><b>GET DIRECTIONS</b></a></span><span style=\"float:right;\"><a target=\"_blank\" href=\"#\"><b>MORE INFO</b></a></span><div style=\"clear:both;\"></div>";
+			$description .= "<span style=\"float:left;\"><a target=\"_blank\" href=\"https://maps.google.com/maps?dirflg=r&saddr=My+Location&daddr=" . urlencode("$agency[address1], $agency[city] $agency[state], $agency[zipcode]") . "\"><b>GET DIRECTIONS</b></a></span><span style=\"float:right;\"><a target=\"_blank\" href=\"#\"><b>MORE INFO</b></a></span><div style=\"clear:both;\"></div>";
 			return $description;
 		}
 	}
