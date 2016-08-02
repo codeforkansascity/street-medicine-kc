@@ -56,6 +56,7 @@ $header = '<!DOCTYPE html>
     		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       		<ul class="nav navbar-nav">
             <li><a href="/admin/front.php">Main Menu</a></li>
+	    <li><a href="/admin/register.php">Add Users</a></li>
             <li><a href="/admin/includes/logout.php">Logout</a></li>
           </ul>
 		</div>
