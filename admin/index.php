@@ -42,11 +42,13 @@ if (isset($_GET['error'])) {
                    value="Login"
                    onclick="formhash(this.form, this.form.password);" /></p>
         </form>
-        <p>If you don't have a login, please <a href="register.php">register</a></p>
         <p>You are currently logged <?php echo $logged ?>.</p>
         <?php
 if ($logged == 'in') {
-	echo "<p>If you are done, please <a href=\"includes/logout.php\">log out</a>.</p>";
+	echo "
+        <p>You are authorized to <a href=\"register.php\">add an agent</a>.</p>
+    <p>If you are done, please <a href=\"includes/logout.php\">log out</a>.</p>
+        ";
 }
 echo $footer;
 ?>

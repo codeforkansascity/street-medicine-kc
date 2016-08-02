@@ -27,6 +27,13 @@ echo $header;
 if (!empty($error_msg)) {
 	echo $error_msg;
 }
+
+$L = new Login();
+if ($L->loginCheck() == FALSE) {
+	echo "You are not authorized to add an agent.";
+	exit();
+}
+
 ?>
         <ul>
             <li>Usernames may contain only digits, upper and lower case letters and underscores</li>
