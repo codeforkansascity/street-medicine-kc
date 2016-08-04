@@ -49,15 +49,15 @@ class Login {
 	/*
 		            * Returns bool
 		            *
-		            * @param $agency_id
+		            * @param $username, $email, $password, $random_salt, $agency_id
 		            *
 		            * @return FALSE on error, otherwise TRUE
 	*/
-	function insertUser($username, $email, $password, $random_salt) {
+	function insertUser($username, $email, $password, $random_salt, $agency_id) {
 		$db = new Db();
 		$dbconn = $db->connect();
-		$sql = "INSERT INTO " . $this->table . " (username, email, password, salt)
-			VALUES('$username', '$email', '$password', '$random_salt')";
+		$sql = "INSERT INTO " . $this->table . " (username, email, password, salt, agency_id)
+			VALUES('$username', '$email', '$password', '$random_salt', '$agency_id')";
 		$db->query($sql);
 		if ($db->error()) {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
@@ -117,7 +117,7 @@ class Login {
 	function login($email, $password) {
 		$db = new Db();
 		$dbconn = $db->connect();
-		$sql = "SELECT id, userName, password, salt FROM admin WHERE email = '$email'";
+		$sql = "SELECT id, userName, password, salt, agency_id FROM admin WHERE email = '$email'";
 		$result = $db->select($sql);
 		if ($db->error()) {
 			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
@@ -125,6 +125,7 @@ class Login {
 		}
 		$admin_id = $result[0]['id'];
 		$db_password = $result[0]['password'];
+		$agency_id = $result[0]['agency_id'];
 		// $password = hash('sha512', $password . $salt);
 		if (count($result) == 1) {
 			// If the user exists we check if the account is locked
@@ -155,6 +156,8 @@ class Login {
 					$_SESSION['username'] = $username;
 					// $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
 					$_SESSION['login_string'] = $password;
+
+					$_SESSION['agency_id'] = $agency_id;
 
 					// Login successful.
 					return true;

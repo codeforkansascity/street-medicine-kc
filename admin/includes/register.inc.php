@@ -22,7 +22,7 @@ include_once '../controller.php';
 
 $error_msg = "";
 
-if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
+if (isset($_POST['username'], $_POST['email'], $_POST['p'], $_POST['agency_id'])) {
 	// Sanitize and validate the data passed in
 	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 	$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -33,6 +33,8 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
 	}
 
 	$password = filter_input(INPUT_POST, 'p', FILTER_SANITIZE_STRING);
+
+	$agency_id = filter_input(INPUT_POST, 'agency_id', FILTER_SANITIZE_STRING);
 	// var_dump($password);
 	if (strlen($password) != 128) {
 		// The hashed pwd should be 128 characters long.
@@ -62,7 +64,7 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
 		// $password = hash('sha512', $password . $random_salt);
 
 		// Insert the new user into the database
-		if ($L->insertUser($username, $email, $password, $random_salt)) {
+		if ($L->insertUser($username, $email, $password, $random_salt, $agency_id)) {
 			header('Location: ./register_success.php');
 		} else {
 			header('Location: ../admin/error.php?err=Registration failure: INSERT');

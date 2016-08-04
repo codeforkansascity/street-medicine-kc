@@ -1,8 +1,8 @@
 <?php
 class Agencies {
 
-        // The database object
-        protected static $db;
+	// The database object
+	protected static $db;
 
 	public $table = "agency";
 	public $subCatLinkTable = "agency_has_subcategories";
@@ -10,8 +10,8 @@ class Agencies {
 	public $catTable = "category";
 
 	public function __construct() {
-                self::$db = new Db() or die("Unable to initiate database object");
-                $dbconn = self::$db->connect() or die("Unable to connect to the database");
+		self::$db = new Db() or die("Unable to initiate database object");
+		$dbconn = self::$db->connect() or die("Unable to connect to the database");
 	}
 
 	/*
@@ -367,44 +367,47 @@ class Agencies {
 		}
 	}
 
-        /*
-                 * Delete agency and related info from the database
-                 *
-                 * @return      boolean
-        */
-        public function deleteAgency($id)	{
+	/*
+		                 * Delete agency and related info from the database
+		                 *
+		                 * @return      boolean
+	*/
+	public function deleteAgency($id) {
 
-                $db = self::$db;
+		$db = self::$db;
+		if ($id == $_SESSION['agency_id'] || $_SESSION['agency_id'] == 0) {
+			$sql = "DELETE FROM contact WHERE agency_id='$id'";
+			$db->query($sql);
+			if ($db->error()) {
+				echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+				return FALSE;
+			}
 
-		$sql="DELETE FROM contact WHERE agency_id='$id'";
-                $db->query($sql);
-                if ($db->error()) {
-                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
-                        return FALSE;
-                }
+			$sql = "DELETE FROM agency_has_subcategories WHERE agency_id='$id'";
+			$db->query($sql);
+			if ($db->error()) {
+				echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+				return FALSE;
+			}
 
-                $sql="DELETE FROM agency_has_subcategories WHERE agency_id='$id'";
-                $db->query($sql);
-                if ($db->error()) {
-                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
-                        return FALSE;
-                }
+			$sql = "DELETE FROM agencyHours WHERE agency_id='$id'";
+			$db->query($sql);
+			if ($db->error()) {
+				echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+				return FALSE;
+			}
 
-                $sql="DELETE FROM agencyHours WHERE agency_id='$id'";
-                $db->query($sql);
-                if ($db->error()) {
-                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
-                        return FALSE;
-                }
-
-                $sql="DELETE FROM agency WHERE id='$id'";
-                $db->query($sql);
-                if ($db->error()) {
-                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
-                        return FALSE;
-                }
-                return TRUE;
-        }
+			$sql = "DELETE FROM agency WHERE id='$id'";
+			$db->query($sql);
+			if ($db->error()) {
+				echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+				return FALSE;
+			}
+		} else {
+			return FALSE;
+		}
+		return TRUE;
+	}
 
 	/*
 		* Add/Update coordinates for an agency
@@ -412,25 +415,27 @@ class Agencies {
 		* @param $agencyid: if 0 = check for missing coordinates; if >0, update that agency only
 		* @return boolean
 	*/
-	public function geoCode($agencyid=0) {
-		$db=self::$db;
-		if($agencyid==0)
-		   	$sql = "SELECT * FROM agency WHERE latitude=0 AND address1!=''";
-		else
+	public function geoCode($agencyid = 0) {
+		$db = self::$db;
+		if ($agencyid == 0) {
+			$sql = "SELECT * FROM agency WHERE latitude=0 AND address1!=''";
+		} else {
 			$sql = "SELECT * FROM agency WHERE id='$agencyid'";
-                $agencies = $db->select($sql);
-                if ($db->error()) {
-                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
-                        return FALSE;
-                }
-                foreach ($agencies as $agency) {
-        		$temp = explode(",", $this->getCoordinates($agency['id']));
-        		$sql2 = "UPDATE agency SET latitude='$temp[0]',longitude='$temp[1]' WHERE id='".$agency['id']."'";
-        		$result2 = $db->query($sql2);
-                	if ($db->error()) {
-                        	echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
-                        	return FALSE;
-                	}
+		}
+
+		$agencies = $db->select($sql);
+		if ($db->error()) {
+			echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+			return FALSE;
+		}
+		foreach ($agencies as $agency) {
+			$temp = explode(",", $this->getCoordinates($agency['id']));
+			$sql2 = "UPDATE agency SET latitude='$temp[0]',longitude='$temp[1]' WHERE id='" . $agency['id'] . "'";
+			$result2 = $db->query($sql2);
+			if ($db->error()) {
+				echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+				return FALSE;
+			}
 		}
 	}
 

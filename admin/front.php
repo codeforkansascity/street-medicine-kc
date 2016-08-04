@@ -4,19 +4,21 @@ require '../variables.php';
 require '../controller.php';
 // Include database connection and functions here.  See 3.1.
 sec_session_start();
+$db = new Db();
+echo $header;
 $L = new Login();
 if ($L->loginCheck() == false) {
 	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
 	exit();
 }
-$db = new Db();
-echo $header;
 
 $A = new Agencies();
 $message = "";
 if ($_REQUEST['delete_agency_id']) {
+	$delAgency = $_REQUEST['delete_agency_id'];
+
 	//DELETE AGENCY
-	if ($A->deleteAgency($_REQUEST['delete_agency_id'])) {
+	if ($A->deleteAgency($delAgency)) {
 		$message = "The agency has been deleted from the database.";
 	} else {
 		$message = "There was an error removing the agency from the database.";

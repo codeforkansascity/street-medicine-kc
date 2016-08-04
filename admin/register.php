@@ -54,6 +54,7 @@ if ($L->loginCheck() == FALSE) {
         <form method="post" name="registration_form" action="<?php echo esc_url($_SERVER['PHP_SELF']); ?>">
             <p>Username: <input type='text' name='username' id='username' /></p>
             <p>Email: <input type="text" name="email" id="email" /></p>
+            <p>Agency ID: <input type="text" name="agency_id" id="agency_id" /></p>
             <p>Password: <input type="password"
                              name="password"
                              id="password"/></p>
@@ -65,6 +66,7 @@ if ($L->loginCheck() == FALSE) {
                    onclick="return regformhash(this.form,
                                    this.form.username,
                                    this.form.email,
+                                   this.form.agency_id,
                                    this.form.password,
                                    this.form.confirmpwd);" /></p>
         </form>

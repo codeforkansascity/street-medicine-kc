@@ -34,7 +34,7 @@ function formhash(form, password) {
     form.submit();
 }
 
-function regformhash(form, uid, email, password, conf) {
+function regformhash(form, uid, email, agency_id, password, conf) {
     // Check each field has a value
     if (uid.value == '' || email.value == '' || password.value == '' || conf.value == '') {
         alert('You must provide all the requested details. Please try again');
@@ -81,7 +81,7 @@ function regformhash(form, uid, email, password, conf) {
     p.name = "p";
     p.type = "hidden";
     // p.value = hex_sha512(password.value);
-    p.value = password;
+    p.value = password.value;
 
     // Make sure the plaintext password doesn't get sent. 
     password.value = "";
