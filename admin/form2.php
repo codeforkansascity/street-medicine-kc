@@ -9,7 +9,7 @@ sec_session_start();
 $L = new Login();
 if ($L->loginCheck() == false) {
 	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
-        exit();
+	exit();
 }
 if ($_GET["agency_id"]) //This agency was saved - show them a confirmation message at the top
 {
@@ -210,12 +210,12 @@ function doContacts($agency) {
 			echo "
 				<div class='form-group'>
 					<input type=\"text\" size=\"5\" value=\"$contact[title]\" placeholder='Title' id=\"title\"" . $id . "\" name=\"title" . $id . "\"<\input>
-					<input type=\"text\" size=\"11\" value=\"$contact[givenName]\" placeholder='First' id=\"given" . $id . "\" name=\"given" . $id . "\"<\input>
-					<input type=\"text\" size=\"15\" value=\"$contact[familyName]\" placeholder='Last' id=\"family" . $id . "\" name=\"family" . $id . "\"<\input>
+					<input type=\"text\" required size=\"11\" value=\"$contact[givenName]\" placeholder='First' id=\"given" . $id . "\" name=\"given" . $id . "\"<\input>
+					<input type=\"text\" required size=\"15\" value=\"$contact[familyName]\" placeholder='Last' id=\"family" . $id . "\" name=\"family" . $id . "\"<\input>
 					<input type=\"text\" size=\"5\" value=\"$contact[suffix]\" placeholder='suffix' id=\"suffix" . $id . "\" name=\"suffix" . $id . "\"<\input>
 					<input type=\"text\" size=\"12\" value=\"$contact[credentials]\" placeholder='credentials' id=\"credentials" . $id . "\" name=\"credentials" . $id . "\"<\input>
-					<input type=\"text\" size=\"11\" minlength=10 maxlength=10 value=\"$contact[phone]\" placeholder='phone' id=\"phone" . $id . "\" name=\"phone" . $id . "\"<\input>
-					<input type=\"text\" size=\"38\" value=\"$contact[email]\" placeholder=\"email\" id=\"email" . $id . "\" name=\"email" . $id . "\" <\input>
+					<input type=\"text\" phone size=\"11\" minlength=10 maxlength=10 value=\"$contact[phone]\" placeholder='phone' id=\"phone" . $id . "\" name=\"phone" . $id . "\"<\input>
+					<input type=\"email\" size=\"38\" value=\"$contact[email]\" placeholder=\"email\" id=\"email" . $id . "\" name=\"email" . $id . "\" <\input>
 			";
 			doTypes($cTypes, "contactType", $id, $contact['contactType_id']);
 			doTypes($pTypes, "phoneType", $id, $contact['phoneType_id']);

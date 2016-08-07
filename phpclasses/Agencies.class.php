@@ -23,7 +23,12 @@ class Agencies {
 	*/
 
 	public function fetchAgency($agencyid) {
+		// var_dump($agencyid);
 		if (!$agencyid) {
+			return FALSE;
+		}
+
+		if (!is_numeric($agencyid)) {
 			return FALSE;
 		}
 
@@ -54,6 +59,11 @@ class Agencies {
 	*/
 
 	public function getAgencyDescription($agencyid) {
+
+		if (!is_numeric($agencyid) || $agencyid == 0) {
+			return FALSE;
+		}
+
 		$db = self::$db;
 		$sql = "SELECT * FROM " . $this->table . " WHERE id='$agencyid'";
 		$agencies = $db->select($sql);
@@ -131,9 +141,9 @@ class Agencies {
 		}
 		foreach ($agencies as $agency) {
 			$agency['cdata'] = $this->getAgencyDescription($agencyid);
-			$agency['phone'] = $this->formatPhone($agency['phone']);
-			$agency['emergencyPhone'] = $this->formatPhone($agency['emergencyPhone']);
-			$agency['fax'] = $this->formatPhone($agency['fax']);
+			// $agency['phone'] = $this->formatPhone($agency['phone']);
+			// $agency['emergencyPhone'] = $this->formatPhone($agency['emergencyPhone']);
+			// $agency['fax'] = $this->formatPhone($agency['fax']);
 		}
 		return $agencies;
 	}
@@ -196,7 +206,7 @@ class Agencies {
 	*/
 
 	public function agencyHasSubCategory($agencyid, $subcatid) {
-		if (!$agencyid || !$subcatid) {
+		if (!$agencyid || !$subcatid || !is_numeric($agencyid)) {
 			return FALSE;
 		}
 
@@ -228,7 +238,7 @@ class Agencies {
 	*/
 	public function fetchActivatedAgencyCategories($agencyid = 0, $orderby = "category") {
 
-		if ($agencyid == 0) {
+		if (!is_numeric($agencyid) || $agencyid == 0) {
 			return FALSE;
 		}
 
@@ -284,6 +294,10 @@ class Agencies {
 	*/
 	public function update_agency($id, $agency, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free) {
 
+		if (!is_numeric($agencyid) || $agencyid == 0) {
+			return FALSE;
+		}
+
 		$db = self::$db;
 
 		$sql = "UPDATE " . $this->table . " SET name='$agency', description='$description', address1='$address1', address2='$address2', city='$city', state='$state',
@@ -305,6 +319,11 @@ class Agencies {
 		 * @return       "$lat,$lng" or FALSE
 	*/
 	public function getCoordinates($agencyid) {
+
+		if (!is_numeric($agencyid) || $agencyid == 0) {
+			return FALSE;
+		}
+
 		$db = self::$db;
 		$sql = "SELECT * FROM " . $this->table . " WHERE id='$agencyid'";
 		$result = $db->query($sql);
@@ -349,6 +368,11 @@ class Agencies {
 		 * @return	boolean
 	*/
 	public function isInCategory($agencyid, $categid) {
+
+		if (!is_numeric($agencyid) || $agencyid == 0) {
+			return FALSE;
+		}
+
 		$sql = "SELECT * FROM subCategories AS t2, Agency_has_subCategories AS t3 WHERE t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid' AND t2.categories_id='$categid'";
 
 		$db = self::$db;
@@ -373,6 +397,10 @@ class Agencies {
 		                 * @return      boolean
 	*/
 	public function deleteAgency($id) {
+
+		if (!is_numeric($id) || $id == 0) {
+			return FALSE;
+		}
 
 		$db = self::$db;
 		if ($id == $_SESSION['agency_id'] || $_SESSION['agency_id'] == 0) {
@@ -416,6 +444,10 @@ class Agencies {
 		* @return boolean
 	*/
 	public function geoCode($agencyid = 0) {
+
+		if (!is_numeric($agencyid)) {
+			return FALSE;
+		}
 		$db = self::$db;
 		if ($agencyid == 0) {
 			$sql = "SELECT * FROM agency WHERE latitude=0 AND address1!=''";

@@ -84,7 +84,7 @@ if ($agencyct == 1) {
 echo " in the system.</h3>";
 
 $perpage = 10;
-if (!$offset) {
+if (!$offset || !is_numeric($offset) || $offset < 0 || $offset > $agencyct) {
 	$offset = 0;
 }
 
