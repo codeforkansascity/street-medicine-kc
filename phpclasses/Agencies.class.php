@@ -91,8 +91,61 @@ class Agencies {
 				$description .= "<p><a href=\"$agency[Website]\" target=\"_blank\">Website <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i></a></p>";
 			}
 
-			if ($agency[hours] != '') {
-				$description .= "<p>Hours: $agency[hours]</p>";
+			$H = new Hours();
+			$hours = $H->getHoursForAgency($agency['id'],0);
+			if($hours) {
+				$description .= "<p>Hours:<br />";
+				$curday=""; 
+				foreach($hours as $hour) {
+					$D = new Days();
+				 	$day = $D->getDay($hour['dayOfWeek_id']);
+					if($day['longName']!=$curday) {	//Start new line for each day
+					   	if($curday!='') 	
+						{
+							$description=substr($description,0,strlen($description)-2);
+							if(date("l")==$curday)
+							{
+								if($H->isAgencyOpen($agency['id']))	//OPEN NOW
+								   $description.=" (Open NOW)";
+								else
+								   $description.=" (CLOSED)";
+								$description.="</span>";	//STOP: need to put in category-specific hours here if they exist
+							}
+							$description.="<br />";
+						}
+						$curday=$day['longName'];
+						if(date("l")==$curday) $description.="<span style=\"background-color:yellow;\">";
+						$description.=$day['shortName'].": ";
+					}
+					//List Hours:
+					$description .= $H->formatHours($hour['openTime'])."-".$H->formatHours($hour['closeTime']).", ";
+				}
+				$description=substr($description,0,strlen($description)-2);
+				if(date("l")==$curday)
+				{
+                                    	if($H->isAgencyOpen($agency['id']))     //OPEN NOW
+                                         	$description.=" (Open NOW)";
+                                        else
+                                                $description.=" (CLOSED)";
+                                        $description.="</span>";
+				}
+				$description .= "</p>";
+			}
+
+			//CATEGORIES
+			$cats = $this->fetchActivatedAgencyCategories($agency['id'],"category",TRUE);
+			if($cats) {
+				$description.="<p>SERVICES:<br />";
+				foreach($cats as $cat) {
+					$subcats = $this->fetchActivatedAgencySubCategories($agency['id'], $cat['id']);
+					if($subcats) {
+                                        	$description.="<span class=\"".$cat['buttonclass']."\">".$cat['category']."</span> - ";                     
+						foreach($subcats as $subcat) {
+							$description.=$subcat['subcategory'].", ";
+						}
+						$description=substr($description,0,strlen($description)-2)."<br />";
+					}
+				}
 			}
 
 			if ($agency[description] != '') {
@@ -180,7 +233,7 @@ class Agencies {
 
 		$sql = "SELECT t1.* FROM " . $this->subCatTable . " AS t1, " . $this->subCatLinkTable . " AS t2 WHERE t1.id=t2.subCategories_id AND t2.Agency_id='$agencyid'";
 		if ($categoryid > 0) {
-			$sql .= " AND t1.categories_id='$categoryid'";
+			$sql .= " AND t1.category_id='$categoryid'";
 		}
 
 		$sql .= " ORDER BY $orderby";
@@ -236,7 +289,7 @@ class Agencies {
 			        *
 			        * @return       MySQL query result, false on error
 	*/
-	public function fetchActivatedAgencyCategories($agencyid = 0, $orderby = "category") {
+	public function fetchActivatedAgencyCategories($agencyid = 0, $orderby = "category", $pinfile = FALSE) {
 
 		if (!is_numeric($agencyid) || $agencyid == 0) {
 			return FALSE;
@@ -244,7 +297,10 @@ class Agencies {
 
 		$db = self::$db;
 
-		$sql = "SELECT DISTINCT t1.* FROM " . $this->catTable . " AS t1, " . $this->subCatTable . " AS t2, " . $this->subCatLinkTable . " AS t3 WHERE t1.id=t2.category_id AND t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid' ORDER BY $orderby";
+		$sql = "SELECT DISTINCT t1.* FROM " . $this->catTable . " AS t1, " . $this->subCatTable . " AS t2, " . $this->subCatLinkTable . " AS t3 WHERE t1.id=t2.category_id AND t2.id=t3.subCategories_id AND t3.Agency_id='$agencyid' ";
+		if($pinfile) //Only return categories with a pinfile
+		   $sql.="AND pinfile!='' ";
+		$sql.="ORDER BY $orderby";
 
 		$activatedCats = $db->select($sql);
 
@@ -294,7 +350,7 @@ class Agencies {
 	*/
 	public function update_agency($id, $agency, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free) {
 
-		if (!is_numeric($agencyid) || $agencyid == 0) {
+		if (!$id) {
 			return FALSE;
 		}
 

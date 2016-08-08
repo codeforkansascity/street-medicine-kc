@@ -22,7 +22,7 @@ class Categories {
 		        *
 		        * @return MySQL query result array
 	*/
-	public function getAllCategories($orderby = "id", $pinfile = FALSE) {
+	public function getAllCategories($orderby = "pinfile!='' DESC,id", $pinfile = FALSE) {
 		$db = self::$db;
 		$sql = "SELECT * FROM " . $this->table;
 		if ($pinfile) {

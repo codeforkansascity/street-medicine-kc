@@ -2,10 +2,9 @@
 require '../variables.php';
 require '../controller.php';
 require 'functions.php';
-include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
-/* Process the Form Input */
 sec_session_start();
+/* Process the Form Input */
 $L = new Login();
 if ($L->loginCheck() == false) {
 	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
@@ -37,7 +36,10 @@ if ($_POST) {
 		$H->deleteHoursForAgency($agency_id);
 		$C->deleteSubcategoryRows($agency_id);
 		$K->deleteContactsForAgency($agency_id);
-		$A->update_agency($agency_id, $agency, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free);
+		if(!$A->update_agency($agency_id, $agency, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free))
+		{
+		   echo "Error updating the agency."; exit();
+	        }
 	} else {
 		// Insert a NEW Agency, and get the new agency's ID
 		$agency_id = $A->insert_agency($agency, $description, $address1, $address2, $city, $state, $zip, $website, $email, $free);

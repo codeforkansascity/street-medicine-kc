@@ -48,6 +48,48 @@ class Hours {
 		return $hours;
 	}
 
+        /*
+                            * Returns boolean (true if agency is open, false otherwise)
+                            *
+                            * @param  $agency_id 
+			    * @param  $subcategory_id (optional - if we want to check if certain subcat is open)
+                            *
+                            * @return boolean
+        */
+        public function isAgencyOpen($agency_id, $subcategory_id = 0) {
+                $db = self::$db;
+		$hours = $this -> getHoursForAgency($agency_id, $subcategory_id);
+		$D = new Days();
+		if($hours) {
+			foreach($hours as $hour) {
+			 	$day = $D->getDay($hour['dayOfWeek_id']);
+				if(date("l")==$day['longName']) { 	//CHECK HOURS FOR THIS DAY
+					if(time()>=strtotime(date("m/d/Y")." ".$hour['openTime']) && time()<=strtotime(date("m/d/Y")." ".$hour['closeTime']))
+						return TRUE;
+				}
+			}
+		}
+		return FALSE;
+        }
+
+        /*
+                            * Returns formatted time of day to H:MM am/pm format
+                            *
+                            * @param  $time
+                            *
+                            * @return formatted time (string)
+        */
+
+	public function formatHours($time) {
+                        $pieces=preg_split("/\:/",$time);
+                        $hh=intval($pieces[0]);
+                        if($hh>12) {
+                                $hh-=12; $ampm="pm";
+                        }
+                        else $ampm="am";
+                        return $hh.":".$pieces[1].$ampm;
+	}
+
 	/*
 		            * Returns bool
 		            *

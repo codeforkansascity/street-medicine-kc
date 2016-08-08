@@ -1,11 +1,10 @@
 <?php
 require '../variables.php';
 require '../controller.php';
-include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
+sec_session_start();
 $db = new Db();
 echo $header;
-sec_session_start();
 $L = new Login();
 if ($L->loginCheck() == false) {
 	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
@@ -263,7 +262,7 @@ function doSubcategories($A, $agency_id) {
 	$cats = $C->getAllCategories();
 	if ($cats) {
 		echo "
-	<h4>Services:</h4>
+	<h4>Services:</h4><p><i>(Click to expand the sub-categories of each category below.)</i></p>
 	<div class=\"panel-group\" id=\"accordion\">";
 		foreach ($cats as $category) {
 			echo "
@@ -293,7 +292,7 @@ function doSubcategories($A, $agency_id) {
 												data-toggle=\"collapse\"
 												data-parent=\"#accordion" . $category["id"] . "\"
 												href=\"#collapse" . $category["id"] . $subcat["id"] . "\">" . $subcat["subcategory"] . "
-											</a>";
+											</a> <span style=\"font-size:90%;\"><i>(click to enter specific hours for this service sub-category)</i></span>";
 				} else {
 					echo $subcat["subcategory"];
 				}

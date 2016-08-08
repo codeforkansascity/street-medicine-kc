@@ -27,5 +27,23 @@ class Days {
 		}
 		return $days;
 	}
+
+        /*
+                            * Returns day selected by id
+                            *
+                            * @param  $id - dayOfWeek.id
+                            *
+                            * @return MySQL query result array
+        */
+        public function getDay($id) {
+                $db = self::$db;
+                $sql = "SELECT * FROM " . $this->table . " WHERE id='$id'";
+                $days = $db->select($sql);
+                if ($db->error()) {
+                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+                        return FALSE;
+                }
+                return $days[0];
+        }
 }
 ?>
