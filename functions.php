@@ -177,8 +177,8 @@ function GetSearchResults($catids = array()) {
 	$kml .= "</Document></kml>";
 	$filename = time() . "-" . preg_replace("/[^0-9]/", "", $_SERVER['SERVER_ADDR']) . ".kml";
 	$filename = "kml/" . $filename;
-	if (!$open = fopen($filename, "w")) {echo "Could not open $filename";return FALSE;}
-	if (!fwrite($open, $kml)) {return FALSE;}
+	if (!$open = fopen($filename, "w+")) {echo "Could not open $filename";return FALSE;}
+	if (!fwrite($open, $kml)) {echo "Could not write $filename"; return FALSE;}
 	fclose($open);
 	return $filename . "<data>" . $list;
 }

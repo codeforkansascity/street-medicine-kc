@@ -49,6 +49,24 @@ class Hours {
 	}
 
         /*
+                            * Returns an array of hours for an agency on a specific day IF it has special hours for sub-categories
+                            *
+                            * @param  $orderby - Field by which to order (default: id)
+                            *
+                            * @return MySQL query result array
+        */
+        public function getSpecialHoursForAgency($agency_id, $dayOfWeek_id, $orderby = "openTime") {
+                $db = self::$db;
+                $sql = "SELECT * FROM " . $this->table . " WHERE agency_id = $agency_id AND dayOfWeek_id = '$dayOfWeek_id' AND subcategory_id>0 ORDER BY $orderby";
+                $hours = $db->select($sql);
+                if ($db->error()) {
+                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+                        return FALSE;
+                }
+                return $hours;
+        }
+
+        /*
                             * Returns boolean (true if agency is open, false otherwise)
                             *
                             * @param  $agency_id 

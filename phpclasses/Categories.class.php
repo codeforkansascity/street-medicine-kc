@@ -73,5 +73,23 @@ class Categories {
 		}
 		return TRUE;
 	}
+
+        /*
+                        * Return the subcategory indicated by the id
+                        *
+                        * @param  $subcategory_id 
+                        *
+                        * @return MySQL query result array
+        */
+        public function getSubCategory($subcategory_id) {
+                $db = self::$db;
+                $sql = "SELECT * FROM " . $this->subtable . " WHERE id='$subcategory_id'";
+                $subcats = $db->select($sql);
+                if ($db->error()) {
+                        echo "<br>MySQL Error: " . $sql . "<br>" . $db->error() . "<br>";
+                        return FALSE;
+                }
+                return $subcats[0];
+        }
 }
 ?>

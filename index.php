@@ -2,6 +2,10 @@
 require 'functions.php';
 require 'controller.php';
 
+header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
+header("Pragma: no-cache"); // HTTP 1.0.
+header("Expires: 0"); // Proxies.
+
 //GET SEARCH PARAMS
 $catids = array();
 $c = 0;
