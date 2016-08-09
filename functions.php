@@ -44,8 +44,8 @@ function GetHeader($kmlfile = "") {
     <title>Homeless KC</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="map.css">
-        <script type="text/JavaScript" src="js/sha512.js"></script>
-        <script type="text/JavaScript" src="js/forms.js"></script>
+        <!--<script type="text/JavaScript" src="js/sha512.js"></script>
+        <script type="text/JavaScript" src="js/forms.js"></script>-->
     <script src="https://use.fontawesome.com/8080d19550.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -77,6 +77,7 @@ gin="anonymous"></script>';
                         preserveViewport: false
                 });
                 kmlLayer.setMap(map);
+		console.log("loaded '.$kmlfile.'");
                 google.maps.event.addListener(kmlLayer, "click", function(kmlEvent) {
                         showInContentWindow(kmlEvent.latLng, kmlEvent.featureData.description);
                 });
@@ -175,8 +176,10 @@ function GetSearchResults($catids = array()) {
 		$list .= "<div class=\"list-element\">" . $info . "</div>";
 	}
 	$kml .= "</Document></kml>";
-	$filename = time() . "-" . preg_replace("/[^0-9]/", "", $_SERVER['SERVER_ADDR']) . ".kml";
+        $serveraddr=preg_replace("/[^0-9]/","",$_SERVER['REMOTE_ADDR']);
+	$filename = time()."_".$serveraddr . ".kml";
 	$filename = "kml/" . $filename;
+	if(file_exists($filename)) { unlink($filename);  }
 	if (!$open = fopen($filename, "w+")) {echo "Could not open $filename";return FALSE;}
 	if (!fwrite($open, $kml)) {echo "Could not write $filename"; return FALSE;}
 	fclose($open);

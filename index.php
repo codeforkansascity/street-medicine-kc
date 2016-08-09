@@ -6,6 +6,9 @@ header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
 header("Pragma: no-cache"); // HTTP 1.0.
 header("Expires: 0"); // Proxies.
 
+$A = new Agencies();
+$A->geoCode();  //Run a check to make sure every agency with an address has been geo-coded
+
 //GET SEARCH PARAMS
 $catids = array();
 $c = 0;
@@ -21,9 +24,6 @@ foreach ($_POST as $key => $value) //Get Categories Checked
 $results = explode("<data>", GetSearchResults($catids));
 $kmlfile = $results[0];
 $listhtml = $results[1];
-
-$A = new Agencies();
-$A->geoCode();	//Run a check to make sure every agency with an address has been geo-coded
 
 echo GetHeader($kmlfile);
 ?>
