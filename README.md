@@ -14,3 +14,21 @@ According to the NCHWIH report:
 - 1.37 million (or 39%) of the total homeless population are children under the age of 18.
  
 ![demographics infographic](https://cloud.githubusercontent.com/assets/17709785/18036030/69b0e5b0-6d27-11e6-9ba9-92ff567c9d9b.jpg)
+
+
+## The Team
+
+* Jae Edgar Bennett (project lead) 
+* Ann Gaffigan (lead developer)
+* Phil Huffman (developer)
+
+[Contributors](https://github.com/codeforkansascity/street-medicine-kc/graphs/contributors)
+
+## What we need
+
+* See [Issues](https://github.com/codeforkansascity/street-medicine-kc/issues)
+
+## How to help
+
+* Come to [Code for KC HackNights](http://www.meetup.com/KCBrigade/)
+* Pick an [issue](https://github.com/codeforkansascity/street-medicine-kc/issues), fork the Repo and fix it.  
