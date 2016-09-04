@@ -1,6 +1,6 @@
 # Street Medicine KC
 
-Provide Kansas City's homeless and organizations that provide services to them, the opportunity to connect with resources via better information about health and community services. 
+Our goal is to provide an interactive tool for front line providers to the homeless population. This comprehensive digital resource guide allows easier access to agencies in seven counties. It will allow agencies to track their referrals.
 
 Current website: http://homelesskc.gazelleincorporated.com/
 
