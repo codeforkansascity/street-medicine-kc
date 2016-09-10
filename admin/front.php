@@ -14,8 +14,8 @@ if ($L->loginCheck() == false) {
 
 $A = new Agencies();
 $message = "";
-if ($_REQUEST['delete_agency_id']) {
-	$delAgency = $_REQUEST['delete_agency_id'];
+if (isset($_REQUEST['delete_agency_id'])) {
+	$delAgency = (int) $_REQUEST['delete_agency_id'];
 
 	//DELETE AGENCY
 	if ($A->deleteAgency($delAgency)) {
@@ -58,7 +58,7 @@ foreach ($agencies as $agency) {
 	$agencyName = $agency["name"];
 	$agency_id = $agency["id"];
 	echo "<option value='$agency_id'";
-	if ($_REQUEST['id'] == $agency_id) {
+	if (isset($_REQUEST['id']) && ($_REQUEST['id'] == $agency_id)) {
 		echo " selected";
 	}
 	//SELECTED AGENCY, IF APPLICABLE
@@ -164,4 +164,3 @@ echo $pagenav;
 
 echo $footer;
 ?>
-

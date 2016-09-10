@@ -10,7 +10,7 @@ if ($L->loginCheck() == false) {
 	echo "You are not authorized to access this page, please <a href=\"../admin/\">login</a>.";
 	exit();
 }
-if ($_GET["agency_id"]) //This agency was saved - show them a confirmation message at the top
+if (isset($_GET["agency_id"])) //This agency was saved - show them a confirmation message at the top
 {
 	$saved = 1;
 	$agency_id = $_GET["agency_id"];
@@ -326,4 +326,3 @@ function doSubcategories($A, $agency_id) {
 	}
 }
 ?>
-
