@@ -161,6 +161,5 @@ for ($a = $offset; $a <= $limit; $a++) {
 }
 echo "</tbody></table>";
 echo $pagenav;
-
 echo $footer;
 ?>

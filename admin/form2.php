@@ -39,7 +39,7 @@ if ($agency_id > 0) {
 }
 //Otherwise, $agency will be empty by default and we can reference it anyway without harm
 
-echo "<form method='POST' action='form3.php'>
+echo "<form id='agency-info-form' method='POST' action='form3.php'>
 	<input type='hidden' name='agency_id' value='$agency_id'>
 	<div class='form-group'>
 	<br><br>
@@ -74,7 +74,7 @@ if ($agency['state'] == "KS") {
 }
 
 echo "
-			>Kansas</label></span>&nbsp;&nbsp;&nbsp;<input type='text' minlength='5' maxlength='10' size='11' id='zip' name='zip' required value=\"$agency[zip]\" placeholder=\"Zip\"></p>
+			>Kansas</label></span>&nbsp;&nbsp;&nbsp;<input title='Please enter 5 digit zip code' type='text' minlength='5' maxlength='10' size='11' id='zip' name='zip' required value=\"$agency[zip]\" placeholder=\"Zip\"></p>
 	</div>
 	<h4>Contacts:</h4>
 	";
@@ -86,7 +86,29 @@ doHoursTable($agency_id);
 /* THE CATEGORIES & SUBCATEGORIES */
 doSubcategories($A, $agency_id);
 echo "<button type='submit' class='btn btn-primary'>Save and Continue</button></form>";
-
+?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script>
+	$().ready(function() {
+		$('#agency-info-form').validate({
+			errorElement: "em",
+			errorClass: "has-danger",
+			errorPlacement: function(err, elem) {
+				err.addClass("text-danger");
+				err.insertAfter(elem);
+			},
+			rules: {
+				zip: {
+					required: true,
+					minlength: 5,
+					maxlength: 5,
+					number: true
+				}
+			}
+		});
+	});
+</script>
+<?php
 echo $footer;
 // ==========
 function doHoursTable($agency_id, $category_id = 0, $subcategory_id = 0) {
