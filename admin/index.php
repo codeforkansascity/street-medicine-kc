@@ -29,20 +29,18 @@ if ($L->loginCheck() == true) {
 echo $header;
 
 if (isset($_GET['error'])) {
-	echo '<p class="error">Error Logging In!</p>';
+	echo '<p class="text-danger error">Error Logging In!</p>';
 }
 ?>
-        <form action="includes/process_login.php" method="post" name="login_form">
-	<h1>Homeless KC Login:</h1>
-            <p>Email: <input type="text" name="email" />
-            Password: <input type="password"
-                             name="password"
-                             id="password"/>
-            <input type="button"
-                   value="Login"
-                   onclick="formhash(this.form, this.form.password);" /></p>
-        </form>
-        <p>You are currently logged <?php echo $logged ?>.</p>
+	<form action="includes/process_login.php" method="post" name="login_form">
+		<h1>Homeless KC Login:</h1>
+		<p>
+			Email: <input required type="text" name="email" />
+			Password: <input required type="password" name="password" id="password"/>
+			<input type="submit" value="Login"/>
+		</p>
+	</form>
+	<p>You are currently logged <?php echo $logged ?>.</p>
         <?php
 if ($logged == 'in') {
 	echo "
