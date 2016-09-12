@@ -72,7 +72,7 @@ gin="anonymous"></script>';
                 }
                 window.map = new google.maps.Map(document.getElementById("map"), mapOptions);
                 var kmlLayer = new google.maps.KmlLayer({
-                        url: "http://homelesskc.gazelleincorporated.com/' . $kmlfile . '",
+                        url: "http://homelesskc.com/' . $kmlfile . '",
                         suppressInfoWindows: true,
                         preserveViewport: false
                 });
@@ -195,7 +195,7 @@ function GetCategoryPin($categid) {
 		$row = mysqli_fetch_array($result);
 	}
 	if ($row) {
-		return "http://homelesskc.gazelleincorporated.com/images/" . $row[0];
+		return "http://homelesskc.com/images/" . $row[0];
 	} else {
 		return FALSE;
 	}
