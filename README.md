@@ -2,7 +2,7 @@
 
 Our goal is to provide an interactive tool for front line providers to the homeless population. This comprehensive digital resource guide allows easier access to agencies in seven counties. It will allow agencies to track their referrals.
 
-Current website: http://homelesskc.gazelleincorporated.com/
+Current website: http://homelesskc.com/ 
 
 ### Homeless Demographics
 
