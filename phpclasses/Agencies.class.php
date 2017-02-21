@@ -74,34 +74,34 @@ class Agencies {
 		}
 
 		foreach ($agencies as $agency) {
-			$description = "<h4>{$agency['name']}</h4>";
-			$description .= "<p>{$agency['address1']}";
-			if ($agency['address2'] != '') {
-				$description .= ", {$agency['address2']}";
+			$description = "<h4>$agency[name]</h4>";
+			$description .= "<p>$agency[address1]";
+			if ($agency[address2] != '') {
+				$description .= ", $agency[address2]";
 			}
 
-			$description .= "<br>{$agency['city']}, {$agency['state']} {$agency['zip']}</p>";
-			$description .= "<p><a href=\"tel:+1" . preg_replace("/[^0-9]/", "", $agency['phone']) . "\">" . $agency['phone'] . "</a>";
-			if ($agency['emergencyPhone'] != '') {
-				$description .= "<br><a href=\"tel:+1" . preg_replace("/[^0-9]/", "", $agency['emergencyPhone']) . "\">" . $agency['emergencyPhone'] . "</a> (Emergency)";
+			$description .= "<br>$agency[city], $agency[state] $agency[zip]</p>";
+			$description .= "<p><a href=\"tel:+1" . preg_replace("/[^0-9]/", "", $agency[phone]) . "\">" . $agency[phone] . "</a>";
+			if ($agency[emergencyPhone] != '') {
+				$description .= "<br><a href=\"tel:+1" . preg_replace("/[^0-9]/", "", $agency[emergencyPhone]) . "\">" . $agency[emergencyPhone] . "</a> (Emergency)";
 			}
 
 			$description .= "</p>";
-			if ($agency['website'] != '') {
-				$description .= "<p><a href=\"{$agency['website']}\" target=\"_blank\">Website <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i></a></p>";
+			if ($agency[Website] != '') {
+				$description .= "<p><a href=\"$agency[Website]\" target=\"_blank\">Website <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i></a></p>";
 			}
 
-			$H = new Hours();
+			$H = new Hours(); 
 			$D = new Days();
 			$C = new Categories();
 			$hours = $H->getHoursForAgency($agency['id'],0);
 			if($hours) {
 				$description .= "<p><b>Hours:</b><br />";
-				$curday="";
+				$curday=""; 
 				foreach($hours as $hour) {
 				 	$day = $D->getDay($hour['dayOfWeek_id']);
 					if($day['longName']!=$curday) {	//Start new line for each day
-					   	if($curday!='')
+					   	if($curday!='') 	
 						{
 							$description=substr($description,0,strlen($description)-2);
 							if(date("l")==$curday)
@@ -117,7 +117,7 @@ class Agencies {
 							if($specialhours) {
 								$description.="&nbsp;&nbsp;&nbsp;(";
 								foreach($specialhours as $shour) {
-									$subcat = $C->getSubCategory($shour['subcategory_id']);
+									$subcat = $C->getSubCategory($shour['subcategory_id']);	
 									$description.=$subcat['subcategory'].": ".$H->formatHours($shour['openTime'])."-".$H->formatHours($shour['closeTime']).", ";
 								}
 								$description=substr($description,0,strlen($description)-2).")<br />";
@@ -149,7 +149,7 @@ class Agencies {
 				foreach($cats as $cat) {
 					$subcats = $this->fetchActivatedAgencySubCategories($agency['id'], $cat['id']);
 					if($subcats) {
-                                        	$description.="<span class=\"".$cat['buttonclass']."\">".$cat['category']."</span> - ";
+                                        	$description.="<span class=\"".$cat['buttonclass']."\">".$cat['category']."</span> - ";                     
 						foreach($subcats as $subcat) {
 							$description.=$subcat['subcategory'].", ";
 						}
@@ -173,11 +173,11 @@ class Agencies {
         			}
 			} //end if cats
 
-			if ($agency['description'] != '') {
+			if ($agency[description] != '') {
 				$description .= "<p>$agency[description]</p>";
 			}
 
-			$description .= "<span style=\"float:left;\"><a target=\"_blank\" href=\"https://maps.google.com/maps?dirflg=r&saddr=My+Location&daddr=" . urlencode("{$agency['address1']}, {$agency['city']} {$agency['state']}, {$agency['zip']}") . "\"><b>GET DIRECTIONS</b></a></span><span style=\"float:right;\"><a target=\"_blank\" href=\"/agency.php?agencyid={$agency['id']}\"><b>MORE INFO</b></a></span><div style=\"clear:both;\"></div>";
+			$description .= "<span style=\"float:left;\"><a target=\"_blank\" href=\"https://maps.google.com/maps?dirflg=r&saddr=My+Location&daddr=" . urlencode("$agency[address1], $agency[city] $agency[state], $agency[zipcode]") . "\"><b>GET DIRECTIONS</b></a></span><span style=\"float:right;\"><a target=\"_blank\" href=\"/agency.php?agencyid=$agency[id]\"><b>MORE INFO</b></a></span><div style=\"clear:both;\"></div>";
 			return $description;
 		}
 	}
@@ -218,7 +218,7 @@ class Agencies {
 			return FALSE;
 		}
 		foreach ($agencies as $agency) {
-			$agency['cdata'] = $this->getAgencyDescription($agency['id']);
+			$agency['cdata'] = $this->getAgencyDescription($agencyid);
 			// $agency['phone'] = $this->formatPhone($agency['phone']);
 			// $agency['emergencyPhone'] = $this->formatPhone($agency['emergencyPhone']);
 			// $agency['fax'] = $this->formatPhone($agency['fax']);
