@@ -47,19 +47,15 @@ class Login {
 	}
 
 	/*
-   * Returns bool
-   *
-   * @param $username, $email, $password, $random_salt, $agency_id
-   *
-   * @return FALSE on error, otherwise TRUE
-	 */
+		            * Returns bool
+		            *
+		            * @param $username, $email, $password, $random_salt, $agency_id
+		            *
+		            * @return FALSE on error, otherwise TRUE
+	*/
 	function insertUser($username, $email, $password, $random_salt, $agency_id) {
 		$db = new Db();
 		$dbconn = $db->connect();
-		$password = $this->hash_password($password);
-		if ($agency_id == '') {
-			$agency_id = null;
-		}
 		$sql = "INSERT INTO " . $this->table . " (username, email, password, salt, agency_id)
 			VALUES('$username', '$email', '$password', '$random_salt', '$agency_id')";
 		$db->query($sql);
@@ -112,12 +108,12 @@ class Login {
 	}
 
 	/*
-   * Returns bool
-   *
-   * @param $email, $password
-   *
-   * @return FALSE on error or no login, else TRUE
-	 */
+		            * Returns bool
+		            *
+		            * @param $email, $password
+		            *
+		            * @return FALSE on error or no login, else TRUE
+	*/
 	function login($email, $password) {
 		$db = new Db();
 		$dbconn = $db->connect();
@@ -143,7 +139,7 @@ class Login {
 				// Check if the password in the database matches
 				// the password the user submitted.
 				// echo "db_password: $db_password<br>password: $password<br>";
-				if (password_verify($password, $db_password)) {
+				if ($db_password == $password) {
 					// echo "username: $username<br>";
 					// echo "<br>admin_id: $admin_id<br>";
 					// Password is correct!
@@ -159,7 +155,7 @@ class Login {
 
 					$_SESSION['username'] = $username;
 					// $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
-					$_SESSION['login_string'] = $db_password;
+					$_SESSION['login_string'] = $password;
 
 					$_SESSION['agency_id'] = $agency_id;
 
@@ -232,10 +228,6 @@ class Login {
 			return FALSE;
 		}
 		return count($result) > 0;
-	}
-
-	function hash_password($pass) {
-		return password_hash($pass, PASSWORD_BCRYPT);
 	}
 }
 ?>
